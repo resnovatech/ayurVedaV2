@@ -40,6 +40,70 @@ class Admin extends Authenticatable
     ];
 
 
+    public function doctors()
+    {
+        return $this->hasMany('App\Models\Doctor');
+    }
+
+    public function walkByPatients()
+    {
+        return $this->hasMany('App\Models\WalkByPatient');
+    }
+
+
+    public function patients()
+    {
+        return $this->hasMany('App\Models\Patient');
+    }
+
+
+    public function bills()
+    {
+        return $this->hasMany('App\Models\Bill');
+    }
+
+
+    public function patientAdmits()
+    {
+        return $this->hasMany('App\Models\PatientAdmit');
+    }
+
+
+    public function doctorAppointments()
+    {
+        return $this->hasMany('App\Models\DoctorAppointment');
+    }
+
+
+    public function patientHistories()
+    {
+        return $this->hasMany('App\Models\PatientHistory');
+    }
+
+    public function therapyAppointments()
+    {
+        return $this->hasMany('App\Models\TherapyAppointment');
+    }
+
+    public function staff()
+    {
+        return $this->hasMany('App\Models\Staff');
+    }
+
+
+
+    public function therapists()
+    {
+        return $this->hasMany('App\Models\Therapist');
+    }
+
+
+    public function therapyAppointmentDateAndTimes()
+    {
+        return $this->hasMany('App\Models\TherapyAppointmentDateAndTime');
+    }
+
+
      public static function getpermissionGroups()
     {
         $permission_groups = DB::table('permissions')
