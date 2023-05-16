@@ -35,9 +35,7 @@
     <!-- custom Css-->
     <link href="{{asset('/')}}public/admin/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
-    <link href=
-'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
-          rel='stylesheet'>
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'rel='stylesheet'>
           <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
 
@@ -304,6 +302,16 @@
   <script>
  $(function(){
     $("#datepicker").datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true
+    });
+});
+  </script>
+
+   <script>
+ $(function(){
+    $(".datepicker").datepicker({
         dateFormat: "yy-mm-dd",
         changeMonth: true,
         changeYear: true

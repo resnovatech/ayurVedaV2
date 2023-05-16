@@ -4,6 +4,10 @@
 Therapist | {{ $ins_name }}
 @endsection
 
+@section('css')
+
+@endsection
+
 
 @section('body')
 <div class="page-content">
@@ -121,7 +125,7 @@ Therapist | {{ $ins_name }}
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">DOB</label>
-                                                                        <input type="text" class="form-control" value="{{ $allTherapistList->dob }}"  name="dob" id="datepicker" required>
+                                                                        <input type="text" class="form-control datepicker" value="{{ $allTherapistList->dob }}"  name="dob"  required>
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Years of experience</label>
