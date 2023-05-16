@@ -105,7 +105,7 @@ Staff  List | {{ $ins_name }}
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Phone Number</label>
-                                                                        <input type="text" class="form-control" value="{{ $allStaffList->phone_or_mobile_number }}" name="phone_or_mobile_number" id="" required>
+                                                                        <input type="text" class="form-control" data-parsley-length="[11, 11]" value="{{ $allStaffList->phone_or_mobile_number }}" name="phone_or_mobile_number" id="" required>
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Address</label>
@@ -113,7 +113,7 @@ Staff  List | {{ $ins_name }}
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">NID</label>
-                                                                        <input type="text" class="form-control" value="{{ $allStaffList->nid_number }}" name="nid_number" id="" required >
+                                                                        <input type="text" class="form-control" data-parsley-length="[10, 17]" value="{{ $allStaffList->nid_number }}" name="nid_number" id="" required >
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Nationality</label>
@@ -121,11 +121,11 @@ Staff  List | {{ $ins_name }}
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">DOB</label>
-                                                                        <input type="date" class="form-control" value="{{ $allStaffList->dob }}"  name="dob" id="" required>
+                                                                        <input type="text" class="form-control" value="{{ $allStaffList->dob }}"  name="dob" id="datepicker" required>
                                                                     </div>
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Years of experience</label>
-                                                                        <input type="text" class="form-control" value="{{ $allStaffList->years_of_experience }}" name="years_of_experience" id="" required >
+                                                                        <input type="text" class="form-control" data-parsley-maxlength="4" value="{{ $allStaffList->years_of_experience }}" name="years_of_experience" id="" required >
                                                                     </div>
 
                                                                 </div>
@@ -156,7 +156,7 @@ Staff  List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>
@@ -194,7 +194,7 @@ Staff  List | {{ $ins_name }}
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" name="phone_or_mobile_number" id="" required>
+                            <input type="text" class="form-control" data-parsley-length="[11, 11]" name="phone_or_mobile_number" id="" required>
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Address</label>
@@ -202,7 +202,7 @@ Staff  List | {{ $ins_name }}
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">NID</label>
-                            <input type="text" class="form-control" name="nid_number" id="" required>
+                            <input type="text" class="form-control" data-parsley-length="[10, 17]" name="nid_number" id="" required>
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Nationality</label>
@@ -210,11 +210,11 @@ Staff  List | {{ $ins_name }}
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">DOB</label>
-                            <input type="date" class="form-control" name="dob" id="" required>
+                            <input type="text" class="form-control" name="dob" id="datepicker" required>
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Years of experience</label>
-                            <input type="text" class="form-control" name="years_of_experience" id="" required>
+                            <input type="text" class="form-control" data-parsley-maxlength="4" name="years_of_experience" id="" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary ">Submit</button>

@@ -100,24 +100,24 @@ Reward  List | {{ $ins_name }}
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label" >Reward For</label>
                                                                         <select name="reward_for" class="form-control" id="" required>
-                                                                            <option value="For Product" {{ 'For Product' == $allRewardList->name ? 'selected':''}}>For Product</option>
-                                                                            <option value="For Service" {{ 'For Service' == $allRewardList->name ? 'selected':''}}>For Service</option>
+                                                                            <option value="For Product" {{ 'For Product' == $allRewardList->reward_for ? 'selected':''}}>For Product</option>
+                                                                            <option value="For Service" {{ 'For Service' == $allRewardList->reward_for ? 'selected':''}}>For Service</option>
                                                                         </select>
                                                                     </div>
 
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Point</label>
-                                                                        <input type="text" class="form-control" value="{{ $allRewardList->point }}" name="point" id="" required>
+                                                                        <input type="number" class="form-control" value="{{ $allRewardList->point }}" name="point" id="" required>
                                                                     </div>
 
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">In Exchange</label>
-                                                                        <input type="text" class="form-control" value="{{ $allRewardList->in_exchange }}" name="in_exchange" id="" required>
+                                                                        <input type="number" class="form-control" value="{{ $allRewardList->in_exchange }}" name="in_exchange" id="" required>
                                                                     </div>
 
                                                                     <div class="col-12 mb-2">
                                                                         <label for="" class="form-label">Amount</label>
-                                                                        <input type="text" class="form-control" value="{{ $allRewardList->amount }}" name="amount" id="" required>
+                                                                        <input type="number" class="form-control" value="{{ $allRewardList->amount }}" name="amount" id="" required>
                                                                     </div>
 
 
@@ -149,7 +149,7 @@ Reward  List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>
@@ -192,17 +192,17 @@ Reward  List | {{ $ins_name }}
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Point</label>
-                            <input type="text" class="form-control"  name="point" id="" required>
+                            <input type="number" class="form-control"  name="point" id="" required>
                         </div>
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">In Exchange</label>
-                            <input type="text" class="form-control"  name="in_exchange" id="" required>
+                            <input type="number" class="form-control"  name="in_exchange" id="" required>
                         </div>
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Amount</label>
-                            <input type="text" class="form-control" name="amount" id="" required>
+                            <input type="number" class="form-control" name="amount" id="" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary ">Submit</button>

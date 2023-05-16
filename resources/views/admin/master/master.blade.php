@@ -35,6 +35,10 @@
     <!-- custom Css-->
     <link href="{{asset('/')}}public/admin/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
+    <link href=
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+          <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
 
         .swal2-confirm{
@@ -255,6 +259,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="{{asset('/')}}public/admin/assets/js/pages/datatables.init.js"></script>
+<!-- init js -->
 
     <!-- App js -->
     <script src="{{asset('/')}}public/admin/assets/js/app.js"></script>
@@ -295,8 +300,37 @@
         })
     }
 </script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+ $(function(){
+    $("#datepicker").datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true
+    });
+});
+  </script>
 
+<script>
+    $(function(){
+       $("#datepicker_one").datepicker({
+           dateFormat: "yy-mm-dd",
+           changeMonth: true,
+           changeYear: true
+       });
+   });
+     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @yield('script')
+
+    <script>
+        $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+    </script>
+
+
 </body>
 
 </html>

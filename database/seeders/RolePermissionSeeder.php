@@ -109,6 +109,142 @@ class RolePermissionSeeder extends Seeder
                     'profile.edit',
                 ]
             ],
+            [
+                'group_name' => 'staff',
+                'permissions' => [
+                    'staffAdd',
+                    'staffView',
+                    'staffDelete',
+                    'staffUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'reward',
+                'permissions' => [
+                    'rewardAdd',
+                    'rewardView',
+                    'rewardDelete',
+                    'rewardUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'therapist',
+                'permissions' => [
+                    'therapistAdd',
+                    'therapistView',
+                    'therapistDelete',
+                    'therapistUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'dietCharts',
+                'permissions' => [
+                    'dietChartsAdd',
+                    'dietChartsView',
+                    'dietChartsDelete',
+                    'dietChartsUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'medicineLists',
+                'permissions' => [
+                    'medicineListsAdd',
+                    'medicineListsView',
+                    'medicineListsDelete',
+                    'medicineListsUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'healthSupplements',
+                'permissions' => [
+                    'healthSupplementsAdd',
+                    'healthSupplementsView',
+                    'healthSupplementsDelete',
+                    'healthSupplementsUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'therapyIngredients',
+                'permissions' => [
+                    'therapyIngredientsAdd',
+                    'therapyIngredientsView',
+                    'therapyIngredientsDelete',
+                    'therapyIngredientsUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'therapyLists',
+                'permissions' => [
+                    'therapyListsAdd',
+                    'therapyListsView',
+                    'therapyListsDelete',
+                    'therapyListsUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'doctorWaitingList',
+                'permissions' => [
+                    'doctorWaitingListAdd',
+                    'doctorWaitingListView',
+                    'doctorWaitingListDelete',
+                    'doctorWaitingListUpdate',
+                ]
+            ],
+
+            [
+                'group_name' => 'patientPrescriptionList',
+                'permissions' => [
+                    'patientPrescriptionListAdd',
+                    'patientPrescriptionListView',
+                    'patientPrescriptionListDelete',
+                    'patientPrescriptionListUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'Billing',
+                'permissions' => [
+                    'BillingAdd',
+                    'BillingView',
+                    'BillingDelete',
+                    'BillingUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'revisedBilling',
+                'permissions' => [
+                    'revisedBillingAdd',
+                    'revisedBillingView',
+                    'revisedBillingDelete',
+                    'revisedBillingUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'therapyAppointment',
+                'permissions' => [
+                    'therapyAppointmentAdd',
+                    'therapyAppointmentView',
+                    'therapyAppointmentDelete',
+                    'therapyAppointmentUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'walkByPatientTherapy',
+                'permissions' => [
+                    'walkByPatientTherapyAdd',
+                    'walkByPatientTherapyView',
+                    'walkByPatientTherapyDelete',
+                    'walkByPatientTherapyUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'doctorAppointment',
+                'permissions' => [
+                    'doctorAppointmentAdd',
+                    'doctorAppointmentView',
+                    'doctorAppointmentDelete',
+                    'doctorAppointmentUpdate',
+                ]
+            ],
         ];
 
 

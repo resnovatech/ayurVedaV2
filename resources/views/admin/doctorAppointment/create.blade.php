@@ -119,7 +119,7 @@ data-nationality="{{ $allPatientList->nationality }}"
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="" class="form-label">Appointment Date</label>
-                                        <input type="date" name="appointment_date" class="form-control" id="" placeholder="Name" required>
+                                        <input type="text" name="appointment_date" class="form-control" id="datepicker" placeholder="Appointment Date" required>
                                     </div>
                                 </div>
 

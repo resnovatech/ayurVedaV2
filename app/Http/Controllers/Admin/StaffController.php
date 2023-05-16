@@ -79,7 +79,6 @@ class StaffController extends Controller
             $admins->name = $request->name;
             $admins->staff_id = $staffId;
             $admins->phone = $request->phone_or_mobile_number;
-            $admins->username = Str::slug($request->name);
             $admins->email = $request->email;
             $admins->password = Hash::make(12345678);
             $admins->save();

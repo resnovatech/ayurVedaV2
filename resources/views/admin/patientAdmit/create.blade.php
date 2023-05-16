@@ -151,13 +151,13 @@ Create  Patient | {{ $ins_name }}
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="" class="form-label">Start Date</label>
-                                        <input type="date" class="form-control" id="" name="start_date" placeholder="Start Date" required>
+                                        <input type="text" class="form-control" id="datepicker" name="start_date" placeholder="Start Date" required>
                                     </div>
                                 </div>
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="" class="form-label">End Date</label>
-                                        <input type="date" class="form-control" id="" name="end_date" placeholder="End Date" required>
+                                        <input type="text" class="form-control" id="datepicker_one" name="end_date" placeholder="End Date" required>
                                     </div>
                                 </div>
                                 <div class="col-xxl-12 col-md-12">

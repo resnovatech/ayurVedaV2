@@ -50,7 +50,7 @@ Therapy Appointment | {{ $ins_name }}
 
                             </div>
 
-
+                            <div class="table-responsive table-card mt-3 mb-1">
                                 <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
                                     <thead class="table-light">
                                     <tr>
@@ -134,7 +134,7 @@ Therapy Appointment | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                          
+                            </div>
 
 
                         </div>

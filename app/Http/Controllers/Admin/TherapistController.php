@@ -79,7 +79,6 @@ class TherapistController extends Controller
             $admins->name = $request->name;
             $admins->staff_id = $staffId;
             $admins->phone = $request->phone_or_mobile_number;
-            $admins->username = Str::slug($request->name);
             $admins->email = $request->email;
             $admins->password = Hash::make(12345678);
             $admins->save();
@@ -109,7 +108,7 @@ class TherapistController extends Controller
             $staff->fill($input)->save();
 
 
-            Admin::where('therapist_id', $id)
+            Admin::where('staff_id', $id)
        ->update([
            'name' => $request->name,
            'phone' => $request->phone_or_mobile_number,
