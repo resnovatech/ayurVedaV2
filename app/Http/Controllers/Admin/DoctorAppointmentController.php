@@ -100,7 +100,7 @@ class DoctorAppointmentController extends Controller
             abort(403, 'Sorry !! You are Unauthorized to Add !');
         }
 
-        // dd($request->all());
+        //dd($request->all());
 
         $request->validate([
             'patient_id' => 'required',
@@ -164,6 +164,11 @@ class DoctorAppointmentController extends Controller
          return redirect()->route('doctorAppointments.index')->with('success','Updated successfully!');
 
 
+    }
+
+
+    public function show($id){
+        
     }
 
 

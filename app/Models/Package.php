@@ -10,11 +10,8 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','powder_id', 'amount',
+        'name','powder_id', 'amount','powder_amount',
     ];
 
-    public function powders()
-    {
-        return $this->hasMany('App\Models\Powder');
-    }
+
 }

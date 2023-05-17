@@ -13,13 +13,5 @@ class Powder extends Model
         'medicine_equipment_id','name','amount',
     ];
 
-    public function medicine_equipments()
-    {
-        return $this->hasMany('App\Models\MedicineEquipment');
-    }
-
-    public function pakage()
-    {
-        return $this->belongsTo('App\Models\Package');
-    }
+   
 }

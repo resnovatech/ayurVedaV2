@@ -56,7 +56,7 @@ Create  Patient | {{ $ins_name }}
                                     <div id="forOldPatient">
                                         <label for="" class="form-label">Patient ID</label>
                                         <select class="form-control" name="patient_id_old" id="patient_id_old">
-                                            <option >--Please Select-----</option>
+                                            <option value="">--Please Select-----</option>
                                             @foreach($patientList as $allPatientList)
 <option value="{{ $allPatientList->patient_id }}" data-name="{{ $allPatientList->name }}"
     data-age="{{ $allPatientList->age }}"
@@ -138,7 +138,7 @@ Create  Patient | {{ $ins_name }}
                                     <div>
                                         <label for="" class="form-label">Recommended doctor name  </label>
                                         <select class="js-example-basic-single form-control" name="doctor_id" required>
-                                            <option>--Please Select --</option>
+                                            <option value="">--Please Select --</option>
                                             @foreach($doctorList as $allDoctorList)
                                             <option value="{{ $allDoctorList->id }}">{{ $allDoctorList->name }}</option>
                                             @endforeach

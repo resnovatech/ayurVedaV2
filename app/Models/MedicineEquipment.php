@@ -14,8 +14,5 @@ class MedicineEquipment extends Model
     ];
 
 
-    public function powder()
-    {
-        return $this->belongsTo('App\Models\Powder');
-    }
+    
 }

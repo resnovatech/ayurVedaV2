@@ -76,14 +76,14 @@ Walk By Patient List | {{ $ins_name }}
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    @if (Auth::guard('admin')->user()->can('WalkByPatientView'))
+                                                    @if (Auth::guard('admin')->user()->can('walkByPatientView'))
                                                     <li><a href="{{ route('transferToPatientList',$allWalkByPatientList->id) }}" class="dropdown-item"><i class="ri-file-fill align-bottom me-2 text-muted"></i>Transfer</a></li>
                                                     <li><a href="{{ route('walkByPatients.show',$allWalkByPatientList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                                     @endif
-                                                    @if (Auth::guard('admin')->user()->can('WalkByPatientUpdate'))
+                                                    @if (Auth::guard('admin')->user()->can('walkByPatientUpdate'))
                                                     <li><a class="dropdown-item edit-item-btn" href="{{ route('walkByPatients.edit',$allWalkByPatientList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
                                                     @endif
-                                                    @if (Auth::guard('admin')->user()->can('WalkByPatientDelete'))
+                                                    @if (Auth::guard('admin')->user()->can('walkByPatientDelete'))
                                                     <a class="dropdown-item remove-item-btn" onclick="deleteTag({{ $allWalkByPatientList->id}})" >
                                                         <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
                                                     </a>
@@ -101,7 +101,7 @@ Walk By Patient List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                          
+
 
 
                         </div>

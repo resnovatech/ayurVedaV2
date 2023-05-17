@@ -15,8 +15,8 @@ class RolePermissionSeeder extends Seeder
          // Create Roles
         $roleSuperAdmin = Role::create(['name' => 'superadmin']);
         $roleAdmin = Role::create(['name' => 'admin']);
-        $roleEditor = Role::create(['name' => 'editor']);
-        $roleUser = Role::create(['name' => 'user']);
+        $roleEditor = Role::create(['name' => 'therapist']);
+        $roleUser = Role::create(['name' => 'staff']);
 
 
         // Permission List as array
@@ -243,6 +243,33 @@ class RolePermissionSeeder extends Seeder
                     'doctorAppointmentView',
                     'doctorAppointmentDelete',
                     'doctorAppointmentUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'package',
+                'permissions' => [
+                    'packageAdd',
+                    'packageView',
+                    'packageDelete',
+                    'packageUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'powder',
+                'permissions' => [
+                    'powderAdd',
+                    'powderView',
+                    'powderDelete',
+                    'powderUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'medicineEquipment',
+                'permissions' => [
+                    'medicineEquipmentAdd',
+                    'medicineEquipmentView',
+                    'medicineEquipmentDelete',
+                    'medicineEquipmentUpdate',
                 ]
             ],
         ];

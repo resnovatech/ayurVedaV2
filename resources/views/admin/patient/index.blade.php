@@ -76,13 +76,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    @if (Auth::guard('admin')->user()->can('PatientView'))
+                                                    @if (Auth::guard('admin')->user()->can('patientView'))
                                                     <li><a href="{{ route('patients.show',$allPatientList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                                     @endif
-                                                    @if (Auth::guard('admin')->user()->can('PatientUpdate'))
+                                                    @if (Auth::guard('admin')->user()->can('patientUpdate'))
                                                     <li><a class="dropdown-item edit-item-btn" href="{{ route('patients.edit',$allPatientList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
                                                     @endif
-                                                    @if (Auth::guard('admin')->user()->can('PatientDelete'))
+                                                    @if (Auth::guard('admin')->user()->can('patientDelete'))
                                                     <a class="dropdown-item remove-item-btn" onclick="deleteTag({{ $allPatientList->id}})" >
                                                         <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
                                                     </a>
@@ -100,7 +100,7 @@
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>

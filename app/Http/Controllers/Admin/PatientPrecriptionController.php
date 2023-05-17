@@ -24,4 +24,8 @@ class PatientPrecriptionController extends Controller
         $getHistoryData = PatientHistory::latest()->get();
         return view('admin.prescriptionList.index',compact('getHistoryData'));
     }
+
+     public function show($id){
+
+    }
 }

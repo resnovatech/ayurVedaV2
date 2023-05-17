@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('powders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('medicine_equipment_id')->unsigned();
-            $table->foreign('medicine_equipment_id')->references('id')->on('medicine_equipment');
+            $table->string('medicine_equipment_id');
             $table->string('amount');
             $table->timestamps();
         });

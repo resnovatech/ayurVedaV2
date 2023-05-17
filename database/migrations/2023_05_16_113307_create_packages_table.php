@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('powder_id')->unsigned();
-            $table->foreign('powder_id')->references('id')->on('powders');
+            $table->string('powder_id');
+            $table->string('powder_amount');
             $table->string('amount');
             $table->timestamps();
         });

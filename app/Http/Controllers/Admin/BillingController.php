@@ -105,8 +105,8 @@ foreach($patientTherapyList as $allPatientTherapyList){
                                       $getNameFromPatient = DB::table('patients')
                                       ->where('patient_id',$patientHistory->patient_id)->value('name');
 
-                                      $getAllPaymentHistoryAmount = Payment::where('bill_id_new',$patientHistory->id)->sum('payment_amount');
-                                     $getAllPaymentHistory = Payment::where('bill_id_new',$patientHistory->id)->latest()->get();
+                                      $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
+                                     $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
 
         $file_Name_Custome = 'Invoice_main';
@@ -206,8 +206,8 @@ foreach($patientTherapyList as $allPatientTherapyList){
                                       $getNameFromPatient = DB::table('patients')
                                       ->where('patient_id',$patientHistory->patient_id)->value('name');
 
-                                      $getAllPaymentHistoryAmount = Payment::where('bill_id_new',$patientHistory->id)->sum('payment_amount');
-                                     $getAllPaymentHistory = Payment::where('bill_id_new',$patientHistory->id)->latest()->get();
+                                      $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
+                                     $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
 
         $file_Name_Custome = 'TherapyList';
@@ -308,8 +308,8 @@ foreach($patientTherapyList as $allPatientTherapyList){
                                       $getNameFromPatient = DB::table('patients')
                                       ->where('patient_id',$patientHistory->patient_id)->value('name');
 
-                                      $getAllPaymentHistoryAmount = Payment::where('bill_id_new',$patientHistory->id)->sum('payment_amount');
-                                     $getAllPaymentHistory = Payment::where('bill_id_new',$patientHistory->id)->latest()->get();
+                                      $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
+                                     $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
 
         $file_Name_Custome = 'MedicineList';
@@ -409,8 +409,8 @@ foreach($patientTherapyList as $allPatientTherapyList){
                                       $getNameFromPatient = DB::table('patients')
                                       ->where('patient_id',$patientHistory->patient_id)->value('name');
 
-                                      $getAllPaymentHistoryAmount = Payment::where('bill_id_new',$patientHistory->id)->sum('payment_amount');
-                                     $getAllPaymentHistory = Payment::where('bill_id_new',$patientHistory->id)->latest()->get();
+                                      $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
+                                     $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
         return view('admin.bill.show',compact('getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientMedicalSupplement'));
 
@@ -422,7 +422,7 @@ foreach($patientTherapyList as $allPatientTherapyList){
     //dd($request->all());
 
     $new_payment = new Payment();
-    $new_payment->bill_id_new = $request->id;
+    $new_payment->bill_id = $request->id;
     $new_payment->payment_type = $request->payment_type;
     $new_payment->payment_amount = $request->amount;
     $new_payment->save();

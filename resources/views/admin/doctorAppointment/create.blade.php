@@ -47,7 +47,7 @@ Doctor Appointment | {{ $ins_name }}
                                         <select class="js-example-basic-single form-control" name="patient_id" id="patient_id" required>
                                         <option >--Please Select-----</option>
                                         @foreach($walkByPatientList as $allPatientList)
-                                        <option value="{{ $allPatientList->patient_id }}" data-name="{{ $allPatientList->name }}" data-ptype="Walk By Patient"
+                                        <option value="{{ $allPatientList->patient_reg_id }}" data-name="{{ $allPatientList->name }}" data-ptype="Walk By Patient"
                                         data-age="{{ $allPatientList->age }}"
                                         data-gender="{{ $allPatientList->gender }}"
                                         data-address="{{ $allPatientList->address }}"

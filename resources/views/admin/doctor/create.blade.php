@@ -74,7 +74,7 @@ Create Doctor  | {{ $ins_name }}
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="" class="form-label">Phone/Mobile Number</label>
-                                        <input type="text" class="form-control" id="" name="phone_or_mobile_number" required
+                                        <input type="text" class="form-control" id="" data-parsley-length="[11, 11]" name="phone_or_mobile_number" required
                                                placeholder="Phone Number">
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@ Create Doctor  | {{ $ins_name }}
                                     <div>
                                         <label for="" class="form-label">National ID Number</label>
                                         <input type="text" class="form-control" id=""
-                                               placeholder="National ID Number" name="nid_number" required>
+                                               placeholder="National ID Number" data-parsley-length="[10, 17]" name="nid_number" required>
                                     </div>
                                 </div>
                                 <div class="col-xxl-6 col-md-6">

@@ -56,7 +56,7 @@ class DoctorController extends Controller
             'address' => 'required',
             'gender' => 'required',
             'email_address' => 'required',
-            'phone_or_mobile_number' => 'required',
+            'phone_or_mobile_number' => 'required|min:11',
             'nid_number' => 'required',
             'nationality' => 'required',
             'years_of_experience' => 'required',
@@ -197,7 +197,7 @@ return redirect()->route('doctors.index')->with('success','Updated successfully!
            }
 
 
-           public function view($id){
+           public function show($id){
 
 
             if (is_null($this->user) || !$this->user->can('doctorView')) {

@@ -28,6 +28,9 @@ use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\TherapyAppointmentController;
 use App\Http\Controllers\Admin\WalkByPatientTherapyController;
 use App\Http\Controllers\Admin\DoctorAppointmentController;
+use App\Http\Controllers\Admin\MedicineEquipmentController;
+use App\Http\Controllers\Admin\PowderController;
+use App\Http\Controllers\Admin\PackageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -165,6 +168,15 @@ Route::group(['prefix' => 'admin'], function () {
   Route::resource('healthSupplements', HealthSupplementController::class);
   Route::resource('therapyLists', TherapyListController::class);
   Route::resource('therapyIngredients', TherapyIngredientController::class);
+
+
+  Route::resource('medicineEquipment', MedicineEquipmentController::class);
+  Route::resource('powderList', PowderController::class);
+  Route::resource('packageList', PackageController::class);
+
+
+
+
 
   //staff route add
 Route::resource('staff',StaffController::class);
