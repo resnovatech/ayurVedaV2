@@ -135,7 +135,7 @@ Paid
                                     <!--end col-->
                                     <div class="col-lg-4 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Total Amount</p>
-                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{ $totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount }}</span></h5>
+                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{$totalPackageAmount +  $totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount }}</span></h5>
                                     </div>
                                     <!--end col-->
                                 </div>
@@ -226,6 +226,26 @@ $getPatientHerb = DB::table('medicines')->where('name',$allPatientHerbList->name
                                         </tr>
                                         @endforeach
 
+
+                                        @foreach($patientPackage as $allPatientHerbList)
+                                        <?php
+$getPatientPackage = DB::table('packages')->where('name',$allPatientHerbList->name)->value('amount');
+                                        ?>
+                                        <tr>
+
+                                            <td class="text-start">
+                                                <span class="fw-medium">{{ $allPatientHerbList->name }}</span>
+
+                                            </td>
+                                               <td>Package</td>
+                                            <td>৳ {{ $getPatientPackage }}</td>
+                                            <td>{{ $allPatientHerbList->how_many_dose }}</td>
+                                            <td class="text-end">৳ {{ $allPatientHerbList->how_many_dose*$getPatientPackage }}</td>
+                                        </tr>
+                                        @endforeach
+
+
+
                                         @foreach($patientMedicalSupplement as $allPatientMedicalSupplement)
 
                                         <?php
@@ -252,7 +272,7 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
                                         <tbody>
                                         <tr>
                                             <td>Total</td>
-                                            <td class="text-end">৳ {{ $totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount }}</td>
+                                            <td class="text-end">৳ {{ $totalPackageAmount + $totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount }}</td>
                                         </tr>
 
                                         </tbody>

@@ -292,6 +292,48 @@ $usr = Auth::guard('admin')->user();
                     </div>
                 </li>
 
+
+                <li class="menu-title"><span data-key="t-menu">Form Section</span></li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{Route::is('agreementFormOne') ||  Route::is('agreementFormTwo') || Route::is('agreementFormThree')  ? 'active' : '' }}" href="#prescriptionListTwoo" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarTables">
+                        <i class="ri-landscape-line"></i> <span data-key="t-tables">Agreement Form </span>
+                    </a>
+                    <div class="collapse menu-dropdown {{Route::is('agreementFormOne') ||  Route::is('agreementFormTwo') || Route::is('agreementFormThree')  ? 'show' : '' }}" id="prescriptionListTwoo">
+                        <ul class="nav nav-sm flex-column">
+                            @if ( $usr->can('medicineEquipmentAdd')  || $usr->can('medicineEquipmentView') ||  $usr->can('medicineEquipmentDelete') ||  $usr->can('medicineEquipmentUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('agreementFormOne') }}" class="nav-link {{ Route::is('agreementFormOne') ? 'active' : '' }}" data-key="t-basic-tables">Agreement Form One</a>
+                            </li>
+                            @endif
+                            @if ( $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('agreementFormTwo') }}" class="nav-link {{ Route::is('agreementFormTwo') ? 'active' : '' }}" data-key="t-grid-js">Agreement Form Two</a>
+                            </li>
+                            @endif
+                            @if ( $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('agreementFormThree') }}" class="nav-link {{ Route::is('agreementFormThree') ? 'active' : '' }}" data-key="t-grid-js">Agreement Form Three</a>
+                            </li>
+                            @endif
+
+
+                        </ul>
+                    </div>
+                </li>
+
+
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('treatMentChart.index') ? 'active' : '' }}" href="{{ route('treatMentChart.index') }}">
+                        <i class="ri-align-justify"></i> <span data-key="t-widgets">TreatMent Chart</span>
+                    </a>
+                </li>
+
                 <li class="menu-title"><span data-key="t-menu">HR Section</span></li>
 
                 <li class="nav-item">

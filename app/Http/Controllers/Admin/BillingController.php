@@ -17,6 +17,8 @@ use App\Models\PatientTherapy;
 use App\Models\PatientHerb;
 use App\Models\PatientMedicalSupplement;
 use DB;
+use App\Models\Package;
+use App\Models\PatientPackage;
 use App\Models\Therapist;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
@@ -376,6 +378,24 @@ foreach($patientTherapyList as $allPatientTherapyList){
 
         }
 
+
+        $patientPackage = PatientPackage::where('patient_history_id',$id)->latest()->get();
+
+
+        $totalPackageAmount = 0 ;
+        ///new code
+        foreach($patientPackage as $allPatientPackageList){
+
+
+            $getPatientPackage = Package::where('name',$allPatientPackageList->name)->value('amount');
+
+
+
+            $totalPackageAmount = $totalPackageAmount + ($getPatientPackage*$allPatientPackageList->how_many_dose);
+
+
+        }
+
         //dd($totalMedicineAmount);
         ///end new code
 
@@ -412,7 +432,7 @@ foreach($patientTherapyList as $allPatientTherapyList){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.bill.show',compact('getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientMedicalSupplement'));
+        return view('admin.bill.show',compact('totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
     }
 

@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\DoctorAppointmentController;
 use App\Http\Controllers\Admin\MedicineEquipmentController;
 use App\Http\Controllers\Admin\PowderController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\TreatMentChartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,6 +78,20 @@ Route::group(['prefix' => 'admin'], function () {
   });
 
   //therapy_apoinment_controller
+
+
+  Route::resource('treatMentChart', TreatMentChartController::class);
+
+  Route::controller(TreatMentChartController::class)->group(function () {
+
+    Route::get('/getTherapyInformation', 'getTherapyInformation')->name('getTherapyInformation');
+
+    Route::get('/agreementFormOne', 'agreementFormOne')->name('agreementFormOne');
+    Route::get('/agreementFormTwo', 'agreementFormTwo')->name('agreementFormTwo');
+    Route::get('/agreementFormThree', 'agreementFormThree')->name('agreementFormThree');
+});
+
+
 
 
     //walkByPatientTherapyController

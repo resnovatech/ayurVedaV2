@@ -40,7 +40,7 @@ Diet Chart List | {{ $ins_name }}
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
                                     <div>
-                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Diet Chart</button>
+                                        <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('dietCharts.create') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Diet Chart</button>
 
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@ Diet Chart List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                        
+
 
 
                         </div>

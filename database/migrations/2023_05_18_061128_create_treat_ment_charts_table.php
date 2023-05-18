@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diet_charts', function (Blueprint $table) {
+        Schema::create('treat_ment_charts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('file');
             $table->string('patient_id');
-            $table->text('early_morning');
-            $table->text('brisk_walk');
-            $table->text('breakfast');
-            $table->text('lunch');
-            $table->text('evening');
-            $table->text('dinner');
+            $table->string('therapy_id');
+            $table->string('day');
+            $table->string('time_of_the_day');
+            $table->string('patient_type');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diet_charts');
+        Schema::dropIfExists('treat_ment_charts');
     }
 };

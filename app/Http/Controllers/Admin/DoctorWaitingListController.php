@@ -13,6 +13,8 @@ use App\Models\DoctorAppointment;
 use App\Models\PatientHistory;
 use App\Models\TherapyList;
 use App\Models\Medicine;
+use App\Models\Package;
+use App\Models\PatientPackage;
 use App\Models\HealthSupplement;
 use App\Models\PatientTherapy;
 use App\Models\PatientHerb;
@@ -106,7 +108,8 @@ class DoctorWaitingListController extends Controller
                  $therapyLists = TherapyList::latest()->get();
                  $medicineLists = Medicine::latest()->get();
                  $healthSupplements = HealthSupplement::latest()->get();
-            return view('admin.doctorWaitingListView.addPatientPrescriptionInfo',compact('healthSupplements','medicineLists','doctor_appoinment','therapyLists'));
+                 $allPackageList = Package::latest()->get();
+            return view('admin.doctorWaitingListView.addPatientPrescriptionInfo',compact('allPackageList','healthSupplements','medicineLists','doctor_appoinment','therapyLists'));
 
            }
 
@@ -123,6 +126,10 @@ class DoctorWaitingListController extends Controller
                 'part_of_the_day.*' => 'required',
                 'how_many_dose.*' => 'required',
                 'main_time.*' => 'required',
+                'package_name.*' => 'required',
+                'package_part_of_the_day.*' => 'required',
+                'package_how_many_dose.*' => 'required',
+                'package_main_time.*' => 'required',
                 'supplement_name.*' => 'required',
                 'quantity.*' => 'required',
 
@@ -137,6 +144,7 @@ class DoctorWaitingListController extends Controller
 
             $therapyName = $inputAllData['name'];
             $herbName = $inputAllData['herb_name'];
+            $packageName = $inputAllData['package_name'];
             $supplementName = $inputAllData['supplement_name'];
 
 
@@ -200,6 +208,21 @@ class DoctorWaitingListController extends Controller
                 $herbName->patient_history_id   = $finalGetData->id;
                 $herbName->patient_id   = $doctorWaitingList->patient_id;
                 $herbName->save();
+
+               }
+
+
+               foreach($packageName as $key => $packageName){
+                $packageName = new PatientPackage();
+                $packageName->name=$inputAllData['package_name'][$key];
+                $packageName->part_of_the_day=$inputAllData['package_part_of_the_day'][$key];
+                $packageName->how_many_dose=$inputAllData['package_how_many_dose'][$key];
+                $packageName->main_time=$inputAllData['package_main_time'][$key];
+                $packageName->doctor_id    = $doctorWaitingList->doctor_id;
+                $packageName->doctor_appointment_id    = $request->appoinment_id;
+                $packageName->patient_history_id   = $finalGetData->id;
+                $packageName->patient_id   = $doctorWaitingList->patient_id;
+                $packageName->save();
 
                }
 

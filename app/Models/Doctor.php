@@ -44,6 +44,12 @@ class Doctor extends Model
     }
 
 
+    public function patientPackage()
+    {
+        return $this->hasMany('App\Models\PatientPackage');
+    }
+
+
     public function bills()
     {
         return $this->hasMany('App\Models\Bill');

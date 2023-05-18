@@ -264,6 +264,15 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
+                'group_name' => 'treatMentChart',
+                'permissions' => [
+                    'treatMentChartAdd',
+                    'treatMentChartView',
+                    'treatMentChartDelete',
+                    'treatMentChartUpdate',
+                ]
+            ],
+            [
                 'group_name' => 'medicineEquipment',
                 'permissions' => [
                     'medicineEquipmentAdd',

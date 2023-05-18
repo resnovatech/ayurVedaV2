@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         /*
@@ -184,6 +185,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

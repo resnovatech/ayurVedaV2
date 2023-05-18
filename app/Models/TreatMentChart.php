@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DietChart extends Model
+class TreatMentChart extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'file', 'patient_id','early_morning','brisk_walk','breakfast','lunch','evening','dinner'
+        'patient_id','therapy_id','day','time_of_the_day','patient_type'
     ];
 }

@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\DietChart;
+use App\Models\Doctor;
+use App\Models\Patient;
+use App\Models\WalkByPatient;
+use App\Models\DoctorAppointment;
+use App\Models\TreatMentChart;
+use App\Models\PatientTherapy;
 use Illuminate\Support\Facades\Auth;
 class DietChartController extends Controller
 {
@@ -34,6 +40,18 @@ class DietChartController extends Controller
 
                return view('admin.dietChart.index',compact('dietChartList'));
            }
+
+
+           public function create(){
+            if (is_null($this->user) || !$this->user->can('dietChartsAdd')) {
+                       abort(403, 'Sorry !! You are Unauthorized to Add !');
+                   }
+                   $walkByPatientList = WalkByPatient::latest()->get();
+                   $patientList = Patient::latest()->get();
+                   $doctorList = Doctor::latest()->get();
+           //dd(1);
+                   return view('admin.dietChart.create',compact('doctorList','walkByPatientList','patientList'));
+               }
 
 
            public function store(Request $request){

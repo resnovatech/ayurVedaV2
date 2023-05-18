@@ -37,6 +37,12 @@ class DoctorAppointment extends Model
         return $this->hasMany('App\Models\PatientHerb');
     }
 
+
+    public function patientPackage()
+    {
+        return $this->hasMany('App\Models\PatientPackage');
+    }
+
     public function patientTherapies()
     {
         return $this->hasMany('App\Models\PatientTherapy');
