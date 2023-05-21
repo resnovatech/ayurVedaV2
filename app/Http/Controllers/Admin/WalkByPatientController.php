@@ -178,26 +178,26 @@ return redirect()->route('walkByPatients.index')->with('success','Added successf
         $walkByPatientList = WalkByPatient::find($id);
 
          // Create New User
-         $patient = new Patient();
-         $patient->admin_id = Auth::guard('admin')->user()->id;
-         $patient->name = $walkByPatientList->name;
-         $patient->patient_id = date('dmy').time();
-         $patient->refer_from = $walkByPatientList->refer_from;
-         $patient->age = $walkByPatientList->age;
-         $patient->gender = $walkByPatientList->gender;
-         $patient->address = $walkByPatientList->address;
-         $patient->email_address = $walkByPatientList->email_address;
-         $patient->phone_or_mobile_number = $walkByPatientList->phone_or_mobile_number;
-         $patient->nid_number = $walkByPatientList->nid_number;
-         $patient->nationality = $walkByPatientList->nationality;
-         $patient->how_did_you_come_to_know_about_this_center = $walkByPatientList->how_did_you_come_to_know_about_this_center;
-         $patient->do_you_have_earlier_experience_of_ayurveda_please_give_details = $walkByPatientList->do_you_have_earlier_experience_of_ayurveda_please_give_details;
-         $patient->do_you_have_symptoms_in_past_one_weak = $walkByPatientList->do_you_have_symptoms_in_past_one_weak;
-         $patient->covid_test_result = $walkByPatientList->covid_test_result;
-         $patient->image = $walkByPatientList->image;
-         $patient->save();
+        //  $patient = new Patient();
+        //  $patient->admin_id = Auth::guard('admin')->user()->id;
+        //  $patient->name = $walkByPatientList->name;
+        //  $patient->patient_id = date('dmy').time();
+        //  $patient->refer_from = $walkByPatientList->refer_from;
+        //  $patient->age = $walkByPatientList->age;
+        //  $patient->gender = $walkByPatientList->gender;
+        //  $patient->address = $walkByPatientList->address;
+        //  $patient->email_address = $walkByPatientList->email_address;
+        //  $patient->phone_or_mobile_number = $walkByPatientList->phone_or_mobile_number;
+        //  $patient->nid_number = $walkByPatientList->nid_number;
+        //  $patient->nationality = $walkByPatientList->nationality;
+        //  $patient->how_did_you_come_to_know_about_this_center = $walkByPatientList->how_did_you_come_to_know_about_this_center;
+        //  $patient->do_you_have_earlier_experience_of_ayurveda_please_give_details = $walkByPatientList->do_you_have_earlier_experience_of_ayurveda_please_give_details;
+        //  $patient->do_you_have_symptoms_in_past_one_weak = $walkByPatientList->do_you_have_symptoms_in_past_one_weak;
+        //  $patient->covid_test_result = $walkByPatientList->covid_test_result;
+        //  $patient->image = $walkByPatientList->image;
+        //  $patient->save();
 
-         return redirect()->route('walkByPatients.index')->with('success','Transfared successfully!');
+         return view('admin.walkByPatient.editFromForPatient',compact('walkByPatientList'));
     }
 
 

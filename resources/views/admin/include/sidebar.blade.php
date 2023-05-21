@@ -224,15 +224,15 @@ $usr = Auth::guard('admin')->user();
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{Route::is('dietCharts.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') ? 'active' : '' }}" href="#prescriptionList" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') ? 'active' : '' }}" href="#prescriptionList" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
                         <i class="ri-landscape-line"></i> <span data-key="t-tables">Prescription Equipment </span>
                     </a>
-                    <div class="collapse menu-dropdown {{Route::is('dietCharts.index') ||  Route::is('medicineLists.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') ? 'show' : '' }}" id="prescriptionList">
+                    <div class="collapse menu-dropdown {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') ||  Route::is('medicineLists.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') ? 'show' : '' }}" id="prescriptionList">
                         <ul class="nav nav-sm flex-column">
                             @if ( $usr->can('dietChartsAdd')  || $usr->can('dietChartsView') ||  $usr->can('dietChartsDelete') ||  $usr->can('dietChartsUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('dietCharts.index') }}" class="nav-link {{ Route::is('dietCharts.index') ? 'active' : '' }}" data-key="t-basic-tables">Diet Chart</a>
+                                <a href="{{ route('dietCharts.index') }}" class="nav-link {{ Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') ? 'active' : '' }}" data-key="t-basic-tables">Diet Chart</a>
                             </li>
                             @endif
 

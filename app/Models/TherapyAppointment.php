@@ -10,7 +10,7 @@ class TherapyAppointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'admin_id', 'patient_id'
+        'admin_id', 'patient_id','patient_type'
     ];
 
     public function admin()

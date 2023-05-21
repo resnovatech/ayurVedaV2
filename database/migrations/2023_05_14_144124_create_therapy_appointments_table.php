@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('admin_id')->unsigned();
             $table->foreign('admin_id')->references('id')->on('admins');
             $table->string('patient_id');
+            $table->string('patient_type')->nullable();
             $table->timestamps();
         });
     }

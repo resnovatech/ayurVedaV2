@@ -142,6 +142,99 @@ return redirect()->route('patients.index')->with('success','Added successfully!'
     }
 
 
+    public function saveTransferToPatientList(Request $request){
+
+        if (is_null($this->user) || !$this->user->can('patientAdd')) {
+            abort(403, 'Sorry !! You are Unauthorized to Add !');
+        }
+
+        $request->validate([
+
+            'name' => 'required',
+            'refer_from' => 'required',
+            'age' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'email_address' => 'required',
+            'phone_or_mobile_number' => 'required',
+            'nid_number' => 'required',
+            'nationality' => 'required',
+            'how_did_you_come_to_know_about_this_center' => 'required',
+            'do_you_have_earlier_experience_of_ayurveda_please_give_details' => 'required',
+            'do_you_have_symptoms_in_past_one_weak' => 'required',
+            'covid_test_result' => 'required',
+            'disease_name.*' => 'required',
+            'detail.*' => 'required',
+        ]);
+
+
+
+
+         // Create New User
+         $patient = new Patient();
+         $patient->admin_id = Auth::guard('admin')->user()->id;
+         $patient->name = $request->name;
+         $patient->patient_id = date('dmy').time();
+         $patient->refer_from = $request->refer_from;
+         $patient->age = $request->age;
+         $patient->gender = $request->gender;
+         $patient->address = $request->address;
+         $patient->email_address = $request->email_address;
+         $patient->phone_or_mobile_number = $request->phone_or_mobile_number;
+         $patient->nid_number = $request->nid_number;
+         $patient->nationality = $request->nationality;
+         $patient->how_did_you_come_to_know_about_this_center = $request->how_did_you_come_to_know_about_this_center;
+         $patient->do_you_have_earlier_experience_of_ayurveda_please_give_details = $request->do_you_have_earlier_experience_of_ayurveda_please_give_details;
+         $patient->do_you_have_symptoms_in_past_one_weak = $request->do_you_have_symptoms_in_past_one_weak;
+         $patient->covid_test_result = $request->covid_test_result;
+         if ($request->hasfile('image')) {
+             $file = $request->file('image');
+             $extension = $file->getClientOriginalName();
+             $filename = $extension;
+             $file->move('public/uploads/', $filename);
+             $patient->image =  'public/uploads/'.$filename;
+
+         }else{
+            $patient->image = $request->imageText;
+
+         }
+
+
+         $patient->save();
+
+         $patientId = $patient->id;
+
+         $inputAllData = $request->all();
+
+         $patientFileName = $inputAllData['file_name'];
+
+
+
+         if (array_key_exists("file_name", $inputAllData)){
+
+            foreach($patientFileName as $key => $patientFileName){
+             $patientFileName = new PatientFile();
+             $patientFileName->name=$inputAllData['file_name'][$key];
+
+
+             $file = $inputAllData['file'][$key];
+             $extension = $file->getClientOriginalName();
+             $filename = $extension;
+             $file->move('public/uploads/', $filename);
+             $patientFileName->file =  'public/uploads/'.$filename;
+             $patientFileName->patient_id   = $patientId;
+             $patientFileName->save();
+
+            }
+            }
+
+
+return redirect()->route('patients.index')->with('success','Added successfully!');
+
+
+    }
+
+
     public function edit($id)
     {
 

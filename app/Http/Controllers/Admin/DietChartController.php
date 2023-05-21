@@ -54,6 +54,26 @@ class DietChartController extends Controller
                }
 
 
+               public function edit($id){
+
+
+                if (is_null($this->user) || !$this->user->can('dietChartsUpdate')) {
+                    abort(403, 'Sorry !! You are Unauthorized to Add !');
+                }
+
+                $dietChartList = DietChart::find($id);
+
+
+                $walkByPatientList = WalkByPatient::latest()->get();
+                $patientList = Patient::latest()->get();
+                $doctorList = Doctor::latest()->get();
+        //dd(1);
+                return view('admin.dietChart.edit',compact('dietChartList','doctorList','walkByPatientList','patientList'));
+
+
+               }
+
+
            public function store(Request $request){
 
             if (is_null($this->user) || !$this->user->can('dietChartsAdd')) {
@@ -63,6 +83,13 @@ class DietChartController extends Controller
             $request->validate([
                 'name' => 'required',
                 'file' => 'required',
+                'patient_id' => 'required',
+                'early_morning' => 'required',
+                'brisk_walk' => 'required',
+                'breakfast' => 'required',
+                'lunch' => 'required',
+                'evening' => 'required',
+                'dinner' => 'required',
               ]);
 
 
@@ -70,8 +97,13 @@ class DietChartController extends Controller
              $dietChartList = new DietChart();
 
              $dietChartList->name = $request->name;
-
-
+             $dietChartList->patient_id = $request->patient_id;
+             $dietChartList->early_morning = $request->early_morning;
+             $dietChartList->brisk_walk = $request->brisk_walk;
+             $dietChartList->breakfast = $request->breakfast;
+             $dietChartList->lunch = $request->lunch;
+             $dietChartList->evening = $request->evening;
+             $dietChartList->dinner = $request->dinner;
              if ($request->hasfile('file')) {
                  $file = $request->file('file');
                  $extension = $file->getClientOriginalName();
@@ -110,7 +142,13 @@ class DietChartController extends Controller
              $dietChartList = DietChart::find($id);
 
              $dietChartList->name = $request->name;
-
+             $dietChartList->patient_id = $request->patient_id;
+             $dietChartList->early_morning = $request->early_morning;
+             $dietChartList->brisk_walk = $request->brisk_walk;
+             $dietChartList->breakfast = $request->breakfast;
+             $dietChartList->lunch = $request->lunch;
+             $dietChartList->evening = $request->evening;
+             $dietChartList->dinner = $request->dinner;
 
              if ($request->hasfile('file')) {
                  $file = $request->file('file');

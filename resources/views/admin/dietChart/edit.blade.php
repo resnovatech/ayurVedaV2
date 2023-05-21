@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-Create Diet Chart  | {{ $ins_name }}
+Edit Diet Chart  | {{ $ins_name }}
 @endsection
 
 
@@ -18,7 +18,7 @@ Create Diet Chart  | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Diet Chart Information</h4>
+                    <h4 class="mb-sm-0">Edit Diet Chart Information</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -38,72 +38,72 @@ Create Diet Chart  | {{ $ins_name }}
 
 
                     <div class="card-body">
-                        <form action="{{ route('dietCharts.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                        <form action="{{ route('dietCharts.update',$dietChartList->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                             @csrf
+                            @method('PUT')
                         <div class="row">
                             <div class="col-lg-12">
                             <label for="" class="form-label">Patient Id</label>
                             <select class="js-example-basic-single form-control" name="patient_id" id="patient_id" required>
                                 <option >--Please Select-----</option>
                                 @foreach($walkByPatientList as $allPatientList)
-                                <option value="{{ $allPatientList->patient_reg_id }}"
-                                >{{ $allPatientList->patient_reg_id }}</option>
-                                                                     @endforeach
+        <option value="{{ $allPatientList->patient_reg_id }}" {{ $dietChartList->patient_id == $allPatientList->patient_reg_id ? 'selected':'' }}>{{ $allPatientList->patient_reg_id }}</option>
+                                 @endforeach
 
                                 @foreach($patientList as $allPatientList)
-<option value="{{ $allPatientList->patient_id }}"
->{{ $allPatientList->patient_id }}</option>
+<option value="{{ $allPatientList->patient_id }}"  {{ $dietChartList->patient_id == $allPatientList->patient_id ? 'selected':'' }}>{{ $allPatientList->patient_id }}</option>
                              @endforeach
                             </select>
                             </div>
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Name</label>
-                                <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
+                                <input type="text" name ="name" class="form-control" value="{{ $dietChartList->name }}" placeholder="Name" required>
                             </div>
                             <div class="col-12">
                                 <label for="" class="form-label">Diet chart file</label>
-                                <input type="file" name="file" class="form-control" id="" required>
+                                <input type="file" name="file" class="form-control" id="" >
+                                <img src="{{ asset('/') }}{{ $dietChartList->file }}" height="50px;" />
                             </div>
 
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Early Morning</label>
-                                <input type="text" name ="early_morning" class="form-control" id="" placeholder="Early Morning" required>
+                                <input type="text" name ="early_morning" class="form-control" value="{{ $dietChartList->early_morning }}" placeholder="Early Morning" required>
                             </div>
 
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Brisk Walk</label>
-                                <input type="text" name ="brisk_walk" class="form-control" id="" placeholder="Brisk Walk" required>
+                                <input type="text" name ="brisk_walk" class="form-control" value="{{ $dietChartList->brisk_walk }}" placeholder="Brisk Walk" required>
                             </div>
 
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">BreakFast</label>
-                                <input type="text" name ="breakfast" class="form-control" id="" placeholder="BreakFast" required>
+                                <input type="text" name ="breakfast" class="form-control" value="{{ $dietChartList->breakfast }}" placeholder="BreakFast" required>
                             </div>
 
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Lunch</label>
-                                <input type="text" name ="lunch" class="form-control" id="" placeholder="Lunch" required>
+                                <input type="text" name ="lunch" class="form-control" value="{{ $dietChartList->lunch }}" placeholder="Lunch" required>
                             </div>
 
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Evening</label>
-                                <input type="text" name ="evening" class="form-control" id="" placeholder="Evening" required>
+                                <input type="text" name ="evening" class="form-control" value="{{ $dietChartList->evening }}" placeholder="Evening" required>
                             </div>
 
                             <div class="col-12 mb-2">
                                 <label for="" class="form-label">Dinner(8.00pm - 9.00pm)</label>
-                                <input type="text" name ="dinner" class="form-control" id="" placeholder="Dinner(8.00pm - 9.00pm)" required>
+                                <input type="text" name ="dinner" class="form-control" value="{{ $dietChartList->dinner }}" placeholder="Dinner(8.00pm - 9.00pm)" required>
                             </div>
 
 
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-3">Update</button>
                     </form>
 
                     </div>

@@ -14,6 +14,7 @@ use App\Models\TherapyList;
 use App\Models\Medicine;
 use App\Models\HealthSupplement;
 use App\Models\PatientTherapy;
+use App\Models\PatientAdmit;
 use App\Models\PatientHerb;
 use App\Models\PatientMedicalSupplement;
 use DB;
@@ -134,6 +135,9 @@ class TherapyAppointmentController extends Controller
     public function store(Request $request){
 
 
+        //dd($request->all());
+
+
         if (is_null($this->user) || !$this->user->can('therapyAppointmentAdd')) {
             abort(403, 'Sorry !! You are Unauthorized to Add !');
         }
@@ -155,6 +159,13 @@ class TherapyAppointmentController extends Controller
         $patientId = PatientHistory::where('id',$request->patient_id)->value('patient_id');
 
 
+        $getIdFromWalkByPatient = WalkByPatient::where('patient_reg_id',$patientId)->value('id');
+
+        $getIdPatient = Patient::where('patient_id',$patientId)->value('id');
+
+        $getIdPatientAdmit = PatientAdmit::where('patient_id',$patientId)->value('id');
+
+
        $patientHistoryUpdate = PatientHistory::find($request->patient_id);
        $patientHistoryUpdate->status = 1;
        $patientHistoryUpdate->save();
@@ -163,6 +174,15 @@ class TherapyAppointmentController extends Controller
         $therapyAppointment = new TherapyAppointment();
         $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
         $therapyAppointment->patient_id =$patientId;
+        if(!empty($getIdFromWalkByPatient)){
+        $therapyAppointment->patient_type ='Walk By Patient';
+    }elseif(!empty($getIdPatient)){
+        $therapyAppointment->patient_type ='Patient';
+
+    }elseif(!empty($getIdPatientAdmit)){
+        $therapyAppointment->patient_type ='Patient Admit';
+
+    }
         $therapyAppointment->save();
 
         $therapyAppointmentId = $therapyAppointment->id;
@@ -233,6 +253,10 @@ class TherapyAppointmentController extends Controller
         return redirect()->route('therapyAppointments.index')->with('error','Deleted successfully!');
     }
 
+    public function show($id){
+
+
+    }
 
     public function edit($id)
     {

@@ -164,6 +164,8 @@ Route::group(['prefix' => 'admin'], function () {
 
    Route::controller(PatientController::class)->group(function () {
 
+    Route::post('/saveTransferToPatientList', 'saveTransferToPatientList')->name('saveTransferToPatientList');
+
       Route::post('/patientFileUpdate', 'patientFileUpdate')->name('patientFileUpdate');
 
       Route::delete('patientFileDelete/{id}','patientFileDelete')->name('patientFileDelete');

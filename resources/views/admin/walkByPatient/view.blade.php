@@ -200,14 +200,14 @@
                                                 <tr>
                                                     <th>Appointment To</th>
                                                     <th>Date</th>
-
+                                                    <th>Type</th>
                                                     <th>Status</th>
                                                 </tr>
                                                 @foreach($doctorAppoinmentList as $allDoctorAppoinmentList)
                                                 <tr>
-                                                    <td>{{ $allDoctorAppointmentList->doctor->name }}</td>
+                                                    <td>{{$allDoctorAppoinmentList->doctor->name }}</td>
                                                     <td>{{$allDoctorAppoinmentList->appointment_date}}</td>
-
+                                                    <td>{{$allDoctorAppoinmentList->patient_type}}</td>
                                                     <td>
                                                         @if($allDoctorAppoinmentList->status == 1)
                                                         Recieved
@@ -232,6 +232,11 @@
                                                 @foreach($getAppoinmentDetail as $allGetAppoinmentDetail)
 
                                                 <?php
+
+$therapyAppType = DB::table('therapy_appointments')->where('id',$allGetAppoinmentDetail->therapy_appointment_id )->value('patient_type');
+
+
+
                                                 $therapy_name = DB::table('therapy_lists')->where('id',$allGetAppoinmentDetail->therapy_name)->value('name');
                                                  $therapy_time = DB::table('therapy_appointment_date_and_times')->where('therapy_appointment_id',$allGetAppoinmentDetail->therapy_appointment_id)->value('therapist');
                                                       $therapy_date = DB::table('therapy_appointment_date_and_times')->where('therapy_appointment_id',$allGetAppoinmentDetail->therapy_appointment_id)->value('date');
@@ -251,6 +256,11 @@
                                                                     <p class="text-muted text-truncate mb-0">Therapist
                                                                         :
                                                                         <span class="fw-semibold text-dark">: {{$therapis_name}}</span>
+                                                                    </p>
+
+                                                                    <p class="text-muted text-truncate mb-0">Patient Type
+                                                                        :
+                                                                        <span class="fw-semibold text-dark">: {{$therapyAppType}}</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex-shrink-0 ms-2">
