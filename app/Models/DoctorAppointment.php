@@ -10,7 +10,7 @@ class DoctorAppointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'admin_id', 'patient_id', 'doctor_id','appointment_date','patient_type','serial_number','status'
+        'admin_id','appointment_time', 'patient_id', 'doctor_id','appointment_date','patient_type','serial_number','status'
     ];
 
     public function admin()

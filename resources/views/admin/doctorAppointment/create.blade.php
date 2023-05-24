@@ -105,10 +105,10 @@ data-nationality="{{ $allPatientList->nationality }}"
                                     </div><!-- end card -->
                                 </div>
 
-                                <div class="col-xxl-6 col-md-12">
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
                                         <label for="" class="form-label">Recommended doctor name  </label>
-                                        <select class="js-example-basic-single form-control" name="doctor_id" required>
+                                        <select class="js-example-basic-single form-control" id="mainDocId" name="doctor_id" required>
                                             @foreach($doctorList as $allDoctorList)
                                             <option value="{{ $allDoctorList->id }}">{{ $allDoctorList->name }}</option>
                                             @endforeach
@@ -116,12 +116,20 @@ data-nationality="{{ $allPatientList->nationality }}"
                                     </div>
                                 </div>
 
-                                <div class="col-xxl-6 col-md-6">
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
                                         <label for="" class="form-label">Appointment Date</label>
-                                        <input type="text" name="appointment_date" class="form-control" id="datepicker" placeholder="Appointment Date" required>
+                                        <input type="text" id="mainDate" name="appointment_date" class="form-control" id="datepicker" placeholder="Appointment Date" required>
                                     </div>
                                 </div>
+
+                                <div class="col-xxl-4 col-md-4">
+                                    <div>
+                                        <label for="" class="form-label">Appointment Time</label>
+                                        <input type="time" id="appointment_time" name="appointment_time" class="form-control"  placeholder="Appointment Time" required>
+                                    </div>
+                                </div>
+                                <small id="dataCheck"></small>
 
                                 <!--end col-->
                             </div>
@@ -136,7 +144,7 @@ data-nationality="{{ $allPatientList->nationality }}"
 
 
         <div class="text-end mb-3">
-            <button type="submit" class="btn btn-primary w-sm" >Submit
+            <button type="submit" class="btn btn-primary w-sm" id="final_button" >Submit
             </button>
         </div>
         </form>
@@ -150,6 +158,48 @@ data-nationality="{{ $allPatientList->nationality }}"
 
 
 @section('script')
+
+<script>
+    // $('#appointment_time').change(function(){
+
+        $(document).on('change keyup keydown keypress click blur', '#appointment_time', function() {
+
+        var getTheValue = $(this).val();
+        var mainDate = $('#mainDate').val();
+        var mainDocId = $('#mainDocId').val();
+        //alert(getTheValue);
+
+        $.ajax({
+url: "{{ route('checkAppoinmentInfo') }}",
+method: 'GET',
+data: {getTheValue:getTheValue,mainDate:mainDate,mainDocId:mainDocId},
+success: function(data) {
+
+    //alert(data);
+
+    if(data >= 1){
+
+        $("#final_button").hide();
+       $('#dataCheck').html('Slot Not Available');
+        $("#dataCheck").css({"color": "red"});
+
+
+
+    }else{
+
+        $("#final_button").show();
+        $('#dataCheck').html('Slot Available');
+        $("#dataCheck").css({"color": "green"});
+
+
+    }
+
+}
+});
+
+    });
+
+</script>
 <script>
     $(function(){
     $('#patient_id').change(function(){

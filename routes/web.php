@@ -114,6 +114,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('doctorAppointments', DoctorAppointmentController::class);
     //doctor_apointment_controller
 
+    Route::controller(DoctorAppointmentController::class)->group(function () {
+
+        Route::get('/checkAppoinmentInfo', 'checkAppoinmentInfo')->name('checkAppoinmentInfo');
+
+
+    });
 
      //billing_controller
      Route::resource('billings', BillingController::class);

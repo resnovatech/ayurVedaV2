@@ -18,6 +18,7 @@ use App\Models\PatientAdmit;
 use App\Models\PatientHerb;
 use App\Models\PatientMedicalSupplement;
 use DB;
+use Carbon\Carbon;
 use App\Models\Therapist;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
@@ -41,8 +42,18 @@ class TherapyAppointmentController extends Controller
                    abort(403, 'Sorry !! You are Unauthorized to Add !');
                }
                $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('date',date('Y-m-d'))->latest()->get();
-       //dd(1);
-               return view('admin.therapyAppointment.index',compact('therapyAppointmentDateAndTimeList'));
+
+               $tomorrow = Carbon::tomorrow()->toDateString();
+               $yesterday  = Carbon::yesterday ()->toDateString();
+
+               $therapyAppointmentDateAndTimeListTomorrow = TherapyAppointmentDateAndTime::where('date',$tomorrow)->latest()->get();
+               $therapyAppointmentDateAndTimeListYesterday = TherapyAppointmentDateAndTime::where('date',$yesterday)->latest()->get();
+
+
+
+
+
+               return view('admin.therapyAppointment.index',compact('therapyAppointmentDateAndTimeListYesterday','therapyAppointmentDateAndTimeListTomorrow','therapyAppointmentDateAndTimeList'));
            }
 
 

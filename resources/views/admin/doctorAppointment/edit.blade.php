@@ -106,7 +106,7 @@ data-nationality="{{ $allPatientList->nationality }}" {{ $allPatientList->patien
                                     </div><!-- end card -->
                                 </div>
 
-                                <div class="col-xxl-6 col-md-12">
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
                                         <label for="" class="form-label">Recommended doctor name  </label>
                                         <select class="js-example-basic-single form-control" name="doctor_id" required>
@@ -117,10 +117,17 @@ data-nationality="{{ $allPatientList->nationality }}" {{ $allPatientList->patien
                                     </div>
                                 </div>
 
-                                <div class="col-xxl-6 col-md-6">
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
                                         <label for="" class="form-label">Appointment Date</label>
                                         <input type="text" name="appointment_date" value="{{ $doctorAppointmentList->appointment_date }}" class="form-control" id="datepicker" placeholder="Appointment Date" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-4 col-md-4">
+                                    <div>
+                                        <label for="" class="form-label">Appointment Time</label>
+                                        <input type="time" name="appointment_time" value="{{ $doctorAppointmentList->appointment_time }}" class="form-control"  placeholder="Appointment Time" required>
                                     </div>
                                 </div>
 

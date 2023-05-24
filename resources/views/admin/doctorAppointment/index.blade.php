@@ -57,7 +57,8 @@ Doctor Appointment List | {{ $ins_name }}
                                         <th class="sort" data-sort="customer_name">Serial Number</th>
                                         <th class="sort" data-sort="customer_name">Patient Id</th>
                                         <th class="sort" data-sort="email">Doctor Name</th>
-                                        <th class="sort" data-sort="phone">Appointment Data</th>
+                                        <th class="sort" data-sort="phone">Appointment Date</th>
+                                        <th class="sort" data-sort="phone">Appointment Time</th>
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
                                     </thead>
@@ -70,7 +71,7 @@ Doctor Appointment List | {{ $ins_name }}
                                         <td class="email">{{ $allDoctorAppointmentList->patient_id }}</td>
                                         <td class="email">{{ $allDoctorAppointmentList->doctor->name }}</td>
                                         <td class="phone">{{ $allDoctorAppointmentList->appointment_date }}</td>
-
+                                        <td class="phone">{{ $allDoctorAppointmentList->appointment_time }}</td>
 
                                         <td>
                                             <div class="dropdown d-inline-block">
@@ -102,7 +103,7 @@ Doctor Appointment List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                          
+
 
 
                         </div>

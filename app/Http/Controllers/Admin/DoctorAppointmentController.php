@@ -130,6 +130,7 @@ class DoctorAppointmentController extends Controller
          $doctorAppointment->patient_id = $request->patient_id;
          $doctorAppointment->doctor_id = $request->doctor_id;
          $doctorAppointment->appointment_date = $request->appointment_date;
+         $doctorAppointment->appointment_time = $request->appointment_time;
          $doctorAppointment->patient_type = $request->patient_type;
          $doctorAppointment->serial_number = $finalSerialValue;
          $doctorAppointment->save();
@@ -156,6 +157,7 @@ class DoctorAppointmentController extends Controller
          $doctorAppointment->patient_id = $request->patient_id;
          $doctorAppointment->doctor_id = $request->doctor_id;
          $doctorAppointment->appointment_date = $request->appointment_date;
+         $doctorAppointment->appointment_time = $request->appointment_time;
          $doctorAppointment->patient_type = $request->patient_type;
          $doctorAppointment->save();
 
@@ -168,7 +170,23 @@ class DoctorAppointmentController extends Controller
 
 
     public function show($id){
-        
+
+    }
+
+
+    public function checkAppoinmentInfo(Request $request){
+
+        $getTheValue = $request->getTheValue;
+         $mainDate = $request->mainDate;
+         $mainDocId = $request->mainDocId;
+
+
+         $data = DoctorAppointment::where('doctor_id',$mainDocId)
+         ->where('appointment_date',$mainDate)
+         ->where('appointment_time',$getTheValue)->count();
+
+         return $data;
+
     }
 
 
