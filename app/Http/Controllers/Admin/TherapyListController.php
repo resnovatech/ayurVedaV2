@@ -38,6 +38,20 @@ class TherapyListController extends Controller
            }
 
 
+           public function edit($id){
+            if (is_null($this->user) || !$this->user->can('therapyListsUpdate')) {
+                abort(403, 'Sorry !! You are Unauthorized to View !');
+                   }
+
+              $allTherapyLists = TherapyList::find($id);
+
+              $therapyIngredients = TherapyIngredient::latest()->get();
+
+                   return view('admin.therapyLists.edit',compact('allTherapyLists','therapyIngredients'));
+
+           }
+
+
            public function store(Request $request){
 
             if (is_null($this->user) || !$this->user->can('therapyListsAdd')) {

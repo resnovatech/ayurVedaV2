@@ -9,6 +9,7 @@ use App\Models\PatientAdmit;
 use App\Models\Patient;
 use App\Models\TherapyList;
 use App\Models\Doctor;
+use App\Models\PatientHistory;
 use App\Models\Bill;
 use App\Models\WalkByPatientService;
 use App\Models\DoctorAppointment;
@@ -81,6 +82,9 @@ class PatientAdmitController extends Controller
 
         $walkByPatientList = PatientAdmit::find($id);
         //dd($walkByPatientListnew);
+
+        $patientHistory = PatientHistory::where('patient_id',$walkByPatientList->patient_id)->latest()->get();
+
         $totalAmount = Bill::where('patient_id',$walkByPatientList->patient_id)->sum('total_amount');
 
           $doctorAppoinmentList = DoctorAppointment::where('patient_id',$walkByPatientList->patient_id)->latest()->get();
@@ -93,7 +97,7 @@ class PatientAdmitController extends Controller
                                $getAppoinmentDetail =  TherapyAppointmentDetail::whereIn('therapy_appointment_id',$separated_data_title)->latest()->get();
 //dd(1);
 
-        return view('admin.patientAdmit.view',compact('walkByPatientList','totalAmount','doctorAppoinmentList','getAppoinmentDetail'));
+        return view('admin.patientAdmit.view',compact('patientHistory','walkByPatientList','totalAmount','doctorAppoinmentList','getAppoinmentDetail'));
     }
 
 

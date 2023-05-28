@@ -35,6 +35,22 @@ class PowderController extends Controller
                return view('admin.powder.index',compact('powders','medicineEquipments'));
            }
 
+           public function edit($id){
+
+
+            if (is_null($this->user) || !$this->user->can('powderUpdate')) {
+                abort(403, 'Sorry !! You are Unauthorized to View !');
+                   }
+
+              $allpowdersLists = Powder::find($id);
+
+              $medicineEquipments = MedicineEquipment::latest()->get();
+
+                   return view('admin.powder.edit',compact('allpowdersLists','medicineEquipments'));
+
+
+           }
+
 
            public function store(Request $request){
 

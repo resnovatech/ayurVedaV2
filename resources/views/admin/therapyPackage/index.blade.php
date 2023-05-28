@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-Package List | {{ $ins_name }}
+Therapy Package List | {{ $ins_name }}
 @endsection
 
 
@@ -13,12 +13,12 @@ Package List | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Package List</h4>
+                    <h4 class="mb-sm-0">Therapy Package List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                            <li class="breadcrumb-item active">Package List</li>
+                            <li class="breadcrumb-item active">Therapy Package List</li>
                         </ol>
                     </div>
 
@@ -31,7 +31,7 @@ Package List | {{ $ins_name }}
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Package Info</h4>
+                        <h4 class="card-title mb-0">Therapy Package Info</h4>
                         @include('flash_message')
                     </div><!-- end card header -->
 
@@ -52,10 +52,10 @@ Package List | {{ $ins_name }}
                                     <thead class="table-light">
                                     <tr>
                                         <th class="sort" data-sort="customer_name">Sl</th>
-                                        <th class="sort" data-sort="customer_name"> Name</th>
+                                        <th class="sort" data-sort="customer_name"> Package Name</th>
                                         <th class="sort" data-sort="customer_name"> Amount</th>
-                                        <th class="sort" data-sort="customer_name">Powder Name</th>
-                                        <th class="sort" data-sort="customer_name">Powder Amount</th>
+                                        <th class="sort" data-sort="customer_name">Therapy Name</th>
+
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
                                     </thead>
@@ -65,38 +65,49 @@ Package List | {{ $ins_name }}
                                     <tr>
 
                                         <td class="id">{{ $key+1 }}</td>
-                                        <td class="customer_name">{{ $allpackagesLists->name }}</td>
+                                        <td class="customer_name">{{ $allpackagesLists->package_name }}</td>
 
-                                        <td class="customer_name">{{ $allpackagesLists->amount }}</td>
+                                        <td class="customer_name">{{ $allpackagesLists->price }}</td>
                                         <td>
 
-                                            {{ $allpackagesLists->powder_id }}
+                                            {{ $allpackagesLists->therapy_list }}
                                         </td>
 
-                                        <td>
 
-                                            {{ $allpackagesLists->powder_amount }}
-                                        </td>
                                         <td>
 
 
 
-                                            @if (Auth::guard('admin')->user()->can('packageUpdate'))
-                                            <a type="button" href="{{ route('packageList.edit',$allpackagesLists->id) }}"
+                                            @if (Auth::guard('admin')->user()->can('therapyPackagesUpdate'))
+                                            <a type="button" href="{{ route('therapyPackages.edit',$allpackagesLists->id) }}"
                                             class="btn btn-primary waves-light waves-effect  btn-sm" >
                                             <i class="ri-pencil-fill"></i></a>
 
+                                              <!--  Large modal example -->
+                                              <div class="modal fade bs-example-modal-lg{{ $allpackagesLists->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                  <div class="modal-dialog modal-lg">
+                                                      <div class="modal-content">
+                                                          <div class="modal-header">
+                                                              <h5 class="modal-title" id="myLargeModalLabel">Update Therapy  Info</h5>
+                                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                              </button>
+                                                          </div>
+                                                          <div class="modal-body">
 
+                                                          </div>
+                                                      </div><!-- /.modal-content -->
+                                                  </div><!-- /.modal-dialog -->
+                                              </div><!-- /.modal -->
 
 
   @endif
 
   {{-- <button type="button" class="btn btn-primary waves-light waves-effect  btn-sm" onclick="window.location.href='{{ route('admin.users.view',$user->id) }}'"><i class="fa fa-eye"></i></button> --}}
 
-                                    @if (Auth::guard('admin')->user()->can('packageDelete'))
+                                    @if (Auth::guard('admin')->user()->can('therapyPackagesDelete'))
 
   <button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allpackagesLists->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
-  <form id="delete-form-{{ $allpackagesLists->id }}" action="{{ route('packageList.destroy',$allpackagesLists->id) }}" method="POST" style="display: none;">
+  <form id="delete-form-{{ $allpackagesLists->id }}" action="{{ route('therapyPackages.destroy',$allpackagesLists->id) }}" method="POST" style="display: none;">
     @method('DELETE')
                                   @csrf
 
@@ -135,12 +146,12 @@ Package List | {{ $ins_name }}
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('packageList.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                <form action="{{ route('therapyPackages.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                     @csrf
                     <div class="row">
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Name</label>
-                            <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
+                            <input type="text" name ="package_name" class="form-control" id="" placeholder="Name" required>
                         </div>
 
 
@@ -148,24 +159,22 @@ Package List | {{ $ins_name }}
                         <div class="col-12">
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
-                                    <th>Powders</th>
-                                    <th>Price</th>
+                                    <th>Therapy Name</th>
+
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-select mb-3" id="powderId0" name="powder_id[]" aria-label="Default select example">
+                                        <select class="form-select mb-3" id="powderId0" name="therapy_list[]" aria-label="Default select example">
                                             <option value="">--Please Select -- </option>
-                                            @foreach($powders as $allTherapyIngredients)
-                                            <option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>
+                                            @foreach($therapLists as $allTherapyIngredients)
+                                            <option value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
 
-                                    <td> <input readonly type="text" id="pamountId0" name ="pamount[]" class="form-control" id="" placeholder="Amount" required></td>
-<td></td>
                                     <td>
                                         <button type="button" name="add" id="dynamic-ar"
-                                                class="btn btn-outline-primary">Add New Powder
+                                                class="btn btn-outline-primary">Add New Therapy
                                         </button>
                                     </td>
                                 </tr>
@@ -174,7 +183,7 @@ Package List | {{ $ins_name }}
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Amount</label>
-                            <input type="text" value="0"  name ="amount" class="form-control" id="mainAmount" placeholder="Amount" required>
+                            <input type="text" value="0"  name ="price" class="form-control" id="mainAmount" placeholder="Amount" required>
                         </div>
 
                     </div>
@@ -196,12 +205,10 @@ Package List | {{ $ins_name }}
         ++i;
         $("#dynamicAddRemove").append('<tr>' +
             '<td>' +
-            ' <select class="form-select mb-3" id="powderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
-            '<option value="">--Please Select -- </option>@foreach($powders as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
+            ' <select class="form-select mb-3" id="powderId'+i+'" name="therapy_list[]" aria-label="Default select example">' +
+            '<option value="">--Please Select -- </option>@foreach($therapLists as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
-            '<td>' +
-            '<input type="text" readonly id="pamountId'+i+'" name="pamount[]"  class="form-control" /></td>' +
-            '<td>' +
+
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });
@@ -209,103 +216,18 @@ Package List | {{ $ins_name }}
         $(this).parents('tr').remove();
 
 
-        var final_total_net_price = 0;
-    var total_net_price = $('input[name="pamount[]"]').map(function (idx, ele) {
-   return $(ele).val();
-}).get();
-
-for (var i = 0; i < total_net_price.length; i++) {
-    final_total_net_price += total_net_price[i] << 0;
-}
-
-$('#mainAmount').val('');
-         $('#mainAmount').val(final_total_net_price);
     });
 
 
     ////
 
 
-    $(document).on('change', '[id^=powderId]', function () {
 
-var main_id = $(this).attr('id');
-var id_for_pass = main_id.slice(8);
-
-var getAmount = $('#powderId'+id_for_pass).find(':selected').data('amount');
-
-var previousVal = $("#pamountId"+id_for_pass).val();
-var getTheValue = $('#mainAmount').val();
-
-var minusValue = getTheValue -previousVal;
-
-if(minusValue == 0){
-
-$("#pamountId"+id_for_pass).val(getAmount);
-
-var finalValue =  parseInt(getAmount);
-
-$('#mainAmount').val(getAmount);
-
-}
-if(minusValue > 0){
-
-$("#pamountId"+id_for_pass).val(getAmount);
-
-var finalValue = parseInt(minusValue) + parseInt(getAmount);
-
-$('#mainAmount').val(finalValue);
-
-}
-});
 
 
 ////////
 
-$(document).on('change', '[id^=editPowderId]', function () {
 
-var main_id = $(this).attr('id');
-var id_for_pass = main_id.slice(12);
-
-//alert(id_for_pass);
-
-var getAmount = $('#editPowderId'+id_for_pass).find(':selected').data('amount');
-
-var previousVal = $("#editPamountId"+id_for_pass).val();
-var getTheValue = $('#editMainAmount').val();
-
-var minusValue = getTheValue -previousVal;
-
-if(minusValue == 0){
-
-$("#editPamountId"+id_for_pass).val(getAmount);
-
-var finalValue =  parseInt(getAmount);
-
-//$('#editMainAmount').val(getAmount);
-
-}
-if(minusValue > 0){
-
-$("#editPamountId"+id_for_pass).val(getAmount);
-
-var finalValue = parseInt(minusValue) + parseInt(getAmount);
-
-//$('#editMainAmount').val(finalValue);
-
-}
-
-var final_total_net_price = 0;
-    var total_net_price = $('input[name="pamount[]"]').map(function (idx, ele) {
-   return $(ele).val();
-}).get();
-
-for (var i = 0; i < total_net_price.length; i++) {
-    final_total_net_price += total_net_price[i] << 0;
-}
-
-$('#editMainAmount').val('');
-         $('#editMainAmount').val(final_total_net_price);
-});
 </script>
 
 <script type="text/javascript">
@@ -314,12 +236,10 @@ $('#editMainAmount').val('');
         ++i;
         $(".dynamicAddRemove").append('<tr id="mDelete'+i+'">' +
             '<td>' +
-            ' <select class="form-select mb-3" id="editPowderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
-            '@foreach($powders as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
+            ' <select class="form-select mb-3" id="editPowderId'+i+'" name="therapy_list[]" aria-label="Default select example">' +
+            '@foreach($therapLists as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
-            '<td>' +
-            '<input type="text" readonly id="editPamountId'+i+'" name="pamount[]"  class="form-control" /></td>' +
-            '<td>' +
+
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });
@@ -333,17 +253,7 @@ var id_for_pass = main_id.slice(19);
 $("#mDelete"+id_for_pass).remove();
 
 
-var final_total_net_price = 0;
-    var total_net_price = $('input[name="pamount[]"]').map(function (idx, ele) {
-   return $(ele).val();
-}).get();
 
-for (var i = 0; i < total_net_price.length; i++) {
-    final_total_net_price += total_net_price[i] << 0;
-}
-
-$('#editMainAmount').val('');
-         $('#editMainAmount').val(final_total_net_price);
 
 
 //$(this).parents('tr').remove();

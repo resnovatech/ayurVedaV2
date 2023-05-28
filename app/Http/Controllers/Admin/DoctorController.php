@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\DoctorAppointment;
 use App\Models\DoctorConsultDate;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class DoctorController extends Controller
 {
     public $user;
@@ -204,9 +206,37 @@ return redirect()->route('doctors.index')->with('success','Updated successfully!
                 abort(403, 'Sorry !! You are Unauthorized to View !');
                    }
 
+                   $doctorAppointmentListToday = DoctorAppointment::where('appointment_date',date('Y-m-d'))
+                   ->where('doctor_id',$id)->latest()->get();
+
+               $tomorrow = Carbon::tomorrow()->toDateString();
+               $yesterday  = Carbon::yesterday ()->toDateString();
+
+               $doctorAppointmentListTomorrow = DoctorAppointment::where('appointment_date',$tomorrow)
+               ->where('doctor_id',$id)->latest()->get();
+               $doctorAppointmentListYesterday = DoctorAppointment::where('appointment_date',$yesterday)
+               ->where('doctor_id',$id)->latest()->get();
+
+
+               $doctorAppointmentComplete = DoctorAppointment::where('status',1)
+               ->where('doctor_id',$id)->latest()->get();
+
+
+               $doctorAppointmentPending = DoctorAppointment::whereNull('status')
+               ->where('doctor_id',$id)->latest()->get();
+
+
+               $doctorAppointmentCancellled = DoctorAppointment::where('status',0)
+               ->where('doctor_id',$id)->latest()->get();
+
+
+
+
+
+
               $doctorList = Doctor::find($id);
 
-      return view('admin.doctor.view',compact('doctorList'));
+      return view('admin.doctor.view',compact('doctorAppointmentCancellled','doctorAppointmentPending','doctorAppointmentComplete','doctorAppointmentListYesterday','doctorAppointmentListTomorrow','doctorAppointmentListToday','doctorList'));
                }
 
 

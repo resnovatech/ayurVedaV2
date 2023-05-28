@@ -13,6 +13,7 @@ use App\Models\DoctorAppointment;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
+use App\Models\PatientHistory;
 class WalkByPatientController extends Controller
 {
     public $user;
@@ -156,6 +157,8 @@ return redirect()->route('walkByPatients.index')->with('success','Added successf
 
         $walkByPatientList = WalkByPatient::find($id);
         //dd($walkByPatientListnew);
+        $patientHistory = PatientHistory::where('patient_id',$walkByPatientList->patient_reg_id)->latest()->get();
+
         $totalAmount = Bill::where('patient_id',$walkByPatientList->patient_reg_id)->sum('total_amount');
           $walkByPatientService = WalkByPatientService::where('walk_by_patient_id',$id)->latest()->get();
           $doctorAppoinmentList = DoctorAppointment::where('patient_id',$walkByPatientList->patient_reg_id)->latest()->get();
@@ -168,7 +171,7 @@ return redirect()->route('walkByPatients.index')->with('success','Added successf
                                $getAppoinmentDetail =  TherapyAppointmentDetail::whereIn('therapy_appointment_id',$separated_data_title)->latest()->get();
 
 
-        return view('admin.walkByPatient.view',compact('walkByPatientList','walkByPatientService','totalAmount','doctorAppoinmentList','getAppoinmentDetail'));
+        return view('admin.walkByPatient.view',compact('patientHistory','walkByPatientList','walkByPatientService','totalAmount','doctorAppoinmentList','getAppoinmentDetail'));
     }
 
 

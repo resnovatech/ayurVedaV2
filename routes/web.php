@@ -32,6 +32,9 @@ use App\Http\Controllers\Admin\MedicineEquipmentController;
 use App\Http\Controllers\Admin\PowderController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TreatMentChartController;
+use App\Http\Controllers\Admin\TherapyPackageController;
+use App\Http\Controllers\Admin\AgrementFormOneController;
+use App\Http\Controllers\Admin\AgrementFormTwoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,6 +71,14 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/', [DashBoardController::class, 'index'])->name('admin.dashboard');
 
+    //therapy_package
+
+
+    Route::resource('agreementFormTwo', AgrementFormTwoController::class);
+    Route::resource('agreementFormOne', AgrementFormOneController::class);
+
+    Route::resource('therapyPackages', TherapyPackageController::class);
+
   //therapy_apoinment_controller
   Route::resource('therapyAppointments', TherapyAppointmentController::class);
 
@@ -86,9 +97,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/getTherapyInformation', 'getTherapyInformation')->name('getTherapyInformation');
 
-    Route::get('/agreementFormOne', 'agreementFormOne')->name('agreementFormOne');
-    Route::get('/agreementFormTwo', 'agreementFormTwo')->name('agreementFormTwo');
-    Route::get('/agreementFormThree', 'agreementFormThree')->name('agreementFormThree');
+
 });
 
 

@@ -82,12 +82,11 @@
                                                     class="d-none d-md-inline-block">Therapy</span>
                                         </a>
                                     </li>
-                                    <!--<li class="nav-item">-->
-                                    <!--    <a class="nav-link fs-14" data-bs-toggle="tab" href="#documents" role="tab">-->
-                                    <!--        <i class="ri-folder-4-line d-inline-block d-md-none"></i> <span-->
-                                    <!--                class="d-none d-md-inline-block">Documents</span>-->
-                                    <!--    </a>-->
-                                    <!--</li>-->
+                                    <li class="nav-item">
+                                     <a class="nav-link fs-14" data-bs-toggle="tab" href="#documents" role="tab">
+                                          <i class="ri-folder-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Bill</span>
+                                      </a>
+                                    </li>
                                 </ul>
                                 <div class="flex-shrink-0">
                                     <a href="{{ route('walkByPatients.edit',$walkByPatientList->id) }}" class="btn btn-success"><i class="ri-edit-box-line align-bottom"></i>
@@ -378,7 +377,82 @@ $therapyAppType = DB::table('therapy_appointments')->where('id',$allGetAppoinmen
                                     <!--end card-->
                                 </div>
                                 <!--end tab-pane-->
-                                <!--<div class="tab-pane fade" id="documents" role="tabpanel">-->
+                                <div class="tab-pane fade" id="documents" role="tabpanel">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3">Bill</h5>
+
+                                            <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
+                                                <thead class="table-light">
+                                                <tr>
+
+                                                    <th class="sort" data-sort="customer_name">SL No</th>
+                                                    <th class="sort" data-sort="customer_name">Patient Id</th>
+                                                    <th class="sort" data-sort="email">Name</th>
+                                                    <th class="sort" data-sort="email">Phone</th>
+
+
+                                                    <th class="sort" data-sort="action">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all">
+                                                @foreach($patientHistory as $key=>$allPatientHistory)
+                                                <?php
+                                                  $getNameFromWalkByPatient = DB::table('walk_by_patients')
+                                                  ->where('patient_reg_id',$allPatientHistory->patient_id)->value('name');
+                                                  $getNameFromPatient = DB::table('patients')
+                                                  ->where('patient_id',$allPatientHistory->patient_id)->value('name');
+
+
+                                                  $getPhoneFromWalkByPatient = DB::table('walk_by_patients')
+                                                  ->where('patient_reg_id',$allPatientHistory->patient_id)->value('phone_or_mobile_number');
+                                                  $getPhoneFromPatient = DB::table('patients')
+                                                  ->where('patient_id',$allPatientHistory->patient_id)->value('phone_or_mobile_number');
+                                                ?>
+                                                <tr>
+
+
+                                                    <td class="customer_name">{{ $key+1}}</td>
+                                                    <td class="email">{{ $allPatientHistory->patient_id }}</td>
+                                                    <td class="email">
+
+                                                        @if(empty($getNameFromWalkByPatient))
+
+            {{ $getNameFromPatient }}
+                                                        @else
+            {{ $getNameFromWalkByPatient }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="email">
+                                                        @if(empty($getPhoneFromWalkByPatient))
+
+                                                        {{ $getPhoneFromPatient }}
+                                                                                                    @else
+                                                        {{ $getPhoneFromWalkByPatient }}
+                                                                                                    @endif
+                                                    </td>
+
+
+
+
+                                                    <td>
+                                                        <div class="dropdown d-inline-block">
+
+
+                                                                @if (Auth::guard('admin')->user()->can('BillingView'))
+                                                             <a href="{{ route('billings.show',$allPatientHistory->id) }}" class="btn btn-primary btn-sm" >view</a>
+                                                                @endif
+
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+            @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                            </div>
                                 <!--    <div class="card">-->
                                 <!--        <div class="card-body">-->
                                 <!--            <div class="d-flex align-items-center mb-4">-->

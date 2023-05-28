@@ -10,6 +10,10 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use App\Models\TherapyAppointment;
+use App\Models\TherapyAppointmentDateAndTime;
+use App\Models\TherapyAppointmentDetail;
 class TherapistController extends Controller
 {
     public $user;
@@ -36,6 +40,39 @@ class TherapistController extends Controller
 
 
                return view('admin.therapistList.index',compact('therapistList'));
+           }
+
+
+           public function show($id){
+
+            $therapistList = Therapist::find($id);
+
+            $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('date',date('Y-m-d'))
+            ->where('therapist',$id)->latest()->get();
+
+            $tomorrow = Carbon::tomorrow()->toDateString();
+            $yesterday  = Carbon::yesterday ()->toDateString();
+
+            $therapyAppointmentDateAndTimeListTomorrow = TherapyAppointmentDateAndTime::where('date',$tomorrow)
+            ->where('therapist',$id)->latest()->get();
+            $therapyAppointmentDateAndTimeListYesterday = TherapyAppointmentDateAndTime::where('date',$yesterday)
+            ->where('therapist',$id)->latest()->get();
+
+
+            $therapyAppointmentComplete = TherapyAppointmentDateAndTime::where('status',1)
+            ->where('therapist',$id)->latest()->get();
+
+
+            $therapyAppointmentPending = TherapyAppointmentDateAndTime::whereNull('status')
+            ->where('therapist',$id)->latest()->get();
+
+
+            $therapyAppointmentCancellled = TherapyAppointmentDateAndTime::where('status',0)
+            ->where('therapist',$id)->latest()->get();
+
+
+            return view('admin.therapistList.view',
+            compact('therapyAppointmentCancellled','therapyAppointmentPending','therapyAppointmentComplete','therapyAppointmentDateAndTimeListYesterday','therapyAppointmentDateAndTimeListTomorrow','therapyAppointmentDateAndTimeList','therapistList','therapyAppointmentCancellled','therapyAppointmentPending','therapyAppointmentComplete'));
            }
 
 

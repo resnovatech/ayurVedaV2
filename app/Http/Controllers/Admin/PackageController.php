@@ -36,6 +36,21 @@ class PackageController extends Controller
            }
 
 
+           public function edit($id){
+
+
+            if (is_null($this->user) || !$this->user->can('packageUpdate')) {
+                abort(403, 'Sorry !! You are Unauthorized to View !');
+                   }
+
+              $allpackagesLists = Package::find($id);
+
+              $powders = Powder::latest()->get();
+
+                   return view('admin.package.edit',compact('allpackagesLists','powders'));
+               }
+
+
            public function store(Request $request){
 
             if (is_null($this->user) || !$this->user->can('packageAdd')) {

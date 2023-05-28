@@ -79,9 +79,7 @@ Doctor Appointment List | {{ $ins_name }}
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    @if (Auth::guard('admin')->user()->can('doctorAppointmentView'))
-                                                    <li><a href="{{ route('doctorAppointments.show',$allDoctorAppointmentList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
-                                                    @endif
+                                                   
                                                     @if (Auth::guard('admin')->user()->can('doctorAppointmentUpdate'))
                                                     <li><a class="dropdown-item edit-item-btn" href="{{ route('doctorAppointments.edit',$allDoctorAppointmentList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
                                                     @endif

@@ -78,105 +78,11 @@ Powder List | {{ $ins_name }}
 
 
                                             @if (Auth::guard('admin')->user()->can('powderUpdate'))
-                                            <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg{{ $allpowdersLists->id }}"
+                                            <a type="button" href="{{ route('powderList.edit',$allpowdersLists->id) }}"
                                             class="btn btn-primary waves-light waves-effect  btn-sm" >
-                                            <i class="ri-pencil-fill"></i></button>
-
-                                              <!--  Large modal example -->
-                                              <div class="modal fade bs-example-modal-lg{{ $allpowdersLists->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                  <div class="modal-dialog modal-lg">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                              <h5 class="modal-title" id="myLargeModalLabel">Update Therapy  Info</h5>
-                                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                              </button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                            <form action="{{ route('powderList.update',$allpowdersLists->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <div class="row">
-                                                                    <div class="col-12 mb-2">
-                                                                        <label for="" class="form-label">Name</label>
-                                                                        <input type="text" value="{{ $allpowdersLists->name }}" name ="name" class="form-control" id="" placeholder="Name" required>
-                                                                    </div>
+                                            <i class="ri-pencil-fill"></i></a>
 
 
-                                                                    <div class="col-12 mb-2">
-                                                                        <label for="" class="form-label">Amount</label>
-                                                                        <input type="text" value="{{ $allpowdersLists->amount }}" name ="amount" class="form-control" id="" placeholder="Amount" required>
-                                                                    </div>
-
-
-                                                                    <?php
-                                                                    $convert_new_ass_cat  = explode(",",$allpowdersLists->medicine_equipment_id);
-
-                                                                   // dd( $convert_new_ass_cat);
-
-                                                                                       ?>
-
-                                                                    <div class="col-12">
-                                                                        <table class="table table-bordered dynamicAddRemove" id="">
-                                                                            <tr>
-                                                                                <th>Medical Equipment</th>
-                                                                            </tr>
-                                                                            @foreach($convert_new_ass_cat as $j=>$allTherapyIngredient)
-                                                                            @if($j == 0 )
-                                                                            <tr id="mDelete{{ $j+50000 }}">
-                                                                                <td>
-                                                                                    <select class="form-select mb-3" name="medicine_equipment_id[]" aria-label="Default select example">
-                                                                                        @foreach($medicineEquipments as $allmedicineEquipments)
-
-                                                                                        <option value="{{ $allmedicineEquipments->name }}" {{ $allTherapyIngredient ==  $allmedicineEquipments->name ? 'selected':'' }}>{{ $allmedicineEquipments->name }}</option>
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                </td>
-
-                                                                                <td>
-
-                                                                                    <button type="button" name="add"  id=""
-                                                                                            class="btn btn-outline-primary dynamic-ar">Add New Equipment
-                                                                                    </button>
-
-
-
-
-                                                                                </td>
-                                                                            </tr>
-                                                                            @else
-                                                                            <tr id="mDelete{{ $j+50000 }}">
-                                                                                <td>
-                                                                                    <select class="form-select mb-3" name="medicine_equipment_id[]" aria-label="Default select example">
-                                                                                        @foreach($medicineEquipments as $allmedicineEquipments)
-
-                                                                                        <option value="{{ $allmedicineEquipments->name }}" {{ $allTherapyIngredient ==  $allmedicineEquipments->name ? 'selected':'' }}>{{ $allmedicineEquipments->name }}</option>
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                </td>
-
-                                                                                <td>
-
-
-
-                                                                                    <button type="button" id="remove-input-fieldd{{ $j+50000 }}" class="btn btn-outline-danger ">Delete</button>
-
-
-                                                                                </td>
-                                                                            </tr>
-                                                                            @endif
-                                                                            @endforeach
-                                                                        </table>
-                                                                    </div>
-
-
-
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary mt-3">Update</button>
-                                                            </form>
-                                                          </div>
-                                                      </div><!-- /.modal-content -->
-                                                  </div><!-- /.modal-dialog -->
-                                              </div><!-- /.modal -->
 
 
   @endif

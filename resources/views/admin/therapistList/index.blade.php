@@ -80,6 +80,17 @@ Therapist | {{ $ins_name }}
                                         <td class="email">{{ $allTherapistList->dob }}</td>
                                         <td class="email">{{ $allTherapistList->years_of_experience }}</td>
                                         <td>
+
+
+
+
+                                            @if (Auth::guard('admin')->user()->can('therapistView'))
+                                            <a href="{{ route('therapist.show',$allTherapistList->id) }}"
+                                            class="btn btn-success waves-light waves-effect  btn-sm" >
+                                            <i class="ri-eye-fill "></i></a>
+@endif
+
+
                                             @if (Auth::guard('admin')->user()->can('therapistUpdate'))
                                             <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg{{ $allTherapistList->id }}"
                                             class="btn btn-primary waves-light waves-effect  btn-sm" >

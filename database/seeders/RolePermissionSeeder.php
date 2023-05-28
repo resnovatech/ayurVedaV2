@@ -273,6 +273,33 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
+                'group_name' => 'therapyPackages',
+                'permissions' => [
+                    'therapyPackagesAdd',
+                    'therapyPackagesView',
+                    'therapyPackagesDelete',
+                    'therapyPackagesUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'agreementFormOne',
+                'permissions' => [
+                    'agreementFormOneAdd',
+                    'agreementFormOneView',
+                    'agreementFormOneDelete',
+                    'agreementFormOneUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'agreementFormTwo',
+                'permissions' => [
+                    'agreementFormTwoAdd',
+                    'agreementFormTwoView',
+                    'agreementFormTwoDelete',
+                    'agreementFormTwoUpdate',
+                ]
+            ],
+            [
                 'group_name' => 'medicineEquipment',
                 'permissions' => [
                     'medicineEquipmentAdd',
