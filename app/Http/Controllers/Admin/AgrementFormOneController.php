@@ -22,6 +22,49 @@ class AgrementFormOneController extends Controller
         });
     }
 
+
+    public function searchPatientFromVamanKarma(Request $request)
+    {
+
+        $checkValueAvailableOrNot = Patient::where('patient_id',$request->get('search'))
+        ->orwhere('name',$request->get('search'))
+        ->orwhere('phone_or_mobile_number',$request->get('search'))->value('name');
+
+
+        if(empty($checkValueAvailableOrNot)){
+
+            $data = PatientAdmit::select("name as value","patient_id as label", "age",'gender')
+            ->where('patient_id', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+            ->get();
+
+        }else{
+
+
+            $data = Patient::select("name as value","patient_id as label", "age",'gender')
+          ->where('patient_id', 'LIKE', '%'. $request->get('search'). '%')
+          ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+          ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+          ->get();
+
+        }
+
+
+
+
+
+
+
+
+return response()->json($data);
+
+
+
+
+
+    }
+
     public function index(){
 
 

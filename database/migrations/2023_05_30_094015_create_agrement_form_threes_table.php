@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agrement_form_ones', function (Blueprint $table) {
+        Schema::create('agrement_form_threes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
             $table->foreign('admin_id')->references('id')->on('admins');
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('snehpanam');
             $table->string('pradhan_karma');
             $table->string('blood_pressure');
+            $table->string('virechan_yog');
             $table->string('nadi');
             $table->string('samyak_lakshana_vegaki');
             $table->string('samyak_lakshana_manaki');
@@ -44,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agrement_form_ones');
+        Schema::dropIfExists('agrement_form_threes');
     }
 };

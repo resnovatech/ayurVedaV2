@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\TreatMentChartController;
 use App\Http\Controllers\Admin\TherapyPackageController;
 use App\Http\Controllers\Admin\AgrementFormOneController;
 use App\Http\Controllers\Admin\AgrementFormTwoController;
+use App\Http\Controllers\Admin\AgrementFormThreeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,8 +75,16 @@ Route::group(['prefix' => 'admin'], function () {
     //therapy_package
 
 
+    Route::resource('agreementFormThree', AgrementFormThreeController::class);
     Route::resource('agreementFormTwo', AgrementFormTwoController::class);
     Route::resource('agreementFormOne', AgrementFormOneController::class);
+
+    Route::controller(AgrementFormOneController::class)->group(function () {
+
+        Route::get('/searchPatientFromVamanKarma', 'searchPatientFromVamanKarma')->name('searchPatientFromVamanKarma');
+        Route::get('/searchPatientFromVamanKarma', 'searchPatientFromVamanKarma')->name('searchPatientFromVamanKarma');
+    });
+
 
     Route::resource('therapyPackages', TherapyPackageController::class);
 

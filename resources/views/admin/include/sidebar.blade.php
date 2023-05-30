@@ -311,12 +311,18 @@ $usr = Auth::guard('admin')->user();
                         <ul class="nav nav-sm flex-column">
                             @if ( $usr->can('agreementFormOneAdd')  || $usr->can('agreementFormOneView') ||  $usr->can('agreementFormOneDelete') ||  $usr->can('agreementFormOneUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('agreementFormOne.index') }}" class="nav-link {{ Route::is('agrementFormOne.index') ? 'active' : '' }}" data-key="t-basic-tables">Agreement Form One</a>
+                                <a href="{{ route('agreementFormOne.index') }}" class="nav-link {{ Route::is('agrementFormOne.index') ? 'active' : '' }}" data-key="t-basic-tables">Vaman Karma</a>
                             </li>
                             @endif
                             @if ( $usr->can('agreementFormTwoAdd')  || $usr->can('agreementFormTwoView') ||  $usr->can('agreementFormTwoDelete') ||  $usr->can('agreementFormTwoUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('agreementFormTwo.index') }}" class="nav-link {{ Route::is('agrementFormTwo.index') ? 'active' : '' }}" data-key="t-grid-js">Agreement Form Two</a>
+                                <a href="{{ route('agreementFormTwo.index') }}" class="nav-link {{ Route::is('agrementFormTwo.index') ? 'active' : '' }}" data-key="t-grid-js">Panchkarma</a>
+                            </li>
+                            @endif
+
+                            @if ( $usr->can('agreementFormThreeAdd')  || $usr->can('agreementFormThreeView') ||  $usr->can('agreementFormThreeDelete') ||  $usr->can('agreementFormThreeUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('agreementFormThree.index') }}" class="nav-link {{ Route::is('agrementFormThree.index') ? 'active' : '' }}" data-key="t-grid-js">Virechan Karma</a>
                             </li>
                             @endif
 

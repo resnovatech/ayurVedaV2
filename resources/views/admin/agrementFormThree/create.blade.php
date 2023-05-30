@@ -1,7 +1,7 @@
 @extends('admin.master.masterCreate')
 
 @section('title')
-Create Vaman Karma  | {{ $ins_name }}
+Create Virechan Karma  | {{ $ins_name }}
 @endsection
 
 
@@ -18,12 +18,12 @@ Create Vaman Karma  | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Vaman Karma Information</h4>
+                    <h4 class="mb-sm-0">Virechan Karma Information</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                            <li class="breadcrumb-item active">Vaman Karma</li>
+                            <li class="breadcrumb-item active">Virechan Karma</li>
                         </ol>
                     </div>
 
@@ -97,8 +97,8 @@ Create Vaman Karma  | {{ $ins_name }}
                                 <input type="text" name ="snehpanam" class="form-control" id="" placeholder="Snehpanam" required>
                             </div>
 
-                            <div class="col-12 mb-2 ">
-                                <center><h3>Vaman Karma</h3></center>
+                            <div class="col-12 mt-2 ">
+                                <center><h3>Virechan Karma</h3></center>
                                 <div class="table-responsive mt-3">
                                 <table class="table table-bordered" id="dynamicAddRemove">
                                     <thead class="bg-success">
@@ -148,58 +148,39 @@ Create Vaman Karma  | {{ $ins_name }}
 
 
 
-                            <div class="col-4 mb-2">
+                            <div class="col-6 mb-2">
                                 <label for="" class="form-label">Pradhan Karma</label>
                                 <input type="text" name ="pradhan_karma" class="form-control" id="" placeholder="Pradhan Karma" required>
                             </div>
 
-                            <div class="col-4 mb-2">
+                            <div class="col-6 mb-2">
                                 <label for="" class="form-label">Blood Pressure</label>
                                 <input type="text" name ="blood_pressure" class="form-control" id="" placeholder="Blood Pressure" required>
                             </div>
 
-                            <div class="col-4 mb-2">
+                            <div class="col-6 mb-2">
                                 <label for="" class="form-label">Nadi</label>
                                 <input type="text" name ="nadi" class="form-control" id="" placeholder="Nadi" required>
                             </div>
 
 
 
-                            <div class="col-12 mb-2 ">
-                                <center><h3>Vaman Yog</h3></center>
-
-                                <div class="table-responsive mt-3">
-                                    <table class="table table-bordered" id="dynamicAddRemoveYog">
-                                        <thead class="bg-success">
-                                            <tr>
-                                              <th scope="col">Name</th>
-                                              <th scope="col">Time</th>
-                                              <th scope="col">Quantity</th>
-                                              <th scope="col">Action</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            <tr>
-                                                <td><select id="name_of_vaman_yog0" name="name_of_vaman_yog[]" class="form-control">
-                                                    <option value="">---please select---</option>
-                                                    <option value="Madhur Payash">Madhur Payash</option>
-                                                    <option value="Kasheer Panam">Kasheer Panam</option>
-                                                    <option value="Fanta Panam">Fanta Panam</option>
-                                                    </select>
-                                                </td>
-                                                <td><input type="text" id="vaman_yog_time0" name="vaman_yog_time[]" class="form-control"/></td>
-                                                <td><input type="text" id="vaman_yog_quantity0"  name="vaman_yog_quantity[]" class="form-control"/></td>
-                                              <td><button type="button" name="add" id="dynamic-ar-yog" class="btn btn-outline-primary">Add</button></td>
-
-
-                                            </tr>
-
-                                          </tbody>
-                                      </table>
-                                    </div>
+                            <div class="col-6 mb-2">
+                                <label for="" class="form-label">Virechan Yog</label>
+                                <select name ="virechan_yog" class="form-control"  placeholder="Virechan Yog" required>
+                                    <option value="">---please select---</option>
+                                    <option value="Trivruth Avalehya">Trivruth Avalehya</option>
+                                    <option value="Trifala Kashay">Trifala Kashay</option>
+                                    <option value="Draksha Rasa">Draksha Rasa</option>
+                                    <option value="Saindhav Jala">Saindhav Jala</option>
+                                </select>
                             </div>
 
-                            <div class="col-12 mb-2 ">
+
+
+
+
+                            <div class="col-12 mt-2 ">
                                 <center><h3>Samyak Lakshana</h3></center>
 
                                 <div class="row">

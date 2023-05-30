@@ -300,6 +300,15 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
+                'group_name' => 'agreementFormThree',
+                'permissions' => [
+                    'agreementFormThreeAdd',
+                    'agreementFormThreeView',
+                    'agreementFormThreeDelete',
+                    'agreementFormThreeUpdate',
+                ]
+            ],
+            [
                 'group_name' => 'medicineEquipment',
                 'permissions' => [
                     'medicineEquipmentAdd',

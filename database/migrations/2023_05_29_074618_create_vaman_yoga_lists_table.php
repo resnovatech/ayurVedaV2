@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('samyak_lakshanas', function (Blueprint $table) {
+        Schema::create('vaman_yoga_lists', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('agrement_form_one_id')->unsigned();
             $table->foreign('agrement_form_one_id')->references('id')->on('agrement_form_ones');
-            $table->string('vdgaki');
-            $table->string('manaki');
-            $table->string('laingaki');
+            $table->string('yoga_name');
+            $table->string('time');
+            $table->string('quantity');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('samyak_lakshanas');
+        Schema::dropIfExists('vaman_yoga_lists');
     }
 };
