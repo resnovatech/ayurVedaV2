@@ -82,7 +82,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::controller(AgrementFormOneController::class)->group(function () {
 
         Route::get('/searchPatientFromVamanKarma', 'searchPatientFromVamanKarma')->name('searchPatientFromVamanKarma');
-        Route::get('/searchPatientFromVamanKarma', 'searchPatientFromVamanKarma')->name('searchPatientFromVamanKarma');
+       
     });
 
 

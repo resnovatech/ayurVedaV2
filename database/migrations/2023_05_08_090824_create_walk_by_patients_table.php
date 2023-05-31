@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->string('patient_reg_id');
             $table->string('name');
             $table->string('refer_from');

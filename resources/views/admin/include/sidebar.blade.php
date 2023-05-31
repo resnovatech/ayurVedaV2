@@ -48,7 +48,7 @@ $usr = Auth::guard('admin')->user();
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index') || Route::is('patientAdmits.show') || Route::is('patients.edit') || Route::is('patients.create') || Route::is('patients.index') || Route::is('patients.show') || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index') || Route::is('walkByPatients.show') ? 'active' : '' }}" href="#sidebarIcons" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarIcons">
-                        <i class="ri-apps-2-line"></i> <span data-key="t-icons">Patient</span>
+                        <i class="ri-user-shared-line"></i> <span data-key="t-icons">Patient</span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index') || Route::is('patientAdmits.show') || Route::is('patients.edit') || Route::is('patients.create') || Route::is('patients.index') || Route::is('patients.show')  || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index') || Route::is('walkByPatients.show') ? 'show' : '' }}" id="sidebarIcons">
                         <ul class="nav nav-sm flex-column">
@@ -79,7 +79,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('doctorAppointments.index') ||  Route::is('doctorAppointments.create') || Route::is('doctorAppointments.edit') || Route::is('doctorAppointments.show') ? 'active':'' }}" href="#doctorAppointment" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="ri-baidu-fill"></i> <span data-key="t-landing">Doctor Appointment</span>
+                        <i class="ri-task-fill"></i> <span data-key="t-landing">Doctor Appointment</span>
                     </a>
                     <div class="collapse menu-dropdown {{ Route::is('doctorAppointments.index') ||  Route::is('doctorAppointments.create') || Route::is('doctorAppointments.edit') || Route::is('doctorAppointments.show') ? 'show':'' }}" id="doctorAppointment">
                         <ul class="nav nav-sm flex-column">
@@ -105,7 +105,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('walkByPatientTherapy.index') ||  Route::is('walkByPatientTherapy.create') || Route::is('walkByPatientTherapy.edit') || Route::is('walkByPatientTherapy.show') ? 'active':'' }}" href="#therapyAppointment23" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="bx bx-receipt"></i> <span data-key="t-landing">Single Therapy Appointment</span>
+                        <i class="ri-file-list-2-fill"></i> <span data-key="t-landing">Single Therapy Appointment</span>
                     </a>
                     <div class="collapse menu-dropdown {{ Route::is('walkByPatientTherapy.index') ||  Route::is('walkByPatientTherapy.create') || Route::is('walkByPatientTherapy.edit') || Route::is('walkByPatientTherapy.show') ? 'show':'' }}" id="therapyAppointment23">
                         <ul class="nav nav-sm flex-column">
@@ -129,7 +129,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('therapyAppointments.index') ||  Route::is('therapyAppointments.create') || Route::is('therapyAppointments.edit') || Route::is('therapyAppointments.show') ? 'active':'' }}" href="#therapyAppointment" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="bx bx-receipt"></i> <span data-key="t-landing">Therapy Appointment</span>
+                        <i class="ri-bill-line"></i> <span data-key="t-landing">Therapy Appointment</span>
                     </a>
                     <div class="collapse menu-dropdown {{ Route::is('therapyAppointments.index') ||  Route::is('therapyAppointments.create') || Route::is('therapyAppointments.edit') || Route::is('therapyAppointments.show') ? 'show':'' }}" id="therapyAppointment">
                         <ul class="nav nav-sm flex-column">
@@ -153,7 +153,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('billings.index') ||  Route::is('billings.create') || Route::is('billings.edit') || Route::is('billings.show') ||  Route::is('revisedBillings.index') ||  Route::is('revisedBillings.create') || Route::is('revisedBillings.edit') || Route::is('revisedBillings.show') ? 'active':'' }}" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="ri-layout-grid-line"></i> <span data-key="t-tables">Billing</span>
+                        <i class="las la-file-invoice"></i> <span data-key="t-tables">Billing</span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('billings.index') ||  Route::is('billings.create') || Route::is('billings.edit') || Route::is('billings.show') ||  Route::is('revisedBillings.index') ||  Route::is('revisedBillings.create') || Route::is('revisedBillings.edit') || Route::is('revisedBillings.show') ? 'show':'' }}" id="sidebarAuth">
                         <ul class="nav nav-sm flex-column">
@@ -177,7 +177,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('DoctorWaitingList') || Route::is('patientPrecriptions.show') ? 'active':'' }}" href="#doctorWaiting" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
-                        <i class="ri-hail-line"></i> <span data-key="t-tables">Doctor Attend</span>
+                        <i class="ri-file-edit-line"></i> <span data-key="t-tables">Doctor Attend</span>
                     </a>
                     <div class="collapse menu-dropdown {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('DoctorWaitingList') || Route::is('patientPrecriptions.show') ? 'show':'' }}" id="doctorWaiting">
                         <ul class="nav nav-sm flex-column">
@@ -202,7 +202,7 @@ $usr = Auth::guard('admin')->user();
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('doctors.show') || Route::is('doctors.create') ||Route::is('doctors.edit') || Route::is('doctors.index') ? 'active' : '' }}" href="#sidebarTables" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTables">
-                        <i class="ri-layout-grid-line"></i> <span data-key="t-tables">Doctor</span>
+                        <i class="las la-stethoscope"></i> <span data-key="t-tables">Doctor</span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('doctors.show') || Route::is('doctors.create') ||Route::is('doctors.edit') || Route::is('doctors.index') ? 'show' : '' }}" id="sidebarTables">
                         <ul class="nav nav-sm flex-column">
@@ -226,7 +226,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') || Route::is('therapyPackages.index') ? 'active' : '' }}" href="#prescriptionList" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
-                        <i class="ri-landscape-line"></i> <span data-key="t-tables">Prescription Equipment </span>
+                        <i class="ri-survey-fill"></i> <span data-key="t-tables">Prescription Equipment </span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') ||  Route::is('medicineLists.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') || Route::is('therapyPackages.index') ? 'show' : '' }}" id="prescriptionList">
                         <ul class="nav nav-sm flex-column">
@@ -269,7 +269,7 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('medicineEquipment.index') ||  Route::is('medicineLists.index') || Route::is('powderList.index') || Route::is('packageList.index') ? 'active' : '' }}" href="#prescriptionListTwo" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
-                        <i class="ri-landscape-line"></i> <span data-key="t-tables">Medicine Equipment </span>
+                        <i class="las la-medkit"></i> <span data-key="t-tables">Medicine Equipment </span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('medicineEquipment.index') ||  Route::is('medicineLists.index') || Route::is('powderList.index') || Route::is('packageList.index') ? 'show' : '' }}" id="prescriptionListTwo">
                         <ul class="nav nav-sm flex-column">
@@ -303,26 +303,26 @@ $usr = Auth::guard('admin')->user();
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{Route::is('agrementFormTwo.index') ||  Route::is('agrementFormTwo.create') || Route::is('agrementFormTwo.edit') || Route::is('agrementFormTwo.show') || Route::is('agrementFormOne.index') ||  Route::is('agrementFormOne.create') || Route::is('agrementFormOne.edit') || Route::is('agrementFormOne.show') ? 'active' : '' }}" href="#prescriptionListTwoo" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link {{Route::is('agreementFormThree.edit') || Route::is('agreementFormThree.index') || Route::is('agreementFormThree.create') || Route::is('agreementFormTwo.index') ||  Route::is('agreementFormTwo.create') || Route::is('agreementFormTwo.edit') || Route::is('agreementFormTwo.show') || Route::is('agreementFormOne.index') ||  Route::is('agreementFormOne.create') || Route::is('agreementFormOne.edit') || Route::is('agreementFormOne.show') ? 'active' : '' }}" href="#prescriptionListTwoo" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
-                        <i class="ri-landscape-line"></i> <span data-key="t-tables">Agreement Form </span>
+                        <i class="ri-clipboard-fill"></i> <span data-key="t-tables">Agreement Form </span>
                     </a>
-                    <div class="collapse menu-dropdown {{Route::is('agrementFormTwo.index') ||  Route::is('agrementFormTwo.create') || Route::is('agrementFormTwo.edit') || Route::is('agrementFormTwo.show') || Route::is('agrementFormOne.index') ||  Route::is('agrementFormOne.create') || Route::is('agrementFormOne.edit') || Route::is('agrementFormOne.show') ? 'show' : '' }}" id="prescriptionListTwoo">
+                    <div class="collapse menu-dropdown {{Route::is('agreementFormThree.edit') || Route::is('agreementFormThree.index') || Route::is('agreementFormThree.create') || Route::is('agreementFormTwo.index') ||  Route::is('agreementFormTwo.create') || Route::is('agreementFormTwo.edit') || Route::is('agreementFormTwo.show') || Route::is('agreementFormOne.index') ||  Route::is('agreementFormOne.create') || Route::is('agreementFormOne.edit') || Route::is('agreementFormOne.show') ? 'show' : '' }}" id="prescriptionListTwoo">
                         <ul class="nav nav-sm flex-column">
                             @if ( $usr->can('agreementFormOneAdd')  || $usr->can('agreementFormOneView') ||  $usr->can('agreementFormOneDelete') ||  $usr->can('agreementFormOneUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('agreementFormOne.index') }}" class="nav-link {{ Route::is('agrementFormOne.index') ? 'active' : '' }}" data-key="t-basic-tables">Vaman Karma</a>
+                                <a href="{{ route('agreementFormOne.index') }}" class="nav-link {{ Route::is('agreementFormOne.index') ? 'active' : '' }}" data-key="t-basic-tables">Vaman Karma</a>
                             </li>
                             @endif
                             @if ( $usr->can('agreementFormTwoAdd')  || $usr->can('agreementFormTwoView') ||  $usr->can('agreementFormTwoDelete') ||  $usr->can('agreementFormTwoUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('agreementFormTwo.index') }}" class="nav-link {{ Route::is('agrementFormTwo.index') ? 'active' : '' }}" data-key="t-grid-js">Panchkarma</a>
+                                <a href="{{ route('agreementFormTwo.index') }}" class="nav-link {{ Route::is('agreementFormTwo.index') ? 'active' : '' }}" data-key="t-grid-js">Panchkarma</a>
                             </li>
                             @endif
 
                             @if ( $usr->can('agreementFormThreeAdd')  || $usr->can('agreementFormThreeView') ||  $usr->can('agreementFormThreeDelete') ||  $usr->can('agreementFormThreeUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('agreementFormThree.index') }}" class="nav-link {{ Route::is('agrementFormThree.index') ? 'active' : '' }}" data-key="t-grid-js">Virechan Karma</a>
+                                <a href="{{ route('agreementFormThree.index') }}" class="nav-link {{ Route::is('agreementFormThree.index') ? 'active' : '' }}" data-key="t-grid-js">Virechan Karma</a>
                             </li>
                             @endif
 
@@ -338,7 +338,7 @@ $usr = Auth::guard('admin')->user();
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('treatMentChart.index') ? 'active' : '' }}" href="{{ route('treatMentChart.index') }}">
-                        <i class="ri-align-justify"></i> <span data-key="t-widgets">TreatMent Chart</span>
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">TreatMent Chart</span>
                     </a>
                 </li>
 
@@ -346,17 +346,17 @@ $usr = Auth::guard('admin')->user();
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('staff.index') ? 'active' : '' }}" href="{{ route('staff.index') }}">
-                        <i class="ri-align-justify"></i> <span data-key="t-widgets">Staff</span>
+                        <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-widgets">Staff</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('reward.index') ? 'active' : '' }}" href="{{ route('reward.index') }}">
-                        <i class="ri-paypal-fill"></i> <span data-key="t-widgets">Reward</span>
+                        <i class="bx bx-money"></i> <span data-key="t-widgets">Reward</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('therapist.show') || Route::is('therapist.index') ? 'active' : '' }}" href="{{ route('therapist.index') }}">
-                        <i class="ri-barricade-fill"></i> <span data-key="t-widgets">Therapist</span>
+                        <i class="mdi mdi-doctor"></i> <span data-key="t-widgets">Therapist</span>
                     </a>
                 </li>
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('therapy_appointments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->string('patient_id');
             $table->string('patient_type')->nullable();
             $table->timestamps();

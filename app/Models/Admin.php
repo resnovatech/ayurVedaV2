@@ -97,6 +97,22 @@ class Admin extends Authenticatable
         return $this->hasMany('App\Models\Therapist');
     }
 
+    public function agrement_form_twos()
+    {
+        return $this->hasMany('App\Models\AgrementFormTwo');
+    }
+
+    public function agrement_form_ones()
+    {
+        return $this->hasMany('App\Models\AgrementFormOne');
+    }
+
+
+    public function agrement_form_threes()
+    {
+        return $this->hasMany('App\Models\AgrementFormThree');
+    }
+
 
     public function therapyAppointmentDateAndTimes()
     {

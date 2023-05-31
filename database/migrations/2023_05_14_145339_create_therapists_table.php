@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('therapists', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->string('name');
             $table->string('email');
             $table->string('phone_or_mobile_number',11);

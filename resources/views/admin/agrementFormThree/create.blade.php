@@ -38,7 +38,7 @@ Create Virechan Karma  | {{ $ins_name }}
 
 
                     <div class="card-body">
-                        <form action="{{ route('agreementFormOne.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                        <form action="{{ route('agreementFormThree.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                             @csrf
                         <div class="row">
 
@@ -209,7 +209,7 @@ Create Virechan Karma  | {{ $ins_name }}
 
                             <div class="col-4 mb-2">
                                 <label for="" class="form-label">Laingaki</label>
-                                <select  name="laingaki[]" class="form-control">
+                                <select  name="laingaki" class="form-control">
                                     <option value="">---please select---</option>
                                     <option value="Expulsion Of Vata">Expulsion Of Vata</option>
                                     <option value="Pitta">Pitta</option>
@@ -221,7 +221,7 @@ Create Virechan Karma  | {{ $ins_name }}
 
                             <div class="col-4 mb-2">
                                 <label for="" class="form-label">Type Of Shodhanam</label>
-                                <select  name="type_of_shodhanam[]" class="form-control">
+                                <select  name="type_of_shodhanam" class="form-control">
                                     <option value="">---please select---</option>
                                     <option value="Pravara">Pravara</option>
                                     <option value="Madhyama">Madhyama</option>

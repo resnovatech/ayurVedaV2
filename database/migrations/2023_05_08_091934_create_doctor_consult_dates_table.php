@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('doctor_consult_dates', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('doctor_id')->unsigned();
-            $table->foreign('doctor_id')->references('id')->on('doctors');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->string('day');
             $table->string('start_time');
             $table->string('end_time');

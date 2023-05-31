@@ -33,6 +33,7 @@ Virechan Karma List
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">Virechan Karma Info</h4>
+                        @include('flash_message')
                     </div><!-- end card header -->
 
                     <div class="card-body">
@@ -46,6 +47,54 @@ Virechan Karma List
                             </div>
 
                         </div>
+
+                        <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
+                            <thead >
+                            <tr>
+                                <th >Sl</th>
+                                <th>Patient Name</th>
+                                <th>Patient Opd No</th>
+                                <th >Patient Age</th>
+                                <th >Patient Gender</th>
+                                <th >Action</th>
+                            </tr>
+                            </thead>
+                            <tbody >
+
+                                @foreach($agrementFormThreeList as $key=>$allAgrementFormThreeList)
+                            <tr>
+
+                                <td >{{ $key+1 }}</td>
+                                <td >{{ $allAgrementFormThreeList->name }}</td>
+                                <td >{{ $allAgrementFormThreeList->opd_no }}</td>
+                                <td >{{ $allAgrementFormThreeList->age }}</td>
+
+                                <td >{{ $allAgrementFormThreeList->gender }}</td>
+                                <td>
+                                    <div class="dropdown d-inline-block">
+                                        <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="ri-more-fill align-middle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a href="{{ route('agreementFormThree.show',$allAgrementFormThreeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> Print</a></li>
+                                            <li><a href="{{ route('agreementFormThree.edit',$allAgrementFormThreeList->id) }}" class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                            <li>
+                                                <a class="dropdown-item remove-item-btn" onclick="deleteTag({{ $allAgrementFormThreeList->id}})" >
+                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                </a>
+                                                <form id="delete-form-{{ $allAgrementFormThreeList->id }}" action="{{ route('agreementFormThree.destroy',$allAgrementFormThreeList->id) }}" method="POST" style="display: none;">
+                                                    @method('DELETE')
+                                                                                  @csrf
+
+                                                                              </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
 
 
                     </div>

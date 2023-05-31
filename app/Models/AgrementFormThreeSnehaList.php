@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AgrementFormOneSnehaList extends Model
+class AgrementFormThreeSnehaList extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'agrement_form_one_id',
+        'agrement_form_three_id',
         'sneha_name',
         'day_one',
         'day_two',
@@ -22,8 +22,8 @@ class AgrementFormOneSnehaList extends Model
         'remark',
     ];
 
-    public function agrement_form_ones()
+    public function agrement_form_threes()
     {
-        return $this->belongsTo('App\Models\AgrementFormOne');
+        return $this->belongsTo('App\Models\AgrementFormThree');
     }
 }

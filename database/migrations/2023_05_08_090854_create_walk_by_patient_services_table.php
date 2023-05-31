@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('walk_by_patient_services', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('walk_by_patient_id')->unsigned();
-            $table->foreign('walk_by_patient_id')->references('id')->on('walk_by_patients');
+            $table->foreign('walk_by_patient_id')->references('id')->on('walk_by_patients')->onDelete('cascade');
             $table->string('name');
             $table->text('detail');
             $table->timestamps();

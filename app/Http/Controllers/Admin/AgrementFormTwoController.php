@@ -58,6 +58,11 @@ class AgrementFormTwoController extends Controller
                     abort(403, 'Sorry !! You are Unauthorized to View !');
                        }
 
+                       $agrementFormTwoList = AgrementFormTwo::find($id);
+                       $walkByPatientList = WalkByPatient::latest()->get();
+                       $patientList = Patient::latest()->get();
+                       return view('admin.agrementFormTwo.edit',compact('agrementFormTwoList','walkByPatientList','patientList'));
+
 
                    }
 
@@ -91,6 +96,23 @@ class AgrementFormTwoController extends Controller
                             abort(403, 'Sorry !! You are Unauthorized to View !');
                                }
 
+                              // dd($request->all());
+
+                               $request->validate([
+
+                                'name' => 'required',
+                                'opd_no' => 'required',
+
+                            ]);
+
+                    $panchKarma = new AgrementFormTwo();
+                    $panchKarma->admin_id = Auth::guard('admin')->user()->id;
+                    $panchKarma->name = $request->name;
+                    $panchKarma->opd_no = $request->opd_no;
+                    $panchKarma->save();
+
+
+return redirect()->route('agreementFormTwo.index')->with('success','Added successfully!');
 
                            }
 
@@ -103,6 +125,16 @@ class AgrementFormTwoController extends Controller
                                    }
 
 
+                                   $panchKarma = AgrementFormTwo::find($id);
+                    $panchKarma->admin_id = Auth::guard('admin')->user()->id;
+                    $panchKarma->name = $request->name;
+                    $panchKarma->opd_no = $request->opd_no;
+                    $panchKarma->save();
+
+
+return redirect()->route('agreementFormTwo.index')->with('info','Updated successfully!');
+
+
                                }
 
 
@@ -112,6 +144,16 @@ class AgrementFormTwoController extends Controller
                                 if (is_null($this->user) || !$this->user->can('agreementFormTwoDelete')) {
                                     abort(403, 'Sorry !! You are Unauthorized to View !');
                                        }
+
+
+                                       $admins = AgrementFormTwo::where('id',$id)->delete();
+
+
+
+
+
+
+                                                  return back()->with('error','Deleted successfully!');
 
 
                                    }

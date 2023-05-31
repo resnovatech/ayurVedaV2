@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('agrement_form_threes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->string('opd_no');
             $table->string('name');
             $table->string('age',2);

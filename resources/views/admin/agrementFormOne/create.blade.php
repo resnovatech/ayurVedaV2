@@ -45,7 +45,7 @@ Create Vaman Karma  | {{ $ins_name }}
 
                             <div class="col-6 mb-2">
                                 <label for="" class="form-label">Name</label>
-                                <input type="text" name ="name" class="form-control nameWiseData" id="search" placeholder="Type Name/Phone/Patient ID" required>
+                                <input type="text" name ="name" class="form-control nameWiseData" id="searchnew" placeholder="Type Name/Phone/Patient ID" required>
                             </div>
                             <div class="col-6">
                                 <label for="" class="form-label">Opd No</label>
@@ -125,15 +125,15 @@ Create Vaman Karma  | {{ $ins_name }}
 
                                         </tr>
                                         <tr>
-                                            <td><input type="text" id="name_of_sneha0" name="name_of_sneha[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_one0" name="day_one[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_two0"  name="day_two[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_three0"  name="day_three[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_four0"  name="day_four[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_five0" name="day_five[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_six0" name="day_six[]" class="form-control"/></td>
-                                            <td><input type="text" id="day_seven0" name="day_seven[]" class="form-control"/></td>
-                                            <td><input type="text" id="remark0" name="remark[]" class="form-control"/></td>
+                                            <td><input type="text" id="name_of_sneha0" name="name_of_sneha[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_one0" name="day_one[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_two0"  name="day_two[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_three0"  name="day_three[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_four0"  name="day_four[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_five0" name="day_five[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_six0" name="day_six[]" class="form-control" required/></td>
+                                            <td><input type="text" id="day_seven0" name="day_seven[]" class="form-control" required/></td>
+                                            <td><input type="text" id="remark0" name="remark[]" class="form-control" required/></td>
                                             <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add</button></td>
                                         </tr>
                                       </tbody>
@@ -180,15 +180,15 @@ Create Vaman Karma  | {{ $ins_name }}
                                           </thead>
                                           <tbody>
                                             <tr>
-                                                <td><select id="name_of_vaman_yog0" name="name_of_vaman_yog[]" class="form-control">
+                                                <td><select id="name_of_vaman_yog0" name="name_of_vaman_yog[]" class="form-control" required>
                                                     <option value="">---please select---</option>
                                                     <option value="Madhur Payash">Madhur Payash</option>
                                                     <option value="Kasheer Panam">Kasheer Panam</option>
                                                     <option value="Fanta Panam">Fanta Panam</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" id="vaman_yog_time0" name="vaman_yog_time[]" class="form-control"/></td>
-                                                <td><input type="text" id="vaman_yog_quantity0"  name="vaman_yog_quantity[]" class="form-control"/></td>
+                                                <td><input type="text" id="vaman_yog_time0" name="vaman_yog_time[]" class="form-control" required/></td>
+                                                <td><input type="text" id="vaman_yog_quantity0"  name="vaman_yog_quantity[]" class="form-control" required/></td>
                                               <td><button type="button" name="add" id="dynamic-ar-yog" class="btn btn-outline-primary">Add</button></td>
 
 
@@ -228,7 +228,7 @@ Create Vaman Karma  | {{ $ins_name }}
 
                             <div class="col-4 mb-2">
                                 <label for="" class="form-label">Laingaki</label>
-                                <select  name="laingaki[]" class="form-control">
+                                <select  name="laingaki" class="form-control" required>
                                     <option value="">---please select---</option>
                                     <option value="Expulsion Of Vata">Expulsion Of Vata</option>
                                     <option value="Pitta">Pitta</option>
@@ -240,7 +240,7 @@ Create Vaman Karma  | {{ $ins_name }}
 
                             <div class="col-4 mb-2">
                                 <label for="" class="form-label">Type Of Shodhanam</label>
-                                <select  name="type_of_shodhanam[]" class="form-control">
+                                <select  name="type_of_shodhanam" class="form-control" required>
                                     <option value="">---please select---</option>
                                     <option value="Pravara">Pravara</option>
                                     <option value="Madhyama">Madhyama</option>
@@ -273,7 +273,7 @@ Create Vaman Karma  | {{ $ins_name }}
 <script type="text/javascript">
 $(".nameWiseData").keyup(function () {
 
-    //alert(22);
+
     console.log(22);
 
 });
@@ -284,7 +284,7 @@ $(".nameWiseData").keyup(function () {
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" id="name_of_sneha'+i+'" name="name_of_sneha[]" class="form-control"/></td><td><input type="text" id="day_one'+i+'" name="day_one[]" class="form-control"/></td><td><input type="text" id="day_two'+i+'"  name="day_two[]" class="form-control"/></td><td><input type="text" id="day_three'+i+'"  name="day_three[]" class="form-control"/></td><td><input type="text" id="day_four'+i+'"  name="day_four[]" class="form-control"/></td><td><input type="text" id="day_five'+i+'" name="day_five[]" class="form-control"/></td><td><input type="text" id="day_six'+i+'" name="day_six[]" class="form-control"/></td><td><input type="text" id="day_seven'+i+'" name="day_seven[]" class="form-control"/></td><td><input type="text" id="remark'+i+'" name="remark[]" class="form-control"/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+        $("#dynamicAddRemove").append('<tr><td><input type="text" id="name_of_sneha'+i+'" name="name_of_sneha[]" class="form-control" required/></td><td><input type="text" id="day_one'+i+'" name="day_one[]" class="form-control" required/></td><td><input type="text" id="day_two'+i+'"  name="day_two[]" class="form-control" required/></td><td><input type="text" id="day_three'+i+'"  name="day_three[]" class="form-control" required/></td><td><input type="text" id="day_four'+i+'"  name="day_four[]" class="form-control" required/></td><td><input type="text" id="day_five'+i+'" name="day_five[]" class="form-control" required/></td><td><input type="text" id="day_six'+i+'" name="day_six[]" class="form-control" required/></td><td><input type="text" id="day_seven'+i+'" name="day_seven[]" class="form-control" required/></td><td><input type="text" id="remark'+i+'" name="remark[]" class="form-control" required/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
@@ -295,7 +295,7 @@ $(".nameWiseData").keyup(function () {
     var i = 0;
     $("#dynamic-ar-yog").click(function () {
         ++i;
-        $("#dynamicAddRemoveYog").append('<tr><td><select id="name_of_vaman_yog'+i+'" name="name_of_vaman_yog[]" class="form-control"><option value="">---please select---</option><option value="Madhur Payash">Madhur Payash</option><option value="Kasheer Panam">Kasheer Panam</option><option value="Fanta Panam">Fanta Panam</option></select></td><td><input type="text" id="vaman_yog_time'+i+'" name="vaman_yog_time[]" class="form-control"/></td><td><input type="text" id="vaman_yog_quantity'+i+'"  name="vaman_yog_quantity[]" class="form-control"/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+        $("#dynamicAddRemoveYog").append('<tr><td><select id="name_of_vaman_yog'+i+'" name="name_of_vaman_yog[]" class="form-control" required><option value="">---please select---</option><option value="Madhur Payash">Madhur Payash</option><option value="Kasheer Panam">Kasheer Panam</option><option value="Fanta Panam">Fanta Panam</option></select></td><td><input type="text" id="vaman_yog_time'+i+'" name="vaman_yog_time[]" class="form-control" required/></td><td><input type="text" id="vaman_yog_quantity'+i+'"  name="vaman_yog_quantity[]" class="form-control" required/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
@@ -306,7 +306,12 @@ $(".nameWiseData").keyup(function () {
 <script type="text/javascript">
 
 
-    $( "#search" ).autocomplete({
+
+
+    $( "#searchnew" ).autocomplete({
+
+
+
         source: function( request, response ) {
           $.ajax({
             url: '{{ route("searchPatientFromVamanKarma") }}',
@@ -321,7 +326,7 @@ $(".nameWiseData").keyup(function () {
           });
         },
         select: function (event, ui) {
-           $('#search').val(ui.item.value);
+           $('#searchnew').val(ui.item.value);
            $('#opd_no').val(ui.item.label);
            $('#age').val(ui.item.age);
            $('#gender').val(ui.item.gender);

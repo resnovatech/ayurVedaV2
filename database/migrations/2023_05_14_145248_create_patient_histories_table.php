@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('patient_histories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->bigInteger('doctor_id')->unsigned();
-            $table->foreign('doctor_id')->references('id')->on('doctors');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->bigInteger('doctor_appointment_id')->unsigned();
-            $table->foreign('doctor_appointment_id')->references('id')->on('doctor_appointments');
+            $table->foreign('doctor_appointment_id')->references('id')->on('doctor_appointments')->onDelete('cascade');
             $table->string('patient_id');
             $table->text('pradhan_vedana')->nullable();
             $table->text('vedana_vrutanta')->nullable();

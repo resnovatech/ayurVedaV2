@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('therapy_appointment_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('therapy_appointment_id')->unsigned();
-            $table->foreign('therapy_appointment_id')->references('id')->on('therapy_appointments');
+            $table->foreign('therapy_appointment_id')->references('id')->on('therapy_appointments')->onDelete('cascade');
             $table->string('therapy_name');
             $table->text('name');
             $table->string('amount');

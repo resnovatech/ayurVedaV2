@@ -38,7 +38,7 @@ Create Panchkarma  | {{ $ins_name }}
 
 
                     <div class="card-body">
-                        <form action="{{ route('agreementFormOne.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                        <form action="{{ route('agreementFormTwo.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                             @csrf
                         <div class="row">
 

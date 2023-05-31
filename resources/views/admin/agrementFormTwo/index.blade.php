@@ -33,6 +33,7 @@ Panchkarma List
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">Panchkarma Info</h4>
+                        @include('flash_message')
                     </div><!-- end card header -->
 
                     <div class="card-body">
@@ -46,6 +47,51 @@ Panchkarma List
                             </div>
 
                         </div>
+
+                        <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
+                            <thead >
+                            <tr>
+                                <th >Sl</th>
+                                <th>Patient Name</th>
+                                <th>Patient Opd No</th>
+
+                                <th >Action</th>
+                            </tr>
+                            </thead>
+                            <tbody >
+
+                                @foreach($agrementFormTwoList as $key=>$allAgrementFormTwoList)
+                            <tr>
+
+                                <td >{{ $key+1 }}</td>
+                                <td >{{ $allAgrementFormTwoList->name }}</td>
+                                <td >{{ $allAgrementFormTwoList->opd_no }}</td>
+
+                                <td>
+                                    <div class="dropdown d-inline-block">
+                                        <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="ri-more-fill align-middle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a href="{{ route('agreementFormTwo.show',$allAgrementFormTwoList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> Print</a></li>
+                                            <li><a href="{{ route('agreementFormTwo.edit',$allAgrementFormTwoList->id) }}" class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                            <li>
+                                                <a class="dropdown-item remove-item-btn" onclick="deleteTag({{ $allAgrementFormTwoList->id}})" >
+                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                </a>
+                                                <form id="delete-form-{{ $allAgrementFormTwoList->id }}" action="{{ route('agreementFormTwo.destroy',$allAgrementFormTwoList->id) }}" method="POST" style="display: none;">
+                                                    @method('DELETE')
+                                                                                  @csrf
+
+                                                                              </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
 
 
                     </div>

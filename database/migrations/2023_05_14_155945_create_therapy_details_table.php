@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('therapy_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('therapy_list_id')->unsigned();
-            $table->foreign('therapy_list_id')->references('id')->on('therapy_lists');
+            $table->foreign('therapy_list_id')->references('id')->on('therapy_lists')->onDelete('cascade');
             $table->bigInteger('therapy_ingredient_id')->unsigned();
-            $table->foreign('therapy_ingredient_id')->references('id')->on('therapy_ingredients');
+            $table->foreign('therapy_ingredient_id')->references('id')->on('therapy_ingredients')->onDelete('cascade');
             $table->string('quantity');
             $table->string('unit');
             $table->timestamps();
