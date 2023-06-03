@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patient_therapies', function (Blueprint $table) {
+        Schema::create('patient_main_therapies', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('doctor_id')->unsigned()->nullable();
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
-            $table->bigInteger('doctor_appointment_id')->unsigned()->nullable();
-            $table->foreign('doctor_appointment_id')->references('id')->on('doctor_appointments')->onDelete('cascade');
+            $table->bigInteger('therapist_id')->unsigned()->nullable();
+            $table->foreign('therapist_id')->references('id')->on('therapists')->onDelete('cascade');
+            $table->bigInteger('therapy_appointment_id')->unsigned()->nullable();
+            $table->foreign('therapy_appointment_id')->references('id')->on('therapy_appointments')->onDelete('cascade');
             $table->bigInteger('patient_history_id')->unsigned();
             $table->foreign('patient_history_id')->references('id')->on('patient_histories')->onDelete('cascade');
             $table->string('patient_id');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patient_therapies');
+        Schema::dropIfExists('patient_main_therapies');
     }
 };

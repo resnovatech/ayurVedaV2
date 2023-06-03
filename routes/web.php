@@ -82,7 +82,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::controller(AgrementFormOneController::class)->group(function () {
 
         Route::get('/searchPatientFromVamanKarma', 'searchPatientFromVamanKarma')->name('searchPatientFromVamanKarma');
-       
+
     });
 
 
@@ -116,7 +116,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('walkByPatientTherapy', WalkByPatientTherapyController::class);
 
     Route::controller(WalkByPatientTherapyController::class)->group(function () {
-
+        Route::get('/therapyPackageListForSingleTherapy', 'therapyPackageListForSingleTherapy')->name('therapyPackageListForSingleTherapy');
+        Route::get('/therapyListForSingleTherapy', 'therapyListForSingleTherapy')->name('therapyListForSingleTherapy');
+        Route::get('/getTherapyType', 'getTherapyType')->name('getTherapyType');
+        Route::get('/searchPatientForTherapy', 'searchPatientForTherapy')->name('searchPatientForTherapy');
        Route::get('/walkByPatientTherapyMain', 'walkByPatientTherapyMain')->name('walkByPatientTherapyMain');
    });
 

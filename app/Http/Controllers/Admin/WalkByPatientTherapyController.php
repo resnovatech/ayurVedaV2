@@ -14,9 +14,14 @@ use App\Models\TherapyList;
 use App\Models\Medicine;
 use App\Models\HealthSupplement;
 use App\Models\PatientTherapy;
+use App\Models\TherapyPackage;
 use App\Models\PatientHerb;
 use App\Models\PatientMedicalSupplement;
 use DB;
+use Session;
+use App\Models\PatientMainTherapy;
+use App\Models\TherapyDetail;
+use App\Models\TherapyIngredient;
 use App\Models\Therapist;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
@@ -32,6 +37,57 @@ class WalkByPatientTherapyController extends Controller
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
+    }
+
+
+    public function searchPatientForTherapy(Request $request)
+    {
+
+
+
+
+            $data = WalkByPatient::select("name as value","patient_reg_id as label", "age","email_address as email")
+          ->where('patient_reg_id', 'LIKE', '%'. $request->get('search'). '%')
+          ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+          ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+          ->get();
+
+
+
+
+
+
+
+
+
+
+return response()->json($data);
+
+
+
+
+
+    }
+
+    public function getTherapyType(Request $request){
+
+
+        $getMainVal = $request->getMainVal;
+
+        if($getMainVal == 'Single'){
+            $data = view('admin.walkByPatientTherapy.getTherapyTypeSingle',compact('getMainVal'))->render();
+            return response()->json($data);
+
+        }else{
+            $data = view('admin.walkByPatientTherapy.getTherapyTypePackage',compact('getMainVal'))->render();
+            return response()->json($data);
+
+
+        }
+
+
+
+
     }
 
     public function index(){
@@ -66,6 +122,29 @@ class WalkByPatientTherapyController extends Controller
             return response()->json($data);
            }
 
+           public function therapyListForSingleTherapy(Request $request){
+
+            $getMainVal = $request->getMainVal;
+
+            $getIngredientData = TherapyDetail::where('therapy_list_id',$getMainVal)->latest()->get();
+
+            $data = view('admin.walkByPatientTherapy.therapyListForSingleTherapy',compact('getIngredientData'))->render();
+            return response()->json($data);
+
+           }
+
+           public function therapyPackageListForSingleTherapy(Request $request){
+
+            $getMainVal = $request->getMainVal;
+
+            $getIngredientData = TherapyPackage::where('id',$getMainVal)->value('therapy_list');
+
+            $therapyArrayList = explode(',',$getIngredientData);
+
+            $data = view('admin.walkByPatientTherapy.therapyPackageListForSingleTherapy',compact('therapyArrayList'))->render();
+            return response()->json($data);
+           }
+
 
 
            public function store(Request $request){
@@ -76,22 +155,25 @@ class WalkByPatientTherapyController extends Controller
             }
 
 
-          // dd($request->all());
-            // $request->validate([
-            //     'patient_id' => 'required',
-            //     'ingridient_name.*' => 'required',
-            //     'therapy_id.*' => 'required',
-            //     'ingridient_amount.*' => 'required',
-            //     'therapist.*' => 'required',
-            //     'therapy.*' => 'required',
-            //     'date.*' => 'required',
-            //     'start_time.*' => 'required',
-            //     'end_time.*' => 'required',
+           //dd($request->all());
+            $request->validate([
+                'patient_id' => 'required',
+                'therapist_id.*' => 'required',
+                'ingrident_id.*' => 'required',
+                'therapy_id.*' => 'required',
+                'quantity.*' => 'required',
+                'unit.*' => 'required',
+                'therapy.*' => 'required',
+                'date.*' => 'required',
+                'start_time.*' => 'required',
+                'end_time.*' => 'required',
 
-            // ]);
+            ]);
 
             //dd($request->all());
-            $patientId = WalkByPatient::where('id',$request->patient_id)->value('patient_reg_id');
+            $patientId =$request->patient_id;
+
+            Session::put('patientId', $patientId);
 
 
            $patientHistoryUpdate = new PatientHistory();
@@ -106,6 +188,7 @@ class WalkByPatientTherapyController extends Controller
             $therapyAppointment = new TherapyAppointment();
             $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
             $therapyAppointment->patient_id =$patientId;
+            $therapyAppointment->status = 0;
             $therapyAppointment->save();
 
             $therapyAppointmentId = $therapyAppointment->id;
@@ -113,67 +196,67 @@ class WalkByPatientTherapyController extends Controller
             $inputAllData = $request->all();
 
             $therapyAppointmentDetail = $inputAllData['therapy_id'];
-            $therapistList = $inputAllData['therapist'];
-            $therapyNameDetail = $inputAllData['therapy_name'];
+           // $therapistList = $inputAllData['therapist_id'];
+            $therapyNameDetail = $inputAllData['therapy_id'];
            // TherapyAppointmentDateAndTime
 
             foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
                 $therapyAppointmentDetail = new TherapyAppointmentDetail();
                 $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
-                $therapyAppointmentDetail->name=$inputAllData['ingridient_name'][$key];
-                $therapyAppointmentDetail->amount=$inputAllData['ingridient_amount'][$key];
+                $therapyAppointmentDetail->name=$inputAllData['ingrident_id'][$key];
+                $therapyAppointmentDetail->amount=$inputAllData['quantity'][$key];
                 $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
                 $therapyAppointmentDetail->save();
 
                }
 
-               foreach($therapyNameDetail as $key => $therapyNameDetail){
+            //    foreach($therapyNameDetail as $key => $therapyNameDetail){
 
 
-                $therapyName = new PatientTherapy();
-                $therapyName->name=$inputAllData['therapy_name'][$key];
-                $therapyName->amount=1;
-                //$therapyName->doctor_id    =Auth::guard('admin')->user()->id;
-                //$therapyName->doctor_appointment_id    =$therapyAppointmentId;
-                $therapyName->patient_history_id   = $patientHistoryUpdateId;
-                $therapyName->patient_id   = $patientId;
-                $therapyName->save();
+            //     $therapyName = new PatientMainTherapy();
+            //     $therapyName->name=$inputAllData['therapy_id'][$key];
+            //     $therapyName->therapist_id=$inputAllData['therapist_id'][$key];
+            //     $therapyName->therapy_appointment_id=$therapyAppointmentId;
+            //     $therapyName->amount=1;
+            //     $therapyName->patient_history_id   = $patientHistoryUpdateId;
+            //     $therapyName->patient_id   = $patientId;
+            //     $therapyName->save();
 
-               }
-
-
-               foreach($therapistList as $key => $therapistList){
-
-                $getSerialValue =  TherapyAppointmentDateAndTime::where('therapist',$inputAllData['therapist'][$key])
-                ->where('therapy',$inputAllData['therapy'][$key])
-                ->where('date',$inputAllData['date'][$key])
-                ->value('serial');
-
-                if(empty($getSerialValue)){
+            //    }
 
 
-                 $finalSerialValue = 1;
+            //    foreach($therapistList as $key => $therapistList){
 
-                }else{
-                 $finalSerialValue = $getSerialValue + 1;
+            //     $getSerialValue =  TherapyAppointmentDateAndTime::where('therapist',$inputAllData['therapist_id'][$key])
+            //     ->where('therapy',$inputAllData['therapy_id'][$key])
+            //     ->where('date',$inputAllData['date'][$key])
+            //     ->value('serial');
 
-                }
+            //     if(empty($getSerialValue)){
 
-                $therapistList = new TherapyAppointmentDateAndTime();
-                $therapistList->therapist=$inputAllData['therapist'][$key];
-                $therapistList->therapy=$inputAllData['therapy'][$key];
-                $therapistList->date=$inputAllData['date'][$key];
-                $therapistList->start_time=$inputAllData['start_time'][$key];
-                $therapistList->end_time=$inputAllData['end_time'][$key];
-                $therapistList->serial=$finalSerialValue;
-                $therapistList->patient_id   = $patientId;
-                $therapistList->admin_id   = Auth::guard('admin')->user()->id;
-                $therapistList->therapy_appointment_id   = $therapyAppointmentId;
-                $therapistList->save();
 
-               }
+            //      $finalSerialValue = 1;
 
-               return redirect()->route('walkByPatientTherapy.index')->with('success','Added successfully!');
+            //     }else{
+            //      $finalSerialValue = $getSerialValue + 1;
+
+            //     }
+
+            //     $therapistList = new TherapyAppointmentDateAndTime();
+            //     $therapistList->therapist=$inputAllData['therapist_id'][$key];
+            //     $therapistList->therapy=$inputAllData['therapy_id'][$key];
+            //     $therapistList->date=$inputAllData['date'][$key];
+            //     $therapistList->start_time=$inputAllData['start_time'][$key];
+            //     $therapistList->end_time=$inputAllData['end_time'][$key];
+            //     $therapistList->serial=$finalSerialValue;
+            //     $therapistList->patient_id   = $patientId;
+            //     $therapistList->admin_id   = Auth::guard('admin')->user()->id;
+            //     $therapistList->therapy_appointment_id   = $therapyAppointmentId;
+            //     $therapistList->save();
+
+            //    }
+
+               return redirect()->route('walkByPatientTherapy.create')->with('success','Added successfully!');
 
 
 

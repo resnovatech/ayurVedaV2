@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->string('patient_id');
             $table->string('patient_type')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

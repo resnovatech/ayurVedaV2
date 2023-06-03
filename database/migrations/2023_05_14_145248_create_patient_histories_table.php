@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
-            $table->bigInteger('doctor_id')->unsigned();
+            $table->bigInteger('doctor_id')->unsigned()->nullable();
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
-            $table->bigInteger('doctor_appointment_id')->unsigned();
+            $table->bigInteger('doctor_appointment_id')->unsigned()->nullable();
             $table->foreign('doctor_appointment_id')->references('id')->on('doctor_appointments')->onDelete('cascade');
             $table->string('patient_id');
             $table->text('pradhan_vedana')->nullable();

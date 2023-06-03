@@ -17,4 +17,9 @@ class Therapist extends Model
     {
         return $this->belongsTo('App\Models\Admin');
     }
+
+    public function patientMainTherapies()
+    {
+        return $this->hasMany('App\Models\PatientMainTherapy');
+    }
 }

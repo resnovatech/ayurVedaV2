@@ -228,7 +228,7 @@ $usr = Auth::guard('admin')->user();
                        aria-expanded="false" aria-controls="sidebarTables">
                         <i class="ri-survey-fill"></i> <span data-key="t-tables">Prescription Equipment </span>
                     </a>
-                    <div class="collapse menu-dropdown {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') ||  Route::is('medicineLists.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') || Route::is('therapyPackages.index') ? 'show' : '' }}" id="prescriptionList">
+                    <div class="collapse menu-dropdown {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index')  || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') || Route::is('therapyPackages.index') ? 'show' : '' }}" id="prescriptionList">
                         <ul class="nav nav-sm flex-column">
                             @if ( $usr->can('dietChartsAdd')  || $usr->can('dietChartsView') ||  $usr->can('dietChartsDelete') ||  $usr->can('dietChartsUpdate'))
                             <li class="nav-item">

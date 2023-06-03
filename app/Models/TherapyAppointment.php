@@ -10,7 +10,7 @@ class TherapyAppointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'admin_id', 'patient_id','patient_type'
+        'admin_id', 'patient_id','patient_type','status'
     ];
 
     public function admin()
@@ -28,5 +28,10 @@ class TherapyAppointment extends Model
     public function therapyAppointmentDetails()
     {
         return $this->hasMany('App\Models\TherapyAppointmentDetail');
+    }
+
+    public function patientMainTherapies()
+    {
+        return $this->hasMany('App\Models\PatientMainTherapy');
     }
 }

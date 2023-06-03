@@ -49,6 +49,11 @@ class PatientHistory extends Model
         return $this->hasMany('App\Models\PatientTherapy');
     }
 
+    public function patientMainTherapies()
+    {
+        return $this->hasMany('App\Models\PatientMainTherapy');
+    }
+
     public function patientMedicalSupplements()
     {
         return $this->hasMany('App\Models\PatientMedicalSupplement');
