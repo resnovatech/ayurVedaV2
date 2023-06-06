@@ -111,7 +111,7 @@ Therapy Appointment | {{ $ins_name }}
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     @if (Auth::guard('admin')->user()->can('therapyAppointmentView'))
-                                                    <li><a href="{{ route('walkByPatientTherapy.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                    {{-- <li><a href="{{ route('walkByPatientTherapy.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li> --}}
                                                     @endif
                                                     @if (Auth::guard('admin')->user()->can('therapyAppointmentUpdate'))
                                                     {{-- <li><a class="dropdown-item edit-item-btn" href="{{ route('therapyAppointments.edit',$allTherapyAppointmentDateAndTimeList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li> --}}

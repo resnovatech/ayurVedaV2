@@ -62,23 +62,21 @@ Package | {{ $ins_name }}
                                             <th>Powders</th>
                                             <th>Price</th>
                                         </tr>
-                                        @foreach($convert_new_ass_cat as $j=>$allTherapyIngredient)
-                                        @foreach($powderAmount as $allpowderAmount)
-                                        @if($j == 0 )
-                                        <tr id="mDelete{{ $j+50000 }}">
+                                        @for ($i = 0; $i < count($convert_new_ass_cat); ++$i)
+                                        @if($i == 0 )
+                                        <tr id="mDelete{{ $i+50000 }}">
                                             <td>
                                                 <select class="form-select mb-3" id="editPowderId0" name="powder_id[]" aria-label="Default select example">
-                                                    @foreach($powders as $allpowders)
 
-                                                    <option data-amount="{{ $allpowders->amount }}" value="{{ $allpowders->name }}" {{ $allTherapyIngredient ==  $allpowders->name ? 'selected':'' }}>{{ $allpowders->name }}</option>
-                                                    @endforeach
+                                                    <option {{ $convert_new_ass_cat[$i] ==  'Tablet' ? 'selected':'' }}  value="Tablet">Tablet</option>
+                                                    <option {{ $convert_new_ass_cat[$i] ==  'Medicine' ? 'selected':'' }} value="Medicine">Medicine</option>
                                                 </select>
                                             </td>
-                                            <td> <input readonly type="text" id="editPamountId0" name ="pamount[]" class="form-control" value="{{ $allpowderAmount }}" placeholder="Amount" required></td>
+                                            <td> <input  type="text" id="editPamountId0" name ="pamount[]" class="form-control" value="{{ $powderAmount[$i] }}" placeholder="Amount" required></td>
                                             <td>
 
                                                 <button type="button" name="add"  id=""
-                                                        class="btn btn-outline-primary dynamic-ar">Add New Equipment
+                                                        class="btn btn-outline-primary dynamic-ar">Add New
                                                 </button>
 
 
@@ -87,28 +85,28 @@ Package | {{ $ins_name }}
                                             </td>
                                         </tr>
                                         @else
-                                        <tr id="mDelete{{ $j+50000 }}">
+                                        <tr id="mDelete{{ $i+50000 }}">
                                             <td>
                                                 <select class="form-select mb-3" id="editPowderId0" name="powder_id[]" aria-label="Default select example">
-                                                    @foreach($powders as $allpowders)
 
-                                                    <option data-amount="{{ $allpowders->amount }}" value="{{ $allpowders->name }}" {{ $allTherapyIngredient ==  $allpowders->name ? 'selected':'' }}>{{ $allpowders->name }}</option>
-                                                    @endforeach
+                                                    <option {{ $convert_new_ass_cat[$i] ==  'Tablet' ? 'selected':'' }}  value="Tablet">Tablet</option>
+                                                    <option {{ $convert_new_ass_cat[$i] ==  'Medicine' ? 'selected':'' }} value="Medicine">Medicine</option>
                                                 </select>
                                             </td>
-                                            <td> <input readonly type="text" id="editPamountId0" name ="pamount[]" class="form-control" value="{{ $allpowderAmount }}" placeholder="Amount" required></td>
+                                            <td> <input  type="text" id="editPamountId0" name ="pamount[]" class="form-control" value="{{ $powderAmount[$i] }}" placeholder="Amount" required></td>
+
                                             <td>
 
 
 
-                                                <button type="button" id="remove-input-fieldd{{ $j+50000 }}" class="btn btn-outline-danger ">Delete</button>
+                                                <button type="button" id="remove-input-fieldd{{ $i+50000 }}" class="btn btn-outline-danger ">Delete</button>
 
 
                                             </td>
                                         </tr>
                                         @endif
-                                        @endforeach
-                                        @endforeach
+
+                                        @endfor
                                     </table>
                                 </div>
 
@@ -158,10 +156,10 @@ Package | {{ $ins_name }}
         $("#dynamicAddRemove").append('<tr>' +
             '<td>' +
             ' <select class="form-select mb-3" id="powderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
-            '<option value="">--Please Select -- </option>@foreach($powders as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
+            '<option value="">--Please Select -- </option><option  value="Tablet">Tablet</option><option  value="Medicine">Medicine</option></select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" readonly id="pamountId'+i+'" name="pamount[]"  class="form-control" /></td>' +
+            '<input type="text"  id="pamountId'+i+'" name="pamount[]"  class="form-control" placeholder="Quantity" /></td>' +
             '<td>' +
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
@@ -275,11 +273,11 @@ $('#editMainAmount').val('');
         ++i;
         $(".dynamicAddRemove").append('<tr id="mDelete'+i+'">' +
             '<td>' +
-            ' <select class="form-select mb-3" id="editPowderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
-            '@foreach($powders as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
+            ' <select class="form-select mb-3" id="powderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
+            '<option value="">--Please Select -- </option><option  value="Tablet">Tablet</option><option  value="Medicine">Medicine</option></select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" readonly id="editPamountId'+i+'" name="pamount[]"  class="form-control" /></td>' +
+            '<input type="text"  id="pamountId'+i+'" name="pamount[]"  class="form-control" placeholder="Quantity" /></td>' +
             '<td>' +
             '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );

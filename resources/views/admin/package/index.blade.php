@@ -54,8 +54,8 @@ Package List | {{ $ins_name }}
                                         <th class="sort" data-sort="customer_name">Sl</th>
                                         <th class="sort" data-sort="customer_name"> Name</th>
                                         <th class="sort" data-sort="customer_name"> Amount</th>
-                                        <th class="sort" data-sort="customer_name">Powder Name</th>
-                                        <th class="sort" data-sort="customer_name">Powder Amount</th>
+                                        <th class="sort" data-sort="customer_name">Medicine/Package Name</th>
+                                        <th class="sort" data-sort="customer_name">Powder Quantity</th>
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
                                     </thead>
@@ -148,24 +148,25 @@ Package List | {{ $ins_name }}
                         <div class="col-12">
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
-                                    <th>Powders</th>
-                                    <th>Price</th>
+                                    <th>Tablet/Medicine</th>
+                                    <th>Quantity</th>
                                 </tr>
                                 <tr>
                                     <td>
                                         <select class="form-select mb-3" id="powderId0" name="powder_id[]" aria-label="Default select example">
                                             <option value="">--Please Select -- </option>
-                                            @foreach($powders as $allTherapyIngredients)
-                                            <option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>
-                                            @endforeach
+
+                                            <option  value="Tablet">Tablet</option>
+                                            <option  value="Medicine">Medicine</option>
+
                                         </select>
                                     </td>
 
-                                    <td> <input readonly type="text" id="pamountId0" name ="pamount[]" class="form-control" id="" placeholder="Amount" required></td>
+                                    <td> <input  type="text"  name ="pamount[]" class="form-control" id="" placeholder="Quantity" required></td>
 <td></td>
                                     <td>
                                         <button type="button" name="add" id="dynamic-ar"
-                                                class="btn btn-outline-primary">Add New Powder
+                                                class="btn btn-outline-primary">Add New
                                         </button>
                                     </td>
                                 </tr>
@@ -174,7 +175,7 @@ Package List | {{ $ins_name }}
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Amount</label>
-                            <input type="text" value="0"  name ="amount" class="form-control" id="mainAmount" placeholder="Amount" required>
+                            <input type="text" value="0"  name ="amount" class="form-control"  placeholder="Amount" required>
                         </div>
 
                     </div>
@@ -197,10 +198,10 @@ Package List | {{ $ins_name }}
         $("#dynamicAddRemove").append('<tr>' +
             '<td>' +
             ' <select class="form-select mb-3" id="powderId'+i+'" name="powder_id[]" aria-label="Default select example">' +
-            '<option value="">--Please Select -- </option>@foreach($powders as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
+            '<option value="">--Please Select -- </option><option  value="Tablet">Tablet</option><option  value="Medicine">Medicine</option></select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" readonly id="pamountId'+i+'" name="pamount[]"  class="form-control" /></td>' +
+            '<input type="text"  id="pamountId'+i+'" name="pamount[]"  class="form-control" placeholder="Quantity" /></td>' +
             '<td>' +
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );

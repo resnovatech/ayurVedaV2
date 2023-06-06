@@ -279,9 +279,9 @@ $usr = Auth::guard('admin')->user();
                             </li>
                             @endif
                             @if ( $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate'))
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('powderList.index') }}" class="nav-link {{ Route::is('powderList.index') ? 'active' : '' }}" data-key="t-grid-js">Powder List</a>
-                            </li>
+                            </li> --}}
                             @endif
                             @if ( $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate'))
                             <li class="nav-item">
@@ -290,7 +290,7 @@ $usr = Auth::guard('admin')->user();
                             @endif
                             @if ( $usr->can('medicineListsAdd')  || $usr->can('medicineListsView') ||  $usr->can('medicineListsDelete') ||  $usr->can('medicineListsUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('medicineLists.index') }}" class="nav-link {{ Route::is('medicineLists.index') ? 'active' : '' }}" data-key="t-grid-js">Medicine List</a>
+                                <a href="{{ route('medicineLists.index') }}" class="nav-link {{ Route::is('medicineLists.index') ? 'active' : '' }}" data-key="t-grid-js">Tablet List</a>
                             </li>
                             @endif
 

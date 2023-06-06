@@ -119,6 +119,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/therapyPackageListForSingleTherapy', 'therapyPackageListForSingleTherapy')->name('therapyPackageListForSingleTherapy');
         Route::get('/therapyListForSingleTherapy', 'therapyListForSingleTherapy')->name('therapyListForSingleTherapy');
         Route::get('/getTherapyType', 'getTherapyType')->name('getTherapyType');
+        Route::post('/patientFinalSubmit', 'patientFinalSubmit')->name('patientFinalSubmit');
         Route::get('/searchPatientForTherapy', 'searchPatientForTherapy')->name('searchPatientForTherapy');
        Route::get('/walkByPatientTherapyMain', 'walkByPatientTherapyMain')->name('walkByPatientTherapyMain');
    });

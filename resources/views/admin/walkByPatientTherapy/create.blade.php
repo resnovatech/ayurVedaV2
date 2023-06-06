@@ -64,9 +64,9 @@ Therapy Appointment  | {{ $ins_name }}
 
 
                                                                 <div class="ribbon-content mt-4 text-muted">
-                                                                    <p>Name: <span id="mmName"></span></p>
-                                                                    <p>Age: <span id="mmAge"></span></p>
-                                                                    <p>Email Address: <span id="mmEmail"></span></p>
+                                                                    <p>Name: <span id="mmName">{{Session::get('name')}}</span></p>
+                                                                    <p>Age: <span id="mmAge">{{Session::get('age')}}</span></p>
+                                                                    <p>Email Address: <span id="mmEmail">{{Session::get('email')}}</span></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -120,8 +120,8 @@ Therapy Appointment  | {{ $ins_name }}
 
         @if(count($therapyAppoinmentList) > 0 )
 
-        <form>
-
+        <form method="post" enctype="multipart/form-data" id="form" data-parsley-validate="" action="{{ route('patientFinalSubmit')  }}">
+@csrf
         <div class="row mt-3">
             <h4 class="card-title mb-0 flex-grow-1">Therapy Appointment Date & Time</h4>
 
@@ -165,7 +165,7 @@ $therapYListPackage = DB::table('therapy_lists')->where('id',$allTherapyPackage-
             @endforeach
         </div>
 
-        <button  class="btn btn-primary mt-3 " style="">
+        <button  class="btn btn-primary mt-3 " type="submit">
             Submit TherapistInfo
             </button>
         </form>
@@ -287,7 +287,7 @@ $therapYListPackage = DB::table('therapy_lists')->where('id',$allTherapyPackage-
                $('#searchnew').val(ui.item.value);
                $('#mmName').html(ui.item.value);
                $('#modalName').val(ui.item.value);
-               $('#patient_id').val(ui.item.label);
+               $('#patient_id').val(ui.item.patient_reg_id);
                $('#mmAge').html(ui.item.age);
                $('#mmEmail').html(ui.item.email);
                console.log(ui.item);
