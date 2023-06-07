@@ -60,14 +60,7 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                     <div class="card-body">
                         <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addTherapyInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Therapy</button>
 
-                        <div class="col-12">
-                            <label for="" class="form-label">Therapy Type</label>
-                            <select name ="therapy_type" class="form-control" id="therapy_type" required>
-                                <option value="">--Please Select--</option>
-                                <option value="Single">Single</option>
-                                <option value="Package">Package</option>
-                            </select>
-                        </div>
+
 
                         <div class="row mt-3" id="showDataaa">
                         </div>
@@ -112,7 +105,7 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                     <div class="card-body">
                         {{-- <p class="text-muted">Add Herbs</p> --}}
                         <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addHerbInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Herb</button>
-                           
+
 
 
                         <!--end col-->
@@ -126,10 +119,10 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Medical Supplement</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Medical Supplement List</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-
+                    <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addMedicalSupplementInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Supplement</button>
 
                         <table class="table table-bordered" id="dynamicAddRemovesu">
                             <tr>

@@ -263,6 +263,12 @@ class DoctorWaitingListController extends Controller
             return view('admin.doctorWaitingListView.addHerbInPrescription');
            }
 
+           public function addMedicalSupplementInPrescription(){
+            $healthSupplements = HealthSupplement::latest()->get();
+            return view('admin.doctorWaitingListView.addMedicalSupplementInPrescription',compact('healthSupplements'));
+
+           }
+
 
            public function getTherapyTypeInPrescription(Request $request){
 
