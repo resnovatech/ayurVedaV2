@@ -172,8 +172,17 @@ Route::group(['prefix' => 'admin'], function () {
     //waiting_list_controller
 
     Route::controller(DoctorWaitingListController::class)->group(function () {
+        Route::post('/postTherapyTypeInPrescription', 'postTherapyTypeInPrescription')->name('postTherapyTypeInPrescription');
+        Route::get('/getTherapyTypeInPrescription', 'getTherapyTypeInPrescription')->name('getTherapyTypeInPrescription');
 
-        Route::get('/doctorWaitingList', 'doctorWaitingList')->name('DoctorWaitingList');
+        Route::get('/addTherapyInPrescription', 'addTherapyInPrescription')->name('addTherapyInPrescription');
+        Route::get('/addHerbInPrescription', 'addHerbInPrescription')->name('addHerbInPrescription');
+        Route::get('/addMedicalSupplementInPrescription', 'addMedicalSupplementInPrescription')->name('addMedicalSupplementInPrescription');
+
+
+        Route::get('/showDataCategoryWise', 'showDataCategoryWise')->name('showDataCategoryWise');
+
+        Route::get('/doctorWaitingList', 'doctorWaitingList')->name('doctorWaitingList');
         Route::get('/addPatientHistory/{id}', 'addPatientHistory')->name('addPatientHistory');
         Route::get('/addPatientPrescriptionInfo/{id}', 'addPatientPrescriptionInfo')->name('addPatientPrescriptionInfo');
         Route::post('/postPatientHistory', 'postPatientHistory')->name('postPatientHistory');

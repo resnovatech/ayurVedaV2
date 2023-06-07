@@ -21,9 +21,10 @@ return new class extends Migration
             $table->foreign('patient_history_id')->references('id')->on('patient_histories')->onDelete('cascade');
             $table->string('patient_id');
             $table->string('name');
-            $table->string('part_of_the_day');
-            $table->string('how_many_dose');
-            $table->string('main_time');
+            $table->string('status');
+            $table->string('package_name')->nullable();
+            $table->string('how_many_dose')->nullable();
+            $table->string('main_time')->nullable();
             $table->timestamps();
         });
     }

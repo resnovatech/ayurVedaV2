@@ -119,7 +119,7 @@ data-nationality="{{ $allPatientList->nationality }}"
                                 <div class="col-xxl-4 col-md-4">
                                     <div>
                                         <label for="" class="form-label">Appointment Date</label>
-                                        <input type="text" id="mainDate" name="appointment_date" class="form-control" id="datepicker" placeholder="Appointment Date" required>
+                                        <input type="text"  name="appointment_date" class="form-control" id="datepicker" placeholder="Appointment Date" required>
                                     </div>
                                 </div>
 
@@ -165,7 +165,7 @@ data-nationality="{{ $allPatientList->nationality }}"
         $(document).on('change keyup keydown keypress click blur', '#appointment_time', function() {
 
         var getTheValue = $(this).val();
-        var mainDate = $('#mainDate').val();
+        var mainDate = $('#datepicker').val();
         var mainDocId = $('#mainDocId').val();
         //alert(getTheValue);
 

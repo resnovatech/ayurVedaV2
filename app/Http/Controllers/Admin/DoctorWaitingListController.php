@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\WalkByPatient;
@@ -103,7 +104,7 @@ class DoctorWaitingListController extends Controller
 
 
            public function addPatientPrescriptionInfo($id){
-
+            Session::put('doctor_appoinment', $id);
                  $doctor_appoinment = $id;
                  $therapyLists = TherapyList::latest()->get();
                  $medicineLists = Medicine::latest()->get();
@@ -118,22 +119,22 @@ class DoctorWaitingListController extends Controller
 
 
 
-            $request->validate([
-                'history_file' => 'required',
-                'name.*' => 'required',
-                'amount.*' => 'required',
-                'herb_name.*' => 'required',
-                'part_of_the_day.*' => 'required',
-                'how_many_dose.*' => 'required',
-                'main_time.*' => 'required',
-                'package_name.*' => 'required',
-                'package_part_of_the_day.*' => 'required',
-                'package_how_many_dose.*' => 'required',
-                'package_main_time.*' => 'required',
-                'supplement_name.*' => 'required',
-                'quantity.*' => 'required',
+            // $request->validate([
+            //     'history_file' => 'required',
+            //     'name.*' => 'required',
+            //     'amount.*' => 'required',
+            //     'herb_name.*' => 'required',
+            //     'part_of_the_day.*' => 'required',
+            //     'how_many_dose.*' => 'required',
+            //     'main_time.*' => 'required',
+            //     'package_name.*' => 'required',
+            //     'package_part_of_the_day.*' => 'required',
+            //     'package_how_many_dose.*' => 'required',
+            //     'package_main_time.*' => 'required',
+            //     'supplement_name.*' => 'required',
+            //     'quantity.*' => 'required',
 
-            ]);
+            // ]);
 
             $doctorWaitingList = DoctorAppointment::where('id',$request->appoinment_id)->first();
             $finalGetData = PatientHistory::where('doctor_appointment_id',$request->appoinment_id)->first();
@@ -230,4 +231,62 @@ class DoctorWaitingListController extends Controller
                return redirect()->route('patientPrecriptions.index')->with('success','Added successfully!');
 
            }
+
+
+           public function showDataCategoryWise(Request $request){
+
+            $getMainVal = $request->herb_type;
+            $m_id = $request->getMainVal;
+
+            if($getMainVal == 'Medicine'){
+                $data = view('admin.doctorWaitingListView.medicineList',compact('getMainVal','m_id'))->render();
+                return response()->json($data);
+
+            }else{
+                $data = view('admin.doctorWaitingListView.tabletList',compact('getMainVal','m_id'))->render();
+                return response()->json($data);
+
+
+            }
+
+           }
+
+
+           public function addTherapyInPrescription(){
+
+            return view('admin.doctorWaitingListView.addTherapyInPrescription');
+           }
+
+
+           public function addHerbInPrescription(){
+
+            return view('admin.doctorWaitingListView.addHerbInPrescription');
+           }
+
+
+           public function getTherapyTypeInPrescription(Request $request){
+
+
+            $getMainVal = $request->getMainVal;
+
+            if($getMainVal == 'Single'){
+                $data = view('admin.doctorWaitingListView.getTherapyTypeSingle',compact('getMainVal'))->render();
+                return response()->json($data);
+
+            }else{
+                $data = view('admin.doctorWaitingListView.getTherapyTypePackage',compact('getMainVal'))->render();
+                return response()->json($data);
+
+
+            }
+
+
+
+
+        }
+
+        public function postTherapyTypeInPrescription(Request $request){
+
+
+        }
 }

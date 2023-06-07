@@ -177,9 +177,9 @@ class TherapyAppointmentController extends Controller
         $getIdPatientAdmit = PatientAdmit::where('patient_id',$patientId)->value('id');
 
 
-       $patientHistoryUpdate = PatientHistory::find($request->patient_id);
-       $patientHistoryUpdate->status = 1;
-       $patientHistoryUpdate->save();
+    //    $patientHistoryUpdate = PatientHistory::find($request->patient_id);
+    //    $patientHistoryUpdate->status = 1;
+    //    $patientHistoryUpdate->save();
 
 
         $therapyAppointment = new TherapyAppointment();

@@ -175,16 +175,16 @@ $usr = Auth::guard('admin')->user();
                 <li class="menu-title"><span data-key="t-menu">Doctor Section</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('DoctorWaitingList') || Route::is('patientPrecriptions.show') ? 'active':'' }}" href="#doctorWaiting" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('doctorWaitingList') || Route::is('patientPrecriptions.show') || Route::is('addTherapyInPrescription') ? 'active':'' }}" href="#doctorWaiting" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
                         <i class="ri-file-edit-line"></i> <span data-key="t-tables">Doctor Attend</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('DoctorWaitingList') || Route::is('patientPrecriptions.show') ? 'show':'' }}" id="doctorWaiting">
+                    <div class="collapse menu-dropdown {{ Route::is('patientPrecriptions.index') ||  Route::is('addPatientPrescriptionInfo') || Route::is('addPatientHistory') || Route::is('doctorWaitingList') || Route::is('patientPrecriptions.show') || Route::is('addTherapyInPrescription')  ? 'show':'' }}" id="doctorWaiting">
                         <ul class="nav nav-sm flex-column">
 
                             @if ($usr->can('doctorWaitingListAdd') ||  $usr->can('doctorWaitingListView') ||  $usr->can('doctorWaitingListDelete') ||  $usr->can('doctorWaitingListUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('DoctorWaitingList') }}" class="nav-link {{ Route::is('addPatientPrescriptionInfo') || Route::is('DoctorWaitingList') || Route::is('addPatientHistory') ? 'active' : '' }}" data-key="t-basic-tables">Doctor Waiting List</a>
+                                <a href="{{ route('doctorWaitingList') }}" class="nav-link {{ Route::is('addPatientPrescriptionInfo') || Route::is('doctorWaitingList') || Route::is('addPatientHistory') || Route::is('addTherapyInPrescription')  ? 'active' : '' }}" data-key="t-basic-tables">Doctor Waiting List</a>
                             </li>
 @endif
 

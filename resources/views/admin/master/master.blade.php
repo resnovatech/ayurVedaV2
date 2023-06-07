@@ -38,7 +38,10 @@
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
     <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <style>
 
         .swal2-confirm{
 
@@ -244,7 +247,7 @@
     <!-- profile init js -->
     <script src="{{asset('/')}}public/admin/assets/js/pages/profile.init.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 
     <!--datatable js-->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -305,7 +308,7 @@
         })
     }
 </script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
   <script>
  $(function(){
     $("#datepicker").datepicker({

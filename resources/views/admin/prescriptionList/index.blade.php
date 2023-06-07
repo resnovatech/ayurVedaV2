@@ -89,7 +89,17 @@ Prescription List | {{ $ins_name }}
                                             {{ $getPhoneFromWalkByPatient }}
                                                                                         @endif
                                         </td>
-                                        <td class="email">{{ $allGetHistoryData->doctor->name }}</td>
+                                        <?php
+
+                                        $doctorName = DB::table('doctors')->where('id',$allGetHistoryData->doctor_id)
+->value('name');
+
+
+                                        ?>
+                                        <td class="email">
+                                            {{ $doctorName }}
+
+                                        </td>
 
 
 
@@ -109,7 +119,7 @@ Prescription List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>

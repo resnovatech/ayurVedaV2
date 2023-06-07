@@ -161,6 +161,7 @@ return response()->json($data);
 
 
            //dd($request->all());
+           
             $request->validate([
                 'patient_id' => 'required',
                 'therapist_id.*' => 'required',
@@ -186,11 +187,11 @@ return response()->json($data);
             Session::put('age', $data->age);
             Session::put('email', $data->email_address);
 
-           $patientHistoryUpdate = new PatientHistory();
-           $patientHistoryUpdate->admin_id =Auth::guard('admin')->user()->id;
-           $patientHistoryUpdate->patient_id =$patientId;
-           $patientHistoryUpdate->status = 2;
-           $patientHistoryUpdate->save();
+        //    $patientHistoryUpdate = new PatientHistory();
+        //    $patientHistoryUpdate->admin_id =Auth::guard('admin')->user()->id;
+        //    $patientHistoryUpdate->patient_id =$patientId;
+        //    $patientHistoryUpdate->status = 2;
+        //    $patientHistoryUpdate->save();
 
            $patientHistoryUpdateId = $patientHistoryUpdate->id;
 
@@ -236,9 +237,9 @@ return response()->json($data);
 
 
 
-        $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
-                  ->where('status',2)
-                   ->value('id');
+        // $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
+        //           ->where('status',2)
+        //            ->value('id');
 
         $therapyAppointmentId = DB::table('therapy_appointments')
                  ->where('patient_id',Session::get('patientId'))

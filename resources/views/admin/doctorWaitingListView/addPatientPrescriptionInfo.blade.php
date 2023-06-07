@@ -51,70 +51,28 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
 
         <div class="row">
 
+
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Package Add</h4>
-                    </div><!-- end card header -->
-
-                    <div class="card-body">
-                        <p class="text-muted">Add Package</p>
-
-                        <table class="table table-bordered" id="dynamicAddRemove22">
-                            <tr>
-                                <th>Name</th>
-                                <th>Parts of day</th>
-                                <th>How Many Dose</th>
-                                <th>when</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select required class="form-select mb-3" aria-label="Default select example" name="package_name[]">
-                                        <option>--- Please Select ---</option>
-                                        @foreach($allPackageList as $allMedicineLists)
-                                        <option value="{{ $allMedicineLists->name }}">{{ $allMedicineLists->name }}</option>
-                                         @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select required class="form-control" name="package_part_of_the_day[]" >
-                                        <option value="Morning">Morning</option>
-                                        <option value="Noon">Noon</option>
-                                        <option value="Evening">Evening</option>
-                                        <option value="Night">Night</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" required class="form-control" id="" name="package_how_many_dose[]">
-                                </td>
-                                <td>
-                                    <select class="form-select mb-3" required  aria-label="Default select example" name="package_main_time[]">
-                                        <option value="After Food">After Food</option>
-                                        <option value="Before Food">Before Food</option>
-                                        <option value="With Food">With Food</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button type="button" name="add" id="dynamic-ar22"
-                                            class="btn btn-outline-primary">Add New Package
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Therapy Add</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Therapy List</h4>
                     </div><!-- end card header -->
                     <div class="card-body">
-                        <p class="text-muted">Add Therapy</p>
+                        <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addTherapyInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Therapy</button>
 
-                            <table class="table table-bordered" id="dynamicAddRemove1">
+                        <div class="col-12">
+                            <label for="" class="form-label">Therapy Type</label>
+                            <select name ="therapy_type" class="form-control" id="therapy_type" required>
+                                <option value="">--Please Select--</option>
+                                <option value="Single">Single</option>
+                                <option value="Package">Package</option>
+                            </select>
+                        </div>
+
+                        <div class="row mt-3" id="showDataaa">
+                        </div>
+
+                            {{-- <table class="table table-bordered mt-4" id="dynamicAddRemove1">
                                 <tr>
                                     <th>Name</th>
                                     <th>How many amount they take</th>
@@ -139,7 +97,7 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                                         </button>
                                     </td>
                                 </tr>
-                            </table>
+                            </table> --}}
 
 
                         <!--end col-->
@@ -149,52 +107,12 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Herbs Add</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Herbs List</h4>
                     </div><!-- end card header -->
                     <div class="card-body">
-                        <p class="text-muted">Add Herbs</p>
-
-                            <table class="table table-bordered" id="dynamicAddRemove2">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Parts of day</th>
-                                    <th>How Many Dose</th>
-                                    <th>when</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select required class="form-select mb-3" aria-label="Default select example" name="herb_name[]">
-                                            <option>--- Please Select ---</option>
-                                            @foreach($medicineLists as $allMedicineLists)
-                                            <option value="{{ $allMedicineLists->name }}">{{ $allMedicineLists->name }}</option>
-                                             @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select required class="form-control" name="part_of_the_day[]" >
-                                            <option value="Morning">Morning</option>
-                                            <option value="Noon">Noon</option>
-                                            <option value="Evening">Evening</option>
-                                            <option value="Night">Night</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" required class="form-control" id="" name="how_many_dose[]">
-                                    </td>
-                                    <td>
-                                        <select class="form-select mb-3" required  aria-label="Default select example" name="main_time[]">
-                                            <option value="After Food">After Food</option>
-                                            <option value="Before Food">Before Food</option>
-                                            <option value="With Food">With Food</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <button type="button" name="add" id="dynamic-ar2"
-                                                class="btn btn-outline-primary">Add New Medicine
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
+                        {{-- <p class="text-muted">Add Herbs</p> --}}
+                        <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addHerbInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Herb</button>
+                           
 
 
                         <!--end col-->
@@ -213,7 +131,7 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                 <div class="card-body">
 
 
-                        <table class="table table-bordered" id="dynamicAddRemove">
+                        <table class="table table-bordered" id="dynamicAddRemovesu">
                             <tr>
                                 <th>Supplement Name</th>
                                 <th>Quantity</th>
@@ -233,7 +151,7 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                                            class="form-control"/>
                                 </td>
                                 <td>
-                                    <button type="button" name="add" id="dynamic-ar"
+                                    <button type="button" name="add" id="dynamic-arsu"
                                             class="btn btn-outline-primary">Add New Therapy
                                     </button>
                                 </td>
@@ -258,10 +176,37 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
 
 @section('script')
 <script type="text/javascript">
+////
+$('#therapy_type').change(function(){
+
+    var getMainVal = $(this).val();
+
+
+
+    $.ajax({
+        url: "{{ route('getTherapyType') }}",
+        method: 'GET',
+        data: {getMainVal:getMainVal},
+        success: function(data) {
+
+            //alert(data);
+
+          $("#showDataaa").html('');
+          $("#showDataaa").html(data);
+        }
+    });
+
+
+});
+//////
+
+
+</script>
+<script type="text/javascript">
     var i = 0;
-    $("#dynamic-ar").click(function () {
+    $("#dynamic-arsu").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr>' +
+        $("#dynamicAddRemovesu").append('<tr>' +
             '<td>' +
             ' <select name="supplement_name[]" class="form-select mb-3" aria-label="Default select example" required>' +
             '@foreach($healthSupplements as $allHealthSupplements)<option value="{{ $allHealthSupplements->name }}">{{ $allHealthSupplements->name }}</option>@endforeach</select>' +
@@ -328,24 +273,49 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
         ++i;
         $("#dynamicAddRemove2").append('<tr>' +
             '<td>' +
-            ' <select class="form-select mb-3"  name="herb_name[]" required aria-label="Default select example">' +
-            '@foreach($medicineLists as $allMedicineLists)<option value="{{ $allMedicineLists->name }}">{{ $allMedicineLists->name }}</option>@endforeach</select>' +
+            ' <select class="form-select herb_type mb-3" id="herb_type'+i+'"  name="herb_type[]" required aria-label="Default select example">' +
+            '<option value="">--- Please Select ---</option><option value="Medicine">Medicine</option><option value="Tablet">Tablet</option>' +
             '</td>' +
             '<td>'+
-            '<select class="form-control" name="part_of_the_day[]" required >'+
-            ' <option value="Morning">Morning</option><option value="Noon">Noon</option><option value="Evening">Evening</option><option value="Night">Night</option> </select>'+
+            '<div id="showType'+i+'"><div>'
+           +
             '</td>'+
             '<td>' +
-            '<input type="text"  class="form-control" name="how_many_dose[]" required /></td>' +
+            '<input type="text" required class="form-control" id="hquantity0" name="hquantity[]"></td>' +
             '<td>'+
-            '<select class="form-select mb-3" name="main_time[]" required aria-label="Default select example">'+
-            '   <option value="After Food">After Food</option><option value="Before Food">Before Food</option><option value="With Food">With Food</option></select>'+
+            '<input type="text" required class="form-control" id="hunit'+i+'" name="hunit[]">'+
+
             '</td>'+
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('change', 'select.herb_type', function () {
+
+        var main_id = $(this).attr('id');
+       var getMainVal = main_id.slice(9);
+       var herb_type = $(this).val();
+    //    showDataCategoryWise
+    //    alert(get_id_from_main);
+
+    $.ajax({
+        url: "{{ route('showDataCategoryWise') }}",
+        method: 'GET',
+        data: {getMainVal:getMainVal,herb_type:herb_type},
+        success: function(data) {
+
+            //alert(data);
+
+          $("#showType"+getMainVal).html('');
+          $("#showType"+getMainVal).html(data);
+        }
+    });
+
     });
 </script>
 @endsection

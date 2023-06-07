@@ -44,27 +44,6 @@ $therapyIngredientList = DB::table('therapy_ingredients')->latest()->get();
 $therapistList = DB::table('therapists')->latest()->get();
 ?>
 
-{{-- <h4 class="card-title mb-0 flex-grow-1">Therapy Appointment Date & Time</h4>
-
-
-
-    <input type="date" required  name="date[]" value=""
-           class="form-control mt-2" id="checkData"/>
-
-    <input type="time" required name="start_time[]" id="checkStartTime"
-           class="form-control mt-2"/>
-
-    <input type="time" required name="end_time[]" id="checkEndTime"
-           class="form-control mt-2"/>
-
-
-           <select class="form-select mt-3" id="therapist_id" required aria-label="Default select example" name="therapist_id[]">
-            <option value="">--Please Select --</option>
-                @foreach($therapistList as $allTherapistList)
-                <option value="{{ $allTherapistList->id }}">{{ $allTherapistList->name }}</option>
-                @endforeach
-
-            </select> --}}
         </div>
 
 <script type="text/javascript">
