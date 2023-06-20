@@ -11,7 +11,7 @@ class PatientHerb extends Model
 
     protected $fillable = [
         'doctor_id','doctor_appointment_id','patient_id','patient_history_id','name',
-        'part_of_the_day','how_many_dose','main_time'
+        'part_of_the_day','how_many_dose','main_time','status'
     ];
 
 

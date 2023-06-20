@@ -27,7 +27,7 @@ Add Medical Suppliment In Prescription | {{ $ins_name }}
         </div>
     </div>
 </div>
-<form action="{{ route('postTherapyTypeInPrescription') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+<form action="{{ route('postMedicalSupplementInPrescription') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
     @csrf
 <div class="row">
     <div class="col-lg-12">

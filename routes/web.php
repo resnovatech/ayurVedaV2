@@ -172,7 +172,13 @@ Route::group(['prefix' => 'admin'], function () {
     //waiting_list_controller
 
     Route::controller(DoctorWaitingListController::class)->group(function () {
+
+
+        Route::post('/postMedicalSupplementInPrescription', 'postMedicalSupplementInPrescription')->name('postMedicalSupplementInPrescription');
+        Route::post('/postHerbInPrescription', 'postHerbInPrescription')->name('postHerbInPrescription');
         Route::post('/postTherapyTypeInPrescription', 'postTherapyTypeInPrescription')->name('postTherapyTypeInPrescription');
+
+
         Route::get('/getTherapyTypeInPrescription', 'getTherapyTypeInPrescription')->name('getTherapyTypeInPrescription');
 
         Route::get('/addTherapyInPrescription', 'addTherapyInPrescription')->name('addTherapyInPrescription');

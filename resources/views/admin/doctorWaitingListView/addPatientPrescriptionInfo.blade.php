@@ -60,37 +60,49 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                     <div class="card-body">
                         <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addTherapyInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Therapy</button>
 
+<?php
+$therapyList = DB::table('patient_therapies')->where('status',0)
+->where('doctor_appointment_id',$doctor_appoinment)->get();
 
+
+$HerbList = DB::table('patient_herbs')->where('status',0)
+->where('doctor_appointment_id',$doctor_appoinment)->get();
+
+$msList = DB::table('patient_medical_supplements')->where('status',0)
+->where('doctor_appointment_id',$doctor_appoinment)->get();
+
+?>
 
                         <div class="row mt-3" id="showDataaa">
                         </div>
 
-                            {{-- <table class="table table-bordered mt-4" id="dynamicAddRemove1">
+                            <table class="table table-bordered mt-4" id="dynamicAddRemove1">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>How many amount they take</th>
+                                    <th>Therapy Name</th>
+                                    <th>Package</th>
                                 </tr>
+                                @foreach($therapyList as $allTherapy)
                                 <tr>
-                                    <td>
-                                        <select class="form-select mb-3" name="name[]" aria-label="Default select example" required>
-                                            <option>--- Please Select ---</option>
-                                            @foreach($therapyLists as $allTherapyLists)
-                                            <option value="{{ $allTherapyLists->name }}">{{ $allTherapyLists->name }}</option>
-                                            @endforeach
 
-                                        </select>
-                                    </td>
                                     <td>
-                                        <input type="text" name="amount[]" value=""
-                                               class="form-control" required/>
+                                       <?php
+$mseeList = DB::table('therapy_lists')->where('id',$allTherapy->name)->value('name');
+
+                                        ?>
+                                        {{ $mseeList }}
                                     </td>
+
                                     <td>
-                                        <button type="button" name="add" id="dynamic-ar1"
-                                                class="btn btn-outline-primary">Add New Therapy
-                                        </button>
+                                        @if($allTherapy->package_name == 'Single')
+
+                                        @else
+                                       Package
+                                       @endif
                                     </td>
+                                    @endforeach
+
                                 </tr>
-                            </table> --}}
+                            </table>
 
 
                         <!--end col-->
@@ -106,7 +118,24 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                         {{-- <p class="text-muted">Add Herbs</p> --}}
                         <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addHerbInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Herb</button>
 
+                        <table class="table table-bordered mt-4" id="dynamicAddRemove1">
+                            <tr>
+                                <th>Herb Name</th>
 
+                            </tr>
+                            @foreach($HerbList as $allTherapy)
+                            <tr>
+
+                                <td>
+
+                                    {{ $allTherapy->name }}
+                                </td>
+
+
+                                @endforeach
+
+                            </tr>
+                        </table>
 
                         <!--end col-->
                     </div>
@@ -124,33 +153,27 @@ DOCTOR PRESCRIPTION | {{ $ins_name }}
                 <div class="card-body">
                     <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addMedicalSupplementInPrescription') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Supplement</button>
 
-                        <table class="table table-bordered" id="dynamicAddRemovesu">
-                            <tr>
-                                <th>Supplement Name</th>
-                                <th>Quantity</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="supplement_name[]" required class="form-select mb-3" aria-label="Default select example">
-                                        <option>--- Please Select ---</option>
-@foreach($healthSupplements as $allHealthSupplements)
-                                        <option value="{{ $allHealthSupplements->name }}">{{ $allHealthSupplements->name }}</option>
-                                        @endforeach
 
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" name="quantity[]" required value=""
-                                           class="form-control"/>
-                                </td>
-                                <td>
-                                    <button type="button" name="add" id="dynamic-arsu"
-                                            class="btn btn-outline-primary">Add New Therapy
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
+                    <table class="table table-bordered mt-4" id="dynamicAddRemove1">
+                        <tr>
+                            <th> Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                        @foreach($msList as $allTherapy)
+                        <tr>
 
+                            <td>
+
+                                {{ $allTherapy->name }}
+                            </td>
+
+                            <td>
+                                {{ $allTherapy->quantity }}
+                            </td>
+                            @endforeach
+
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

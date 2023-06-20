@@ -11,7 +11,7 @@ class PatientMedicalSupplement extends Model
 
     protected $fillable = [
         'doctor_id','doctor_appointment_id','patient_id','patient_history_id','name',
-        'quantity'
+        'quantity','status'
     ];
 
 

@@ -11,7 +11,7 @@ class PatientTherapy extends Model
 
     protected $fillable = [
         'doctor_id','doctor_appointment_id','patient_id','patient_history_id','name',
-        'therapy_type','package_name'
+        'therapy_type','package_name','status'
     ];
 
 

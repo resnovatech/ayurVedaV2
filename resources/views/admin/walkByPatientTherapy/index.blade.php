@@ -34,7 +34,7 @@ Therapy Appointment | {{ $ins_name }}
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Doctor Appointment Info</h4>
+                        <h4 class="card-title mb-0">Therapy Appointment Info</h4>
                         @include('flash_message')
                     </div><!-- end card header -->
 
@@ -50,7 +50,7 @@ Therapy Appointment | {{ $ins_name }}
 
                             </div>
 
-                            <div class="table-responsive table-card mt-3 mb-1">
+
                                 <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
                                     <thead class="table-light">
                                     <tr>
@@ -134,7 +134,7 @@ Therapy Appointment | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                            </div>
+                  
 
 
                         </div>
