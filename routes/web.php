@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\TherapyPackageController;
 use App\Http\Controllers\Admin\AgrementFormOneController;
 use App\Http\Controllers\Admin\AgrementFormTwoController;
 use App\Http\Controllers\Admin\AgrementFormThreeController;
+use App\Http\Controllers\Admin\InventoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +75,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     //therapy_package
 
+
+
+    Route::resource('inventoryList', InventoryController::class);
 
     Route::resource('agreementFormThree', AgrementFormThreeController::class);
     Route::resource('agreementFormTwo', AgrementFormTwoController::class);
@@ -172,6 +176,9 @@ Route::group(['prefix' => 'admin'], function () {
     //waiting_list_controller
 
     Route::controller(DoctorWaitingListController::class)->group(function () {
+
+
+        Route::get('/typeOfHerb', 'typeOfHerb')->name('typeOfHerb');
 
 
         Route::post('/postMedicalSupplementInPrescription', 'postMedicalSupplementInPrescription')->name('postMedicalSupplementInPrescription');

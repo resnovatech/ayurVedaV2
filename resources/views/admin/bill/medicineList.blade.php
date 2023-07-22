@@ -13,8 +13,8 @@ table {
 </style>
 </head>
 <body>
-    
-    
+
+
                                             @if(empty($getNameFromWalkByPatient))
 
 <p>{{ $getNameFromPatient }}</p>
@@ -34,7 +34,7 @@ table {
                                         <tr class="table-active">
 <th>Sl No</th>
                                             <th scope="col">Hearb</th>
-                                         
+
                                             <th scope="col">Cost</th>
                                             <th scope="col">Dose</th>
                                             <th scope="col" class="text-end">Amount</th>
@@ -43,27 +43,48 @@ table {
                                         </tr>
                                         </thead>
                                         <tbody id="products-list">
-                                           @foreach($patientHerb as $key=>$allPatientHerbList)
-                                        <?php
-$getPatientHerb = DB::table('medicines')->where('name',$allPatientHerbList->name)->value('amount');
+
+                                            <?php
+
+                                        $countData = count($patientTherapyList);
+                                        $countpatientHerb = count($patientHerb);
+                                        $getPatientHerb =0;
                                         ?>
+                                           @foreach($patientHerb as $key=>$allPatientHerbList)
+                                           <?php
+                                          $getPatientHerb = DB::table('medicines')->where('name',$allPatientHerbList->name)->value('amount');
+$getPackage = DB::table('packages')->where('id',$allPatientHerbList->package_name)->value('name');
+$getPatientHerb = DB::table('packages')->where('id',$allPatientHerbList->package_name)->value('amount');
+?>
                                         <tr>
 <td>{{$key+1}}</td>
                                             <td class="text-start">
-                                                <span class="fw-medium">{{ $allPatientHerbList->name }}</span>
+                                                <span class="fw-medium">{{ $allPatientHerbList->name }}({{ $getPackage }})</span>
 
                                             </td>
-                                             
+
+                                            @if(($key+1) == $countpatientHerb)
+
                                             <td>BDT {{ $getPatientHerb }}</td>
+
+                                            @else
+<td></td>
+                                            @endif
                                             <td>{{ $allPatientHerbList->how_many_dose }}</td>
-                                            <td class="text-end">BDT {{ $allPatientHerbList->how_many_dose*$getPatientHerb }}</td>
+                                            @if(($key+1) == $countpatientHerb)
+                                            <td class="text-end">BDT {{ $getPatientHerb }}</td>
+
+
+                                            @else
+<td class="text-end"></td>
+                                            @endif
                                             <td>{{$allPatientHerbList->part_of_the_day}}</td>
                                              <td>{{$allPatientHerbList->main_time}}</td>
                                         </tr>
                                         @endforeach
-                                      
 
-                                   
+
+
 
                                         </tbody>
                                     </table><!--end table-->

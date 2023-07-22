@@ -175,7 +175,7 @@ return response()->json($data);
                 'end_time.*' => 'required',
 
             ]);
-
+            //dd($request->all());
             //dd($request->all());
             $patientId =$request->patient_id;
 
@@ -209,15 +209,33 @@ return response()->json($data);
             $therapyAppointmentDetail = $inputAllData['therapy_id'];
            // $therapistList = $inputAllData['therapist_id'];
             $therapyNameDetail = $inputAllData['therapy_id'];
+
+
            // TherapyAppointmentDateAndTime
 
             foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
                 $therapyAppointmentDetail = new TherapyAppointmentDetail();
                 $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
-                $therapyAppointmentDetail->name=$inputAllData['ingrident_id'][$key];
-                $therapyAppointmentDetail->amount=$inputAllData['quantity'][$key];
+                // $therapyAppointmentDetail->name=$inputAllData['ingrident_id'][$key];
+                // $therapyAppointmentDetail->amount=$inputAllData['quantity'][$key];
                 $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
                 $therapyAppointmentDetail->save();
+
+                $mm_id = TherapyAppointmentDetail::where('therapy_name',$inputAllData['therapy_id'][$key])
+                ->where('therapy_appointment_id',$therapyAppointmentId)->value('id');
+
+
+                $color_image_main = $inputAllData["ingrident_id".$key];
+
+                foreach($color_image_main as $j => $therapyNamen){
+
+                    TherapyAppointmentDetail::where('id', $mm_id)
+       ->update([
+        'name'=>$inputAllData["ingrident_id".$key][$j],
+           'amount' =>$inputAllData["quantity".$key][$j]
+        ]);
+
+                }
 
                }
 

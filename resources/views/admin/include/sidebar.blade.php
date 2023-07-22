@@ -341,6 +341,13 @@ $usr = Auth::guard('admin')->user();
                         <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">TreatMent Chart</span>
                     </a>
                 </li>
+                <li class="menu-title"><span data-key="t-menu">Inventory</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory List</span>
+                    </a>
+                </li>
 
                 <li class="menu-title"><span data-key="t-menu">HR Section</span></li>
 

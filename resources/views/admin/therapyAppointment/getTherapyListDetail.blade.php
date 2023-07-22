@@ -7,9 +7,9 @@ $therapyId = DB::table('therapy_lists')
         ->where('name', $allPatientTherapyList->name)->value('id');
 
 $therapyDetailList = DB::table('therapy_details')
-        ->where('therapy_list_id', $therapyId)->get();
+        ->where('therapy_list_id', $allPatientTherapyList->name)->get();
         $therapyName = DB::table('therapy_lists')
-        ->where('id', $therapyId)->value('name');
+        ->where('id', $allPatientTherapyList->name)->value('name');
     ?>
     <div class="col-lg-6">
         <div class="card">
@@ -40,7 +40,7 @@ $therapyDetailListName = DB::table('therapy_ingredients')
                                 <input type="text" value="{{$therapyDetailListName}}" name="ingridient_name[]"
                                        class="form-control" required/>
 
-                                       <input type="hidden" value="{{$therapyId}}" name="therapy_id[]"
+                                       <input type="hidden" value="{{$allPatientTherapyList->name}}" name="therapy_id[]"
                                        class="form-control"/>
 
 
@@ -103,9 +103,18 @@ $therapyDetailListName = DB::table('therapy_ingredients')
                             </select>
                             {{-- <span>ddd</span> --}}
                         </td>
+                        <?php
+
+$therapyName = DB::table('therapy_lists')
+        ->where('id', $allPatientTherapyList->name)->value('name');
+
+                        ?>
                         <td>
 
-                            <input type="text" required  name="therapy[]" value="{{ $allPatientTherapyList->name }}"
+                            <input type="text" required   value="{{ $therapyName }}"
+                                   class="form-control" readonly/>
+
+                            <input type="hidden" required  name="therapy[]" value="{{ $allPatientTherapyList->name }}"
                                    class="form-control" readonly/>
 
 
@@ -147,7 +156,7 @@ $therapyDetailListName = DB::table('therapy_ingredients')
         var main_id = $(this).attr('id');
              var id_for_pass = main_id.slice(10);
         ++i;
-        $("#dynamicAddRemove"+id_for_pass).append('<tr><td><input type="text"  name="ingridient_name[]"class="form-control" required/>  <input type="hidden" value="{{$therapyId}}" name="therapy_id[]"class="form-control"/></td><td><input type="text" value="" name="ingridient_amount[]"class="form-control" required/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+        $("#dynamicAddRemove"+id_for_pass).append('<tr><td><input type="text"  name="ingridient_name[]"class="form-control" required/>  <input type="hidden" value="{{$allPatientTherapyList->name}}" name="therapy_id[]"class="form-control"/></td><td><input type="text" value="" name="ingridient_amount[]"class="form-control" required/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();

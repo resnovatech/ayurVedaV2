@@ -130,9 +130,8 @@ class TherapyAppointmentController extends Controller
 
            public function getTherapyListDetail(Request $request){
 
-
                     $mainId = $request->patient_id;
-                    $patientTherapyList = PatientTherapy::where('patient_history_id',$mainId)->latest()->get();
+                    $patientTherapyList = PatientTherapy::where('patient_history_id',$mainId)->where('status',2)->latest()->get();
                     $therapistList = Therapist::latest()->get();
 
                     $data = view('admin.therapyAppointment.getTherapyListDetail',compact('patientTherapyList','therapistList'))->render();
@@ -146,7 +145,7 @@ class TherapyAppointmentController extends Controller
     public function store(Request $request){
 
 
-        //dd($request->all());
+
 
 
         if (is_null($this->user) || !$this->user->can('therapyAppointmentAdd')) {

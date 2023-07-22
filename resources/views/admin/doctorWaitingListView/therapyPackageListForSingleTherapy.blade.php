@@ -14,7 +14,7 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
 
 <div class="col-md-12">
 
-    <p class="mt-3">Therapy Name: {{ $allTherapyPackage->name }}
+    <p class="mt-3">hhTherapy Name: {{ $allTherapyPackage->name }}
         <input type="hidden" class="form-control" name="therapy_id[]" value="{{ $allTherapyPackage->id }}" >
 
 
@@ -27,17 +27,17 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
     @foreach($allDetail as $key=>$allGetIngredientData)
     <tr>
         <td>
-            <select class="form-select mb-3" name="ingrident_id[]" aria-label="Default select example">
+            <select class="form-select mb-3" name="ingrident_id{{ $j }}[]" aria-label="Default select example">
                 @foreach($therapyIngredientList as $allTherapyIngredients)
                 <option value="{{ $allTherapyIngredients->id }}" {{ $allGetIngredientData->therapy_ingredient_id == $allTherapyIngredients->id ?  'selected':'' }}>{{ $allTherapyIngredients->name }}</option>
                 @endforeach
             </select>
         </td>
 
-        <td><input type="text" class="form-control" name="quantity[]" value="{{ $allGetIngredientData->quantity }}" ></td>
+        <td><input type="text" class="form-control" name="quantity{{ $j }}[]" value="{{ $allGetIngredientData->quantity }}" ></td>
 
         <td>
-            <select class="form-select mb-3" name="unit[]" aria-label="Default select example">
+            <select class="form-select mb-3" name="unit{{ $j }}[]" aria-label="Default select example">
                 <option value="gram" {{ 'gram' ==  $allGetIngredientData->unit ? 'selected':'' }}>gram</option>
                 <option value="milligram" {{ 'milligram' ==  $allGetIngredientData->unit ? 'selected':'' }}>milligram</option>
                 <option value="liter" {{ 'liter' ==  $allGetIngredientData->unit ? 'selected':'' }}>liter</option>
@@ -93,13 +93,13 @@ $therapistList = DB::table('therapists')->latest()->get();
         ++i;
         $("#dynamicAddRemove"+id_for_pass).append('<tr id="mDelete'+i+'">' +
             '<td>' +
-            ' <select class="form-select mb-3" name="ingrident_id[]" aria-label="Default select example">' +
+            ' <select class="form-select mb-3" name="ingrident_id'+i+'[]" aria-label="Default select example">' +
             '@foreach($therapyIngredientList as $allTherapyIngredients)<option value="{{ $allTherapyIngredients->id }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="quantity[]"  class="form-control" /></td>' +
+            '<input type="text" name="quantity'+i+'[]"  class="form-control" /></td>' +
             '<td>' +
-            ' <select class="form-select mb-3" name="unit[]" aria-label="Default select example">' +
+            ' <select class="form-select mb-3" name="unit'+i+'[]" aria-label="Default select example">' +
             ' <option value="gram">gram</option><option value="milligram">milligram</option><option value="liter">liter</option></select>' +
             '</td>' +
             '<td><button type="button" id="remove-input-fieldd'+i+'" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'

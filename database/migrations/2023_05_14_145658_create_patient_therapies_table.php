@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('patient_history_id')->references('id')->on('patient_histories')->onDelete('cascade');
             $table->string('patient_id');
             $table->string('name');
+            $table->string('amount');
             $table->string('status');
             $table->string('therapy_type')->nullable();;
             $table->string('package_name')->nullable();;

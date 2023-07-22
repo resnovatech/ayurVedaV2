@@ -121,7 +121,7 @@ $mseeList = DB::table('therapy_lists')->where('id',$allTherapy->name)->value('na
                         <table class="table table-bordered mt-4" id="dynamicAddRemove1">
                             <tr>
                                 <th>Herb Name</th>
-
+                                <th>Quantity</th>
                             </tr>
                             @foreach($HerbList as $allTherapy)
                             <tr>
@@ -131,7 +131,10 @@ $mseeList = DB::table('therapy_lists')->where('id',$allTherapy->name)->value('na
                                     {{ $allTherapy->name }}
                                 </td>
 
+                                <td>
 
+                                    {{ $allTherapy->how_many_dose }}
+                                </td>
                                 @endforeach
 
                             </tr>

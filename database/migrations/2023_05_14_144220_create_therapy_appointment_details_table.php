@@ -16,8 +16,8 @@ return new class extends Migration
             $table->bigInteger('therapy_appointment_id')->unsigned();
             $table->foreign('therapy_appointment_id')->references('id')->on('therapy_appointments')->onDelete('cascade');
             $table->string('therapy_name');
-            $table->text('name');
-            $table->string('amount');
+            $table->text('name')->nullable();
+            $table->string('amount')->nullable();
             $table->timestamps();
         });
     }

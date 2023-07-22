@@ -20,6 +20,7 @@ use App\Models\PatientPackage;
 use App\Models\HealthSupplement;
 use App\Models\PatientTherapy;
 use App\Models\PatientHerb;
+use App\Models\PatientHerbDetail;
 use App\Models\PatientTherapyDetail;
 use App\Models\PatientMedicalSupplement;
 class DoctorWaitingListController extends Controller
@@ -273,6 +274,7 @@ class DoctorWaitingListController extends Controller
             foreach($therapyName as $key => $therapyName){
                 $therapyName = new PatientTherapy();
                 $therapyName->name=$inputAllData['therapy_id'][$key];
+                $therapyName->amount=$request->amount;
                 $therapyName->package_name=$request->therapy_type;
                 $therapyName->therapy_type=$request->therapy_type;
                 $therapyName->doctor_id    = $doctorWaitingList->doctor_id;
@@ -314,7 +316,7 @@ class DoctorWaitingListController extends Controller
 
                     $therapyId = $therapyName->id;
 
-                    if (array_key_exists("ingrident_id".$key, $inputAllData)){
+
 
 
                     $color_image_main = $inputAllData["ingrident_id".$key];
@@ -328,7 +330,7 @@ class DoctorWaitingListController extends Controller
                     $therapyNamen->save();
                     }
 
-                }
+
 
                    }
 
@@ -343,41 +345,75 @@ class DoctorWaitingListController extends Controller
         public function postHerbInPrescription(Request $request){
 
 
-
+//dd($request->all());
             $doctorWaitingList = DoctorAppointment::where('id',Session::get('doctor_appoinment'))->first();
             $finalGetData = PatientHistory::where('doctor_appointment_id',Session::get('doctor_appoinment'))->first();
 
 
 
             $inputAllData = $request->all();
-            $herbName = $inputAllData['herb_type'];
-            $mName = $inputAllData['mingrident_id'];
+            $medicineName = $inputAllData['medicinename'];
+            $tabletName = $inputAllData['tablet_name'];
 
-            //dd($inputAllData);
+           // dd($tabletName);
 
-            foreach($herbName as $key => $herbName){
-                $herbName = new PatientHerb();
-                $herbName->name=$inputAllData['herb_type'][$key];
-                if (array_key_exists("mingrident_id".$key, $inputAllData)){
-                $mName = $inputAllData['mingrident_id'][$key];
-                $st = implode(" ",$mName);
-                $herbName->package_name=$st;
-                }else{
-                    if (array_key_exists("tablet_name".$key, $inputAllData)){
-                    $herbName->package_name=$inputAllData['tablet_name'][$key];
-                    }
-                }
-                $herbName->how_many_dose=$inputAllData['hquantity'][$key];
-                $herbName->main_time=$inputAllData['hunit'][$key];
-                $herbName->doctor_id    = $doctorWaitingList->doctor_id;
-                $herbName->doctor_appointment_id    = Session::get('doctor_appoinment');
-                $herbName->patient_history_id   = $finalGetData->id;
-                $herbName->patient_id   = $doctorWaitingList->patient_id;
-                $herbName->status   = 0;
-                $herbName->save();
+
+            foreach($medicineName as $key => $medicineName){
+
+
+
+
+            $mm = new PatientHerb();
+            $mm->name=$inputAllData['medicinename'][$key];
+            $mm->how_many_dose=$inputAllData['mmquantity'][$key];
+            $mm->package_name=$request->package__type;
+            $mm->doctor_id= $doctorWaitingList->doctor_id;
+            $mm->doctor_appointment_id= Session::get('doctor_appoinment');
+            $mm->patient_history_id= $finalGetData->id;
+            $mm->patient_id= $doctorWaitingList->patient_id;
+            $mm->status= 0;
+            $mm->save();
+
+            $medicineNameStoreId = $mm->id;
+            $mingridentId = $inputAllData['mingrident_id'.$key];
+//dd($mingridentId);
+            foreach($mingridentId as $j => $mingridentId){
+
+            $mainDetail = new PatientHerbDetail();
+            $mainDetail->patient_herb_id =$medicineNameStoreId;
+            $mainDetail->ingredient_name =$inputAllData['mingrident_id'.$key][$j];
+            $mainDetail->quantity =$inputAllData['mquantity'.$key][$j];
+            $mainDetail->unit =$inputAllData['munit'.$key][$j];
+            $mainDetail->save();
+
+            }
+
+
+           }
+
+            foreach($tabletName as $key => $tabletName){
+
+
+
+
+                $tabletNameStore = new PatientHerb();
+                $tabletNameStore->name=$inputAllData['tablet_name'][$key];
+                $tabletNameStore->how_many_dose=$inputAllData['hquantity'][$key];
+                $tabletNameStore->package_name=$request->package__type;
+                $tabletNameStore->doctor_id    = $doctorWaitingList->doctor_id;
+                $tabletNameStore->doctor_appointment_id    = Session::get('doctor_appoinment');
+                $tabletNameStore->patient_history_id   = $finalGetData->id;
+                $tabletNameStore->patient_id   = $doctorWaitingList->patient_id;
+                $tabletNameStore->status   = 0;
+                $tabletNameStore->save();
+
+
+
+
+
 
                }
-
+               //dd($medicineName);
                return redirect('admin/addPatientPrescriptionInfo/'.Session::get('doctor_appoinment'));
         }
 
@@ -412,6 +448,19 @@ class DoctorWaitingListController extends Controller
 
 
             return redirect('admin/addPatientPrescriptionInfo/'.Session::get('doctor_appoinment'));
+
+
+        }
+
+
+        public function typeOfHerb(Request $request){
+
+            $mainId = $request->getMainVal;
+
+
+                $data = view('admin.doctorWaitingListView.herbPackage',compact('mainId'))->render();
+                return response()->json($data);
+
 
 
         }

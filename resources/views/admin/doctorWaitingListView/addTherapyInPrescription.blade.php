@@ -48,6 +48,12 @@ Add Therapy In Prescription | {{ $ins_name }}
                             </select>
                         </div>
 
+                        <div class="col-12">
+                            <label for="" class="form-label">Quantity</label>
+                            <input type="text" name="amount" required value=""
+                            class="form-control"/>
+                        </div>
+
                         <div class="row mt-3" id="showDataaa">
                         </div>
 

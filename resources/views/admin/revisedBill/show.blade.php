@@ -179,7 +179,7 @@ Paid
                                         <tr class="table-active">
 
                                             <th scope="col">Product Details</th>
-                                            <th scope="col">Category</th>
+
 
                                             <th scope="col">Rate</th>
                                             <th scope="col">Quantity</th>
@@ -187,59 +187,134 @@ Paid
                                         </tr>
                                         </thead>
                                         <tbody id="products-list">
+                                            <?php
+
+                                            $countData = count($patientTherapyList);
+                                            $countpatientTherapyList = count($patientTherapyList);
+                                            $getPatientTheraPrice =0;
+                                            ?>
+
+
                                             @foreach($patientTherapyList as $key=>$allPatientTherapyList)
 
                                             <?php
-$getTherapyPrice = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceName = DB::table('therapy_lists')->where('id',$allPatientTherapyList->name)->value('name');
+$getPackage = DB::table('therapy_packages')->where('id',$allPatientTherapyList->package_name)->value('package_name');
+$getPatientTheraPrice = DB::table('therapy_packages')->where('id',$allPatientTherapyList->package_name)->value('price');
 
                                               ?>
                                         <tr>
 
                                             <td class="text-start">
-                                                <span class="fw-medium">{{ $allPatientTherapyList->name }}</span>
+                                                <span class="fw-medium">{{ $getTherapyPriceName }}({{ $getPackage }})</span>
 
                                             </td>
-                                             <td>Therapy</td>
-                                            <td>৳ {{ $getTherapyPrice }}</td>
+
+                                            @if(($key+1) == $countpatientTherapyList)
+
+                                            <td>৳ {{ $getPatientTheraPrice }}</td>
+
+                                            @else
+<td></td>
+                                            @endif
+
                                             <td>
-                                  <input type="hidden" name="therapy_id[]" value="{{ $allPatientTherapyList->id }}" />
-                                  <input type="text" class="form-control" name="therapy_amount[]" value="{{ $allPatientTherapyList->amount }}" />
 
-
+                                                <input type="hidden" name="therapy_id[]" value="{{ $allPatientTherapyList->id }}"/>
+                                                <input type="text" class="form-control form-control-sm" name="therapy_amount[]" value="{{ $allPatientTherapyList->amount }}"/>
 
                                             </td>
-                                            <td class="text-end">৳ {{ $allPatientTherapyList->amount*$getTherapyPrice }}</td>
+                                            @if(($key+1) == $countpatientTherapyList)
+
+                                            <td class="text-end">৳ {{ $allPatientTherapyList->amount*$getPatientTheraPrice }}</td>
+
+                                            @else
+<td></td>
+                                            @endif
                                         </tr>
                                         @endforeach
+
+                                        @foreach($patientTherapyListSingle as $key=>$allPatientTherapyList)
+
+                                        <?php
+$getTherapyPrice = DB::table('therapy_lists')->where('id',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceName = DB::table('therapy_lists')->where('id',$allPatientTherapyList->name)->value('name');
+                                          ?>
+                                    <tr>
+
+                                        <td class="text-start">
+                                            <span class="fw-medium">{{ $getTherapyPriceName}}</span>
+
+                                        </td>
+
+                                        <td>৳ {{ $getTherapyPrice }}</td>
+                                        <td>
+                                            <input type="hidden" name="therapy_id[]" value="{{ $allPatientTherapyList->id }}"/>
+                                            <input type="text" class="form-control form-control-sm" name="therapy_amount[]" value="{{ $allPatientTherapyList->amount }}"/>
+
+
+
+
+
+                                        </td>
+                                        <td class="text-end">৳ {{ $allPatientTherapyList->amount*$getTherapyPrice }}</td>
+                                    </tr>
+                                    @endforeach
+
+
                                         <?php
 
-                                        $countData = count($patientTherapyList)
-
+                                        $countData = count($patientTherapyList);
+                                        $countpatientHerb = count($patientHerb);
+                                        $getPatientHerb =0;
                                         ?>
 
-                                        @foreach($patientHerb as $allPatientHerbList)
+                                        @foreach($patientHerb as $key=>$allPatientHerbList)
                                         <?php
 $getPatientHerb = DB::table('medicines')->where('name',$allPatientHerbList->name)->value('amount');
+$getPackage = DB::table('packages')->where('id',$allPatientHerbList->package_name)->value('name');
+$getPatientHerb = DB::table('packages')->where('id',$allPatientHerbList->package_name)->value('amount');
                                         ?>
                                         <tr>
 
                                             <td class="text-start">
-                                                <span class="fw-medium">{{ $allPatientHerbList->name }}</span>
+                                                <span class="fw-medium">{{ $allPatientHerbList->name }}({{ $getPackage }})</span>
 
                                             </td>
-                                             <td>Medicine</td>
+
+
+                                               @if(($key+1) == $countpatientHerb)
+
                                             <td>৳ {{ $getPatientHerb }}</td>
+
+                                            @else
+<td></td>
+                                            @endif
+
+
                                             <td>
-                                                <input type="hidden" name="herb_id[]" value="{{ $allPatientHerbList->id }}" />
-                                                <input type="text" class="form-control" name="herb_amount[]" value="{{ $allPatientHerbList->how_many_dose }}" />
+
+                                                <input type="hidden" name="herb_id[]" value="{{ $allPatientHerbList->id }}"/>
+                                                <input type="text" class="form-control form-control-sm" name="herb_amount[]" value="{{ $allPatientHerbList->how_many_dose }}"/>
 
 
 
 
                                             </td>
-                                            <td class="text-end">৳ {{ $allPatientHerbList->how_many_dose*$getPatientHerb }}</td>
+                                            @if(($key+1) == $countpatientHerb)
+                                            <td class="text-end">৳ {{ $getPatientHerb }}</td>
+
+
+                                            @else
+<td class="text-end"></td>
+                                            @endif
                                         </tr>
                                         @endforeach
+
+
+
+
+
 
                                         @foreach($patientMedicalSupplement as $allPatientMedicalSupplement)
 
@@ -252,23 +327,15 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
                                                 <span class="fw-medium">{{ $allPatientMedicalSupplement->name }}</span>
 
                                             </td>
-                                             <td>Health Suppliment</td>
+
                                             <td>৳ {{ $getPatientMedicalSupplement }}</td>
-
-
-                                                <td>
-                                                    <input type="hidden" name="suppliment_id[]" value="{{ $allPatientMedicalSupplement->id }}" />
-                                                    <input type="text" class="form-control" name="suppliment_amount[]" value="{{ $allPatientMedicalSupplement->quantity }}" />
-
+                                            <td>
+<input type="hidden" name="suppliment_id[]" value="{{ $allPatientMedicalSupplement->id }}"/>
+<input type="text" class="form-control form-control-sm" name="suppliment_amount[]" value="{{ $allPatientMedicalSupplement->quantity }}"/>
 
 
 
-                                                </td>
-
-
-
-
-
+                                            </td>
                                             <td class="text-end">৳ {{ $getPatientMedicalSupplement*$allPatientMedicalSupplement->quantity  }}</td>
                                         </tr>
                                         @endforeach

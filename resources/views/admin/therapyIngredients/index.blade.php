@@ -53,8 +53,8 @@ Therapy Ingredient List | {{ $ins_name }}
                                     <tr>
                                         <th class="sort" data-sort="customer_name">Sl</th>
                                         <th class="sort" data-sort="customer_name"> Name</th>
-
-
+                                        <th class="sort" data-sort="customer_name"> Quantity</th>
+                                        <th class="sort" data-sort="customer_name"> Unit</th>
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
                                     </thead>
@@ -65,7 +65,8 @@ Therapy Ingredient List | {{ $ins_name }}
 
                                         <td class="id">{{ $key+1 }}</td>
                                         <td class="customer_name">{{ $allTherapyIngredients->name }}</td>
-
+                                        <td class="customer_name">{{ $allTherapyIngredients->quantity }}</td>
+                                        <td class="customer_name">{{ $allTherapyIngredients->unit }}</td>
 
                                         <td>
 
@@ -95,7 +96,16 @@ Therapy Ingredient List | {{ $ins_name }}
                                                                         <input type="text" value="{{ $allTherapyIngredients->name }}" name ="name" class="form-control" id="" placeholder="Name" required>
                                                                     </div>
 
-
+                                                                    <div class="col-12 mb-2">
+                                                                        <label for="" class="form-label">Quantity</label>
+                                                                        <input type="text" name="quantity" value="{{ $allTherapyIngredients->quantity }}"
+                                                                               class="form-control"/>
+                                                                    </div>
+                                                                    <div class="col-12 mb-2">
+                                                                        <label for="" class="form-label">Unit</label>
+                                                                        <input type="text" name="unit" value="{{ $allTherapyIngredients->unit }}"
+                                                                        class="form-control"/>
+                                                                    </div>
 
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary mt-3">Update</button>
@@ -126,7 +136,7 @@ Therapy Ingredient List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>
@@ -159,6 +169,20 @@ Therapy Ingredient List | {{ $ins_name }}
                             <label for="" class="form-label">Name</label>
                             <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
                         </div>
+
+
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Quantity</label>
+                            <input type="text" name="quantity" value=""
+                                   class="form-control"/>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Unit</label>
+                            <input type="text" name="unit" value=""
+                            class="form-control"/>
+                        </div>
+
+
 
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>

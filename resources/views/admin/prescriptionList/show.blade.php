@@ -1,6 +1,6 @@
 @extends('admin.master.master')
 @section('title')
-Billing Information List | {{ $ins_name }}
+Precription Information List | {{ $ins_name }}
 @endsection
 
 
@@ -16,12 +16,12 @@ Billing Information List | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Billing List</h4>
+                    <h4 class="mb-sm-0">Precription Info</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                            <li class="breadcrumb-item active">Billing</li>
+                            <li class="breadcrumb-item active">Precription</li>
                         </ol>
                     </div>
 
@@ -30,53 +30,7 @@ Billing Information List | {{ $ins_name }}
         </div>
         <!-- end page title -->
 
-        <div class="row">
-            <div class="col-xxl-12">
-                <div class="card" >
-                    <div class="card-body" >
-                        <div class="btn-group">
-                            <a href="{{ route('printInvoice',$patientHistory->id) }}" class="btn btn-primary">Print</a>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Payment</button>
 
-                            <!-- Modal -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('paymentMoney') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
-                @csrf
-
-                <label for="" class="form-label">Payment type</label>
-                <select class="form-control" name="payment_type" id="payment_type" required>
-                    <option value="cash">cash</option>
-                    <option value="check">check</option>
-                </select>
-
-                <label for="" class="form-label">Amount</label>
-                <input type="number" class="form-control" name="amount" id="" value="" >
-                <input type="hidden" class="form-control" name="id" id="" value="{{ $patientHistory->id }}" >
-
-                <button type="submit" class="btn btn-primary mt-4">Submit</button>
-            </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
-                            <a href ="{{ route('moveToReversed',$patientHistory->id) }}" class="btn btn-info">Moved To Reversed</a>
-                             <a href ="{{ route('medicineList',$patientHistory->id) }}" class="btn btn-info">Medicine List</a>
-                            <a href ="{{ route('therapyListFromHistory',$patientHistory->id) }}" class="btn btn-info">Therapy List</a>
-                          </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-xxl-12">
                 <div class="card" id="demo">
