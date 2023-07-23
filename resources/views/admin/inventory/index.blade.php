@@ -38,7 +38,15 @@ Inventory List | {{ $ins_name }}
 
 
                         <div id="customerList">
+                            <div class="row g-4 mb-3">
+                                <div class="col-sm-auto">
+                                    <div>
+                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Ingredient</button>
 
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <!--new code -->
 
@@ -52,6 +60,12 @@ Inventory List | {{ $ins_name }}
     <li class="nav-item waves-effect waves-light">
         <a class="nav-link" data-bs-toggle="tab" href="#pill-justified-profile-1" role="tab">
             Medicine Equipment
+        </a>
+    </li>
+
+    <li class="nav-item waves-effect waves-light">
+        <a class="nav-link" data-bs-toggle="tab" href="#pill-justified-profile-2" role="tab">
+            Other Ingredient
         </a>
     </li>
 
@@ -143,6 +157,95 @@ Inventory List | {{ $ins_name }}
 
     </div>
 
+    <div class="tab-pane" id="pill-justified-profile-2" role="tabpanel">
+        <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
+            <thead class="table-light">
+            <tr>
+                <th class="sort" data-sort="customer_name">Sl</th>
+                <th class="sort" data-sort="customer_name"> Name</th>
+                <th class="sort" data-sort="customer_name"> Quantity</th>
+                <th class="sort" data-sort="customer_name"> Unit</th>
+
+                <th class="sort" data-sort="action">Action</th>
+            </tr>
+            </thead>
+            <tbody class="list form-check-all">
+
+                @foreach($otherIngredients as $key=>$allmedicineEquipment)
+            <tr>
+
+                <td class="id">{{ $key+1 }}</td>
+                <td class="customer_name">{{ $allmedicineEquipment->name }}</td>
+                <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
+                <td class="customer_name">{{ $allmedicineEquipment->unit }}</td>
+                <td>
+
+
+
+                    @if (Auth::guard('admin')->user()->can('inventoryUpdate'))
+                    <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg{{ $allmedicineEquipment->id }}"
+                    class="btn btn-primary waves-light waves-effect  btn-sm" >
+                    <i class="ri-pencil-fill"></i></button>
+
+                      <!--  Large modal example -->
+                      <div class="modal fade bs-example-modal-lg{{ $allmedicineEquipment->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="myLargeModalLabel">Update Medicine Equipment Name</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="{{ route('inventoryList.update',$allmedicineEquipment->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="row">
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Name</label>
+                                                <input type="text" value="{{ $allmedicineEquipment->name }}" name ="name" class="form-control" id="" placeholder="Name" required>
+                                            </div>
+
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Quantity</label>
+                                                <input type="text" name="quantity" value="{{ $allmedicineEquipment->quantity }}"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Unit</label>
+                                                <input type="text" name="unit" value="{{ $allmedicineEquipment->unit }}"
+                                                class="form-control"/>
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                    </form>
+                                  </div>
+                              </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                      </div><!-- /.modal -->
+
+
+@endif
+
+{{-- <button type="button" class="btn btn-primary waves-light waves-effect  btn-sm" onclick="window.location.href='{{ route('admin.users.view',$user->id) }}'"><i class="fa fa-eye"></i></button> --}}
+
+            @if (Auth::guard('admin')->user()->can('inventoryDelete'))
+
+<button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allmedicineEquipment->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
+<form id="delete-form-{{ $allmedicineEquipment->id }}" action="{{ route('inventoryList.destroy',$allmedicineEquipment->id) }}" method="POST" style="display: none;">
+@method('DELETE')
+          @csrf
+
+      </form>
+                          @endif
+
+                </td>
+            </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
@@ -165,7 +268,55 @@ Inventory List | {{ $ins_name }}
         <!-- end row -->
     </div>
 </div>
+<!-- Default Modals -->
+<div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Inventory Category Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('inventoryList.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                    @csrf
+                    <div class="row">
 
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Inventory Category</label>
+                            <select name ="category" class="form-control" id=""  required>
+                                <option value="">--Please select --</option>
+                                @foreach($inventoryCategorys as $allInventoryCategorys)
+<option value="{{ $allInventoryCategorys->name }}">{{ $allInventoryCategorys->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Name</label>
+                            <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Quantity</label>
+                            <input type="text" name="quantity" value=""
+                                   class="form-control"/>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="" class="form-label">Unit</label>
+                            <input type="text" name="unit" value=""
+                            class="form-control"/>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @endsection
 
 

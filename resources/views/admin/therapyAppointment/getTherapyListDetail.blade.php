@@ -6,8 +6,8 @@
 $therapyId = DB::table('therapy_lists')
         ->where('name', $allPatientTherapyList->name)->value('id');
 
-$therapyDetailList = DB::table('therapy_details')
-        ->where('therapy_list_id', $allPatientTherapyList->name)->get();
+$therapyDetailList = DB::table('patient_therapy_details')
+        ->where('patient_therapy_id', $allPatientTherapyList->id)->get();
         $therapyName = DB::table('therapy_lists')
         ->where('id', $allPatientTherapyList->name)->value('name');
     ?>
@@ -23,21 +23,24 @@ $therapyDetailList = DB::table('therapy_details')
                         <tr>
                             <th>Name</th>
                             <th>Amount</th>
-                            <th>Action</th>
+                            <th>Unit</th>
                         </tr>
                         @foreach($therapyDetailList as $mainkey=>$allTherapyDetailList)
 
                         <?php
 
 $therapyDetailListName = DB::table('therapy_ingredients')
-        ->where('id', $allTherapyDetailList->therapy_ingredient_id)->value('name');
+        ->where('id', $allTherapyDetailList->ingredient_name)->value('name');
 
     ?>
 
 
                         <tr>
                             <td>
-                                <input type="text" value="{{$therapyDetailListName}}" name="ingridient_name[]"
+
+                                {{$therapyDetailListName}}
+
+                                <input type="hidden" value="{{$allTherapyDetailList->ingredient_name}}" name="ingridient_name[]"
                                        class="form-control" required/>
 
                                        <input type="hidden" value="{{$allPatientTherapyList->name}}" name="therapy_id[]"
@@ -46,18 +49,18 @@ $therapyDetailListName = DB::table('therapy_ingredients')
 
                             </td>
                             <td>
-                                <input type="text" value="{{ $allTherapyDetailList->quantity }}{{ $allTherapyDetailList->unit }}" name="ingridient_amount[]"
+                                {{ $allTherapyDetailList->quantity }}
+                                <input type="hidden" value="{{ $allTherapyDetailList->quantity }}" name="quantity[]"
                                        class="form-control" required/>
                             </td>
 
-                            <td>
-                                @if($mainkey+1 == 1)
-                                <button type="button" name="add" id="dynamic-ar{{ $allPatientTherapyList->id }}"
-                                        class="btn btn-outline-primary btn-sm">Add New Therapy
-                                </button>
-                                @else
 
-                                @endif
+
+                            <td>
+                                {{ $allTherapyDetailList->unit }}
+                                <input type="hidden" value="{{ $allTherapyDetailList->unit }}" name="unit[]"
+                                class="form-control" required/>
+
                             </td>
 
                         </tr>

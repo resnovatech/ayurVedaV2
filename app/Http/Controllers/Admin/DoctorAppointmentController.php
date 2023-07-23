@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\WalkByPatient;
@@ -21,6 +22,50 @@ class DoctorAppointmentController extends Controller
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
+    }
+
+
+    public function searchPatientForAppoinmentInfo(request $request){
+
+
+        $walkByPatientList = WalkByPatient::select("name as value",DB::raw("CONCAT(name,' - ',phone_or_mobile_number) as label"),"patient_reg_id as patient_reg_id", "age","email_address as email")
+        ->where('patient_reg_id', 'LIKE', '%'. $request->get('search'). '%')
+        ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+        ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+        ->get();
+
+        if(count($walkByPatientList) > 0){
+
+            $data = WalkByPatient::select("name as value",DB::raw("CONCAT(name,' - ',phone_or_mobile_number) as label"),"patient_reg_id as patient_reg_id", "age","email_address as email")
+            ->where('patient_reg_id', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+            ->get();
+        }else{
+
+
+
+
+
+
+            $data = Patient::select("name as value",DB::raw("CONCAT(name,' - ',phone_or_mobile_number) as label"),"patient_id as patient_reg_id", "age","email_address as email")
+            ->where('patient_id', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('name', 'LIKE', '%'. $request->get('search'). '%')
+            ->orwhere('phone_or_mobile_number', 'LIKE', '%'. $request->get('search'). '%')
+            ->get();
+
+        }
+
+
+
+
+
+
+
+
+
+
+return response()->json($data);
     }
 
 
@@ -125,13 +170,28 @@ class DoctorAppointmentController extends Controller
        }
 
 
+       $walkByPatientList = WalkByPatient::where('patient_reg_id',$request->patient_id)
+
+       ->get();
+
+       if(count($walkByPatientList) > 0){
+
+           $data = 'WalkByPatient';
+       }else{
+
+        $data = 'Patient';
+
+       }
+
+
+
          $doctorAppointment = new DoctorAppointment();
          $doctorAppointment->admin_id = Auth::guard('admin')->user()->id;
          $doctorAppointment->patient_id = $request->patient_id;
          $doctorAppointment->doctor_id = $request->doctor_id;
          $doctorAppointment->appointment_date = $request->appointment_date;
          $doctorAppointment->appointment_time = $request->appointment_time;
-         $doctorAppointment->patient_type = $request->patient_type;
+         $doctorAppointment->patient_type = $data;
          $doctorAppointment->serial_number = $finalSerialValue;
          $doctorAppointment->save();
 
@@ -152,13 +212,25 @@ class DoctorAppointmentController extends Controller
 
 
 
+        $walkByPatientList = WalkByPatient::where('patient_reg_id',$request->patient_id)
+
+        ->get();
+
+        if(count($walkByPatientList) > 0){
+
+            $data = 'WalkByPatient';
+        }else{
+
+         $data = 'Patient';
+
+        }
 
          $doctorAppointment = DoctorAppointment::find($id);
          $doctorAppointment->patient_id = $request->patient_id;
          $doctorAppointment->doctor_id = $request->doctor_id;
          $doctorAppointment->appointment_date = $request->appointment_date;
          $doctorAppointment->appointment_time = $request->appointment_time;
-         $doctorAppointment->patient_type = $request->patient_type;
+         $doctorAppointment->patient_type = $data;
          $doctorAppointment->save();
 
 

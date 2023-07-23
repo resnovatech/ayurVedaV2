@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2023 at 06:32 PM
+-- Generation Time: Jul 23, 2023 at 08:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -50,7 +50,8 @@ INSERT INTO `admins` (`id`, `name`, `phone`, `staff_id`, `position`, `image`, `e
 (1, 'super admin', '123456789', NULL, 'admin', 'public/uploads/1689865029202307208b167af653c2399dd93b952a48740620 (1).jpg', 'superadmin@gmail.com', NULL, '$2y$10$XU0GpiLPB/leEvfJVJmkIuHYDyv81tjlU11ZRh7IAM1uVLM57Xe0a', NULL, '2023-06-02 11:32:04', '2023-07-20 08:57:09'),
 (2, 'therapist One', '22222222224', '1', NULL, NULL, 'axft1DtgZt', NULL, '$2y$10$WCVVGHRuFFl6s3h5w7qwWOAP2ubldhODcjr8dLQdXZZApRZiwZnne', NULL, '2023-06-02 11:35:34', '2023-06-02 11:35:34'),
 (3, 'therapist Two', '77777777777', '2', NULL, NULL, 'emjru3qtJ7', NULL, '$2y$10$DtPQWdhNlim0MXomI//Fk.gdKq2bEyI50/9Br5wKSBiCwZXRIixPS', NULL, '2023-06-02 11:36:38', '2023-06-02 11:36:38'),
-(4, 'staff one', '77777777777', '1', NULL, NULL, '2yyso@hbkw.com', NULL, '$2y$10$rLNfivs/Bc81qgRl1oC2BuUUw9QIFPeguSpbzu5dRJDJIx4p4YFGy', NULL, '2023-06-02 11:37:58', '2023-06-02 11:37:58');
+(4, 'staff one', '77777777777', '1', NULL, NULL, '2yyso@hbkw.com', NULL, '$2y$10$rLNfivs/Bc81qgRl1oC2BuUUw9QIFPeguSpbzu5dRJDJIx4p4YFGy', NULL, '2023-06-02 11:37:58', '2023-06-02 11:37:58'),
+(5, 'therapy maker', '11111111', NULL, 'therapy maker', NULL, 'therapy_maker@gmail.com', NULL, '$2y$10$KpUmCOES.co/z6h64F492.igPMHfiVL98NBv5TlE7yninvy/7TzLO', NULL, '2023-07-23 04:11:18', '2023-07-23 04:11:18');
 
 -- --------------------------------------------------------
 
@@ -279,11 +280,7 @@ CREATE TABLE `doctor_appointments` (
 --
 
 INSERT INTO `doctor_appointments` (`id`, `admin_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_time`, `patient_type`, `serial_number`, `status`, `created_at`, `updated_at`) VALUES
-(9, 1, '2706231687877331', 2, '2023-07-31', '13:28', 'Walk By Patient', '1', NULL, '2023-07-20 01:26:58', '2023-07-20 01:26:58'),
-(10, 1, '2706231687877032', 2, '2023-07-20', '15:27', 'Walk By Patient', '1', NULL, '2023-07-20 01:27:25', '2023-07-20 01:27:25'),
-(11, 1, '2706231687877665', 2, '2023-07-21', '00:52', 'Patient', '1', '1', '2023-07-20 22:50:23', '2023-07-21 04:28:24'),
-(12, 1, '2706231687877760', 2, '2023-07-21', '05:00', 'Patient', '2', NULL, '2023-07-21 05:00:07', '2023-07-21 05:00:07'),
-(13, 1, '2706231687877986', 2, '2023-07-21', '23:22', 'Patient', '2', '1', '2023-07-21 11:22:38', '2023-07-21 11:40:14');
+(14, 1, '2706231687877665', 2, '2023-07-23', '18:15', 'Patient', '1', '1', '2023-07-23 06:15:22', '2023-07-23 06:19:47');
 
 -- --------------------------------------------------------
 
@@ -347,6 +344,28 @@ INSERT INTO `health_supplements` (`id`, `name`, `amount`, `created_at`, `updated
 (1, 'health one', '400', '2023-06-02 11:42:20', '2023-06-02 11:42:20'),
 (2, 'health two', '340', '2023-06-02 11:42:40', '2023-06-02 11:42:40'),
 (3, 'SM Enayet Mahmood', '25', '2023-06-11 13:09:28', '2023-06-11 13:09:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_categories`
+--
+
+CREATE TABLE `inventory_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventory_categories`
+--
+
+INSERT INTO `inventory_categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'therapy Ingredient', '2023-07-23 03:32:56', '2023-07-23 03:32:56'),
+(2, 'Medicine Equipment', '2023-07-23 03:33:32', '2023-07-23 03:33:32'),
+(3, 'other', '2023-07-23 03:40:29', '2023-07-23 03:40:29');
 
 -- --------------------------------------------------------
 
@@ -458,7 +477,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2023_05_30_094346_create_agrement_form_three_sneha_lists_table', 1),
 (48, '2023_06_03_101845_create_patient_main_therapies_table', 2),
 (49, '2023_06_07_061255_create_patient_therapy_details_table', 3),
-(50, '2023_06_07_062346_create_patient_herb_details_table', 4);
+(50, '2023_06_07_062346_create_patient_herb_details_table', 4),
+(51, '2023_07_23_084804_create_other_ingredients_table', 5),
+(52, '2023_07_23_084947_create_inventory_categories_table', 6),
+(53, '2023_07_23_110251_create_single_ingredients_table', 7);
 
 -- --------------------------------------------------------
 
@@ -492,7 +514,23 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\Admin', 1),
 (3, 'App\\Models\\Admin', 2),
 (3, 'App\\Models\\Admin', 3),
-(4, 'App\\Models\\Admin', 4);
+(4, 'App\\Models\\Admin', 4),
+(5, 'App\\Models\\Admin', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `other_ingredients`
+--
+
+CREATE TABLE `other_ingredients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -668,14 +706,9 @@ CREATE TABLE `patient_herbs` (
 --
 
 INSERT INTO `patient_herbs` (`id`, `doctor_id`, `doctor_appointment_id`, `patient_history_id`, `patient_id`, `name`, `package_name`, `how_many_dose`, `main_time`, `status`, `created_at`, `updated_at`) VALUES
-(16, 2, 11, 45, '2706231687877665', 'HeaxR3m4fz', '5', '3', NULL, '2', '2023-07-21 04:27:20', '2023-07-21 04:27:20'),
-(17, 2, 11, 45, '2706231687877665', 'xbr6lWoeJ6', '5', '3', NULL, '2', '2023-07-21 04:27:21', '2023-07-21 04:27:21'),
-(18, 2, 11, 45, '2706231687877665', 'mm two', '5', '3', NULL, '2', '2023-07-21 04:27:21', '2023-07-21 04:27:21'),
-(19, 2, 13, 48, '2706231687877986', 'm4', '3', '3', NULL, '2', '2023-07-21 11:39:51', '2023-07-21 11:39:51'),
-(20, 2, 13, 48, '2706231687877986', 'm3', '3', '1', NULL, '2', '2023-07-21 11:39:51', '2023-07-21 11:39:51'),
-(21, 2, 13, 48, '2706231687877986', 'm3', '3', '1', NULL, '2', '2023-07-21 11:39:51', '2023-07-21 11:39:51'),
-(22, 2, 13, 48, '2706231687877986', 'mm two', '3', '3', NULL, '2', '2023-07-21 11:39:52', '2023-07-21 11:39:52'),
-(23, 2, 13, 48, '2706231687877986', 'mm one', '3', '3', NULL, '2', '2023-07-21 11:39:52', '2023-07-21 11:39:52');
+(24, 2, 14, 64, '2706231687877665', 'mm1', '5', '3', NULL, '2', '2023-07-23 06:19:02', '2023-07-23 06:19:02'),
+(25, 2, 14, 64, '2706231687877665', 'mm2', '5', '33', NULL, '2', '2023-07-23 06:19:02', '2023-07-23 06:19:02'),
+(26, 2, 14, 64, '2706231687877665', 'mm two', '5', '12', NULL, '2', '2023-07-23 06:19:03', '2023-07-23 06:19:03');
 
 -- --------------------------------------------------------
 
@@ -698,12 +731,10 @@ CREATE TABLE `patient_herb_details` (
 --
 
 INSERT INTO `patient_herb_details` (`id`, `patient_herb_id`, `ingredient_name`, `quantity`, `unit`, `created_at`, `updated_at`) VALUES
-(6, 16, '2', '1', '1', '2023-07-21 04:27:21', '2023-07-21 04:27:21'),
-(7, 16, '1', '11', '11', '2023-07-21 04:27:21', '2023-07-21 04:27:21'),
-(8, 17, '2', '111', '111', '2023-07-21 04:27:21', '2023-07-21 04:27:21'),
-(9, 19, '2', '1', 't', '2023-07-21 11:39:51', '2023-07-21 11:39:51'),
-(10, 20, '2', '111', 'r', '2023-07-21 11:39:51', '2023-07-21 11:39:51'),
-(11, 21, '2', '111', 'r', '2023-07-21 11:39:51', '2023-07-21 11:39:51');
+(12, 24, '2', '1', 't', '2023-07-23 06:19:02', '2023-07-23 06:19:02'),
+(13, 24, '2', '2', 't', '2023-07-23 06:19:02', '2023-07-23 06:19:02'),
+(14, 25, '1', '111', 'r', '2023-07-23 06:19:03', '2023-07-23 06:19:03'),
+(15, 25, '2', '4444', 'r', '2023-07-23 06:19:03', '2023-07-23 06:19:03');
 
 -- --------------------------------------------------------
 
@@ -770,9 +801,13 @@ CREATE TABLE `patient_histories` (
 --
 
 INSERT INTO `patient_histories` (`id`, `admin_id`, `doctor_id`, `doctor_appointment_id`, `patient_id`, `pradhan_vedana`, `vedana_vrutanta`, `chikitsa_vrutanta`, `stri_evam_prasooti_vrutant`, `poorva_vedana_vrutant`, `anuvanshika_vritanta`, `pratyaksh_pramanam`, `roga_preeksha_srotas_pareeksha`, `rasavaha_srotas`, `raktavaha_srotas`, `mamsavaha_srotas`, `medovaha_srotas`, `asthivaha_srotas`, `majjavaha_srotas`, `shukravaha_srotas`, `rogi_pareeksha`, `nadi`, `dosha`, `dushya`, `shwas`, `tap_temp`, `kala`, `bhara_wt`, `agni`, `raktchap_bp`, `prakruti`, `mala`, `vaya`, `mootra`, `satmya`, `kshudha`, `satva`, `nidra`, `ahara`, `vyasan`, `roga_mrag`, `rago_sthana`, `sadhyasadhyata`, `pathya`, `yoga_chikitsa`, `paramarsh`, `history_file`, `status`, `bill_status`, `created_at`, `updated_at`) VALUES
-(45, 1, 2, 11, '2706231687877665', 'VhLJRWPGjm', 'ITPg6z4u2h', 'PvWriTRFbJ', '4gjPdlWyRI', '2BaQ9Sy6MQ', 'HqXpON5x7M', 'grSRR1OCfe', 'JF5sgFG1NP', 'iqBReZFpfq', '4zo971rK1g', '8hLJE8C5fn', '1gfJLLqvJZ', 'qHudY3J14K', 'dJp3e0Uvih', 'cqBteHJgWZ', 'JlcQucOxLU', '7AONP4NKze', '5xZQ99eCQP', 'yE76ol7Cd3', 'ZhugXc1Hri', 'HRGNJQTath', 'xRLgX5bgxE', 'UnpHOVp6g8', 'BiaesoaA8y', 'ba4PmAX5QW', 'QGJlKXXPXt', 'NY60rLjq0w', 'ILwBQ8Qvqk', 'bKjJhT8R8d', 'pfbGZCUAYS', '9L5Ojmrull', 'ix7A6OPEZl', '4bsVaL0xAJ', 'ZRdnj3uigM', 'KrFgDvJttv', 'pus55MuXc5', 'aEM6Fk8vAb', 'sch3H6MMer', '5e4Wp8ZfLy', 'VNAdkNiJZe', 'TZhLDAE5iE', 'public/uploads/222.PNG', '0', '1', '2023-07-20 22:50:55', '2023-07-21 09:27:45'),
-(48, 1, 2, 13, '2706231687877986', 'hXS9ZOVlRq', 'CypgopqaMz', '6bJBohtPeO', 'b70kW5bgY2', 'JrlvAoGFKl', 'iENb96VfQE', 'Dhd80sSw1K', 'EytnR5M3ac', 'WHkZzXxpcG', 'DeoFX9zLpH', '46UTLql8TH', 'etnPRuzCCU', 'uvc7x7FlUG', '9B0bL0iLzt', 'WRYAHAq8uD', 'r1H3qkiGdT', '8V9alVBE6x', 'Sojc9eoelR', 'KYt9uceS4x', '73Ns4EOXNd', 'xOZUubRADi', 'VN7s49BGyJ', 'ZZEq2BnVSD', 'W391xbwMzT', 'fEwhlQz1wq', '99unR8sBbh', 'BVrx2EJlKw', 'boI0bf6PDb', 'dcgEMZRmtg', '485BnJzZkY', 'G3kmxjG9F5', 'g2LtYU7cXV', 'H6VlhLXJrA', 'GQdnOAUUh0', '2USAX8wGLs', 'oRQFJcECwl', 'XiSItHQggu', 'C3XqjoCEnR', '6ujI2VDfrS', 'judlcyM8yS', '7jaYIJTSPI', 'public/uploads/222.PNG', '0', NULL, '2023-07-21 11:23:26', '2023-07-21 11:40:14'),
-(49, 1, NULL, NULL, '1106231686473743', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-21 11:58:08', '2023-07-21 11:58:08');
+(64, 1, 2, 14, '2706231687877665', 'lgkCIpRXhc', 'AEdvdoGRi7', 'i8w8etWQHm', 'jmn57aTu8P', 'vpc2VCNSYE', 'Ez1vrI4C7P', 'CdJEH5KuLg', 'tqoPR4sCTt', 'SJpb3AeLvQ', 'YgBL2GesOy', 'bd7PJhZFiV', 'mxcvZ8dvwd', 'Boht8jG8pz', 'LGLfvC5xlu', 'vj5WzSVaO2', 'Pf8axIXLGd', '2rBLcE8sld', 'R7ZdORucLA', 'nzz7IYrCo5', 'HB0FeWZ86w', 'HjCh0o75tW', 'yBuyDFBgCc', 'GBGTS2H5Nu', 'lvoHA8uUcb', 'N5E7MOzhyn', 'FDjh32YWy3', 'i8V4qYTe1O', 'xFQclzt18b', 'UL9Zr7fIpS', 'pdnNkhTfgC', 'biL0LcN2cG', 'Hp7jeVyl40', 'i60yugCZsc', 'jwEmJaRK0E', '72bHjLqXKy', 'TcbGacLfMt', 'UKxQNaTJsM', 'gcdURnvf47', 'wK7C5aPtd5', 'QtJZm9Vmx8', 'PBEmnOvYD7', 'public/uploads/govt-bangladesh-logo-D1143C363F-seeklogo.com.png', '0', NULL, '2023-07-23 06:16:05', '2023-07-23 06:19:47'),
+(66, 1, NULL, NULL, '2706231687877032', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-23 07:50:36', '2023-07-23 07:50:36'),
+(67, 1, NULL, NULL, '2706231687877331', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-23 08:34:54', '2023-07-23 08:34:54'),
+(68, 1, NULL, NULL, '1106231686473743', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-23 09:13:32', '2023-07-23 09:13:32'),
+(69, 1, NULL, NULL, '2706231687877331', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(70, 1, NULL, NULL, '2706231687877032', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '2023-07-23 09:22:29', '2023-07-23 09:22:29'),
+(71, 1, NULL, NULL, '2706231687877032', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', '1', '2023-07-23 09:34:35', '2023-07-23 10:43:51');
 
 -- --------------------------------------------------------
 
@@ -787,6 +822,7 @@ CREATE TABLE `patient_main_therapies` (
   `patient_history_id` bigint(20) UNSIGNED NOT NULL,
   `patient_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `therapy_package_id` varchar(200) DEFAULT NULL,
   `amount` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -796,9 +832,12 @@ CREATE TABLE `patient_main_therapies` (
 -- Dumping data for table `patient_main_therapies`
 --
 
-INSERT INTO `patient_main_therapies` (`id`, `therapist_id`, `therapy_appointment_id`, `patient_history_id`, `patient_id`, `name`, `amount`, `created_at`, `updated_at`) VALUES
-(8, 2, 31, 49, '1106231686473743', 'SM Enayet Mahmood', '1', '2023-07-21 11:58:52', '2023-07-21 11:58:52'),
-(9, 1, 31, 49, '1106231686473743', 'therapy two', '1', '2023-07-21 11:58:53', '2023-07-21 11:58:53');
+INSERT INTO `patient_main_therapies` (`id`, `therapist_id`, `therapy_appointment_id`, `patient_history_id`, `patient_id`, `name`, `therapy_package_id`, `amount`, `created_at`, `updated_at`) VALUES
+(19, 2, 51, 67, '2706231687877331', 'therapy two', '2', '1', '2023-07-23 09:20:20', '2023-07-23 09:20:20'),
+(20, 1, 51, 67, '2706231687877331', 'therapy One', '2', '1', '2023-07-23 09:20:21', '2023-07-23 09:20:21'),
+(21, 2, 52, 66, '2706231687877032', 'therapy two', NULL, '1', '2023-07-23 09:22:42', '2023-07-23 09:22:42'),
+(22, 2, 53, 71, '2706231687877032', 'therapy One', '2', '1', '2023-07-23 09:35:01', '2023-07-23 09:35:01'),
+(23, 1, 53, 71, '2706231687877032', 'therapy two', '2', '1', '2023-07-23 09:35:01', '2023-07-23 09:35:01');
 
 -- --------------------------------------------------------
 
@@ -824,8 +863,7 @@ CREATE TABLE `patient_medical_supplements` (
 --
 
 INSERT INTO `patient_medical_supplements` (`id`, `doctor_id`, `doctor_appointment_id`, `patient_history_id`, `patient_id`, `name`, `quantity`, `status`, `created_at`, `updated_at`) VALUES
-(4, 2, 11, 45, '2706231687877665', 'health two', '6', '2', '2023-07-20 22:52:00', '2023-07-21 10:43:20'),
-(5, 2, 13, 48, '2706231687877986', 'health two', '7', '2', '2023-07-21 11:40:04', '2023-07-21 11:40:04');
+(6, 2, 14, 64, '2706231687877665', 'health two', '7', '2', '2023-07-23 06:19:20', '2023-07-23 06:19:20');
 
 -- --------------------------------------------------------
 
@@ -873,11 +911,9 @@ CREATE TABLE `patient_therapies` (
 --
 
 INSERT INTO `patient_therapies` (`id`, `doctor_id`, `doctor_appointment_id`, `patient_history_id`, `patient_id`, `name`, `amount`, `therapy_type`, `package_name`, `status`, `created_at`, `updated_at`) VALUES
-(20, 2, 11, 45, '2706231687877665', '2', '2', 'Package', '2', '2', '2023-07-20 22:51:36', '2023-07-20 22:51:36'),
-(21, 2, 11, 45, '2706231687877665', '1', '2', 'Package', '2', '2', '2023-07-20 22:51:36', '2023-07-20 22:51:36'),
-(23, 2, 13, 48, '2706231687877986', '3', NULL, 'Package', '3', '2', '2023-07-21 11:37:24', '2023-07-21 11:37:24'),
-(24, 2, 13, 48, '2706231687877986', '2', NULL, 'Package', '3', '2', '2023-07-21 11:37:25', '2023-07-21 11:37:25'),
-(25, 2, 13, 48, '2706231687877986', '3', '2', 'Single', 'Single', '2', '2023-07-21 11:38:59', '2023-07-21 11:38:59');
+(26, 2, 14, 64, '2706231687877665', '2', '1', 'Single', 'Single', '2', '2023-07-23 06:17:14', '2023-07-23 06:17:14'),
+(27, 2, 14, 64, '2706231687877665', '2', '2', 'Package', '2', '2', '2023-07-23 06:17:56', '2023-07-23 06:17:56'),
+(28, 2, 14, 64, '2706231687877665', '1', '2', 'Package', '2', '2', '2023-07-23 06:17:57', '2023-07-23 06:17:57');
 
 -- --------------------------------------------------------
 
@@ -900,11 +936,10 @@ CREATE TABLE `patient_therapy_details` (
 --
 
 INSERT INTO `patient_therapy_details` (`id`, `patient_therapy_id`, `ingredient_name`, `quantity`, `unit`, `created_at`, `updated_at`) VALUES
-(10, 23, '3', '2', 'gram', '2023-07-21 11:37:24', '2023-07-21 11:37:24'),
-(11, 23, '2', '1', 'gram', '2023-07-21 11:37:25', '2023-07-21 11:37:25'),
-(12, 24, '1', '65', 'gram', '2023-07-21 11:37:25', '2023-07-21 11:37:25'),
-(13, 25, '3', '2', 'gram', '2023-07-21 11:38:59', '2023-07-21 11:38:59'),
-(14, 25, '2', '1', 'gram', '2023-07-21 11:39:00', '2023-07-21 11:39:00');
+(15, 26, '1', '650', 'gram', '2023-07-23 06:17:14', '2023-07-23 06:17:14'),
+(16, 26, '4', '300', 'gram', '2023-07-23 06:17:14', '2023-07-23 06:17:14'),
+(17, 27, '1', '65', 'gram', '2023-07-23 06:17:57', '2023-07-23 06:17:57'),
+(18, 28, '2', '65', 'gram', '2023-07-23 06:17:57', '2023-07-23 06:17:57');
 
 -- --------------------------------------------------------
 
@@ -1068,7 +1103,19 @@ INSERT INTO `permissions` (`id`, `group_name`, `name`, `guard_name`, `created_at
 (125, 'medicineEquipment', 'medicineEquipmentAdd', 'admin', '2023-06-02 11:32:03', '2023-06-02 11:32:03'),
 (126, 'medicineEquipment', 'medicineEquipmentView', 'admin', '2023-06-02 11:32:03', '2023-06-02 11:32:03'),
 (127, 'medicineEquipment', 'medicineEquipmentDelete', 'admin', '2023-06-02 11:32:03', '2023-06-02 11:32:03'),
-(128, 'medicineEquipment', 'medicineEquipmentUpdate', 'admin', '2023-06-02 11:32:04', '2023-06-02 11:32:04');
+(128, 'medicineEquipment', 'medicineEquipmentUpdate', 'admin', '2023-06-02 11:32:04', '2023-06-02 11:32:04'),
+(129, 'Inventory', 'inventoryAdd', 'admin', NULL, NULL),
+(130, 'Inventory', 'inventoryView', 'admin', NULL, NULL),
+(131, 'Inventory', 'inventoryDelete', 'admin', NULL, NULL),
+(132, 'Inventory', 'inventoryUpdate', 'admin', NULL, NULL),
+(133, 'inventory Category', 'inventoryCategoryAdd', 'admin', NULL, NULL),
+(134, 'inventory Category', 'inventoryCategoryView', 'admin', NULL, NULL),
+(135, 'inventory Category', 'inventoryCategoryDelete', 'admin', NULL, NULL),
+(136, 'inventory Category', 'inventoryCategoryUpdate', 'admin', NULL, NULL),
+(137, 'Therapy Maker', 'therapyMakerAdd', 'admin', NULL, NULL),
+(138, 'Therapy Maker', 'therapyMakerView', 'admin', NULL, NULL),
+(139, 'Therapy Maker', 'therapyMakerDelete', 'admin', NULL, NULL),
+(140, 'Therapy Maker', 'therapyMakerUpdate', 'admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1158,7 +1205,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (1, 'superadmin', 'admin', '2023-06-02 11:31:34', '2023-06-02 11:31:34'),
 (2, 'admin', 'admin', '2023-06-02 11:31:35', '2023-06-02 11:31:35'),
 (3, 'therapist', 'admin', '2023-06-02 11:31:35', '2023-06-02 11:31:35'),
-(4, 'staff', 'admin', '2023-06-02 11:31:35', '2023-06-02 11:31:35');
+(4, 'staff', 'admin', '2023-06-02 11:31:35', '2023-06-02 11:31:35'),
+(5, 'TherapyMaker', 'admin', '2023-07-23 04:09:49', '2023-07-23 04:09:49');
 
 -- --------------------------------------------------------
 
@@ -1177,7 +1225,9 @@ CREATE TABLE `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
+(1, 5),
 (2, 1),
+(2, 5),
 (3, 1),
 (4, 1),
 (5, 1),
@@ -1303,7 +1353,47 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (125, 1),
 (126, 1),
 (127, 1),
-(128, 1);
+(128, 1),
+(129, 1),
+(130, 1),
+(131, 1),
+(132, 1),
+(133, 1),
+(134, 1),
+(135, 1),
+(136, 1),
+(137, 5),
+(138, 5),
+(139, 5),
+(140, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `single_ingredients`
+--
+
+CREATE TABLE `single_ingredients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `therapy_appointment_detail_id` bigint(20) UNSIGNED NOT NULL,
+  `ingredient_name` varchar(255) NOT NULL,
+  `quantity` text NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `single_ingredients`
+--
+
+INSERT INTO `single_ingredients` (`id`, `therapy_appointment_detail_id`, `ingredient_name`, `quantity`, `unit`, `created_at`, `updated_at`) VALUES
+(32, 56, '1', '65', 'gram', '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(33, 56, '4', '120', 'gram', '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(34, 57, '2', '650', 'gram', '2023-07-23 09:19:51', '2023-07-23 09:19:51'),
+(35, 58, '1', '650', 'gram', '2023-07-23 09:22:30', '2023-07-23 09:22:30'),
+(36, 59, '1', '65', 'gram', '2023-07-23 09:34:36', '2023-07-23 09:34:36'),
+(37, 60, '2', '65', 'gram', '2023-07-23 09:34:36', '2023-07-23 09:34:36');
 
 -- --------------------------------------------------------
 
@@ -1408,8 +1498,9 @@ CREATE TABLE `therapy_appointments` (
 --
 
 INSERT INTO `therapy_appointments` (`id`, `admin_id`, `patient_id`, `patient_type`, `status`, `created_at`, `updated_at`) VALUES
-(30, 1, '2706231687877665', 'Patient', NULL, '2023-07-21 05:23:09', '2023-07-21 05:23:09'),
-(31, 1, '1106231686473743', NULL, '3', '2023-07-21 11:58:08', '2023-07-21 11:58:08');
+(51, 1, '2706231687877331', NULL, '3', '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(52, 1, '2706231687877032', NULL, '3', '2023-07-23 09:22:29', '2023-07-23 09:22:29'),
+(53, 1, '2706231687877032', NULL, '3', '2023-07-23 09:34:35', '2023-07-23 09:34:35');
 
 -- --------------------------------------------------------
 
@@ -1438,12 +1529,11 @@ CREATE TABLE `therapy_appointment_date_and_times` (
 --
 
 INSERT INTO `therapy_appointment_date_and_times` (`id`, `therapy_appointment_id`, `therapist`, `therapy`, `date`, `start_time`, `end_time`, `serial`, `status`, `patient_id`, `admin_id`, `created_at`, `updated_at`) VALUES
-(6, 30, '2', '2', '2023-07-26', '19:19', '19:19', '1', NULL, '2706231687877665', '1', '2023-07-21 05:23:09', '2023-07-21 05:23:09'),
-(7, 30, '2', '2', '2023-07-10', '20:19', '20:19', '1', NULL, '2706231687877665', '1', '2023-07-21 05:23:10', '2023-07-21 05:23:10'),
-(8, 30, '2', '1', '2023-07-21', '20:19', '20:20', '1', NULL, '2706231687877665', '1', '2023-07-21 05:23:10', '2023-07-21 05:23:10'),
-(9, 30, '2', '1', '2023-07-26', '21:23', '17:25', '1', NULL, '2706231687877665', '1', '2023-07-21 05:23:10', '2023-07-21 05:23:10'),
-(10, 31, '2', 'SM Enayet Mahmood', '2023-07-21', '23:03', '23:03', '1', NULL, '1106231686473743', '1', '2023-07-21 11:58:53', '2023-07-21 11:58:53'),
-(11, 31, '1', 'therapy two', '2023-07-21', '23:58', '14:58', '1', NULL, '1106231686473743', '1', '2023-07-21 11:58:53', '2023-07-21 11:58:53');
+(26, 51, '2', 'therapy two', '2023-07-23', '21:20', '23:20', '1', NULL, '2706231687877331', '1', '2023-07-23 09:20:21', '2023-07-23 09:20:21'),
+(27, 51, '1', 'therapy One', '2023-07-24', '22:20', '21:23', '1', NULL, '2706231687877331', '1', '2023-07-23 09:20:21', '2023-07-23 09:20:21'),
+(28, 52, '2', 'therapy two', '2023-07-23', '21:27', '21:28', '2', NULL, '2706231687877032', '1', '2023-07-23 09:22:43', '2023-07-23 09:22:43'),
+(29, 53, '2', 'therapy One', '2023-07-26', '12:34', '13:34', '1', NULL, '2706231687877032', '1', '2023-07-23 09:35:01', '2023-07-23 09:35:01'),
+(30, 53, '1', 'therapy two', '2023-07-20', '13:34', '21:34', '1', NULL, '2706231687877032', '1', '2023-07-23 09:35:01', '2023-07-23 09:35:01');
 
 -- --------------------------------------------------------
 
@@ -1466,10 +1556,11 @@ CREATE TABLE `therapy_appointment_details` (
 --
 
 INSERT INTO `therapy_appointment_details` (`id`, `therapy_appointment_id`, `therapy_name`, `name`, `amount`, `created_at`, `updated_at`) VALUES
-(31, 30, '2', 'the ing one', '65gram', '2023-07-21 05:23:09', '2023-07-21 05:23:09'),
-(32, 30, '1', 'the ing two', '65gram', '2023-07-21 05:23:09', '2023-07-21 05:23:09'),
-(33, 31, '3', '2', '1', '2023-07-21 11:58:09', '2023-07-21 11:58:09'),
-(34, 31, '2', '1', '65', '2023-07-21 11:58:09', '2023-07-21 11:58:09');
+(56, 51, '2', '2', '1', '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(57, 51, '1', '2', '1', '2023-07-23 09:19:50', '2023-07-23 09:19:50'),
+(58, 52, '2', 'Single', '1', '2023-07-23 09:22:30', '2023-07-23 09:22:30'),
+(59, 53, '2', '2', '1', '2023-07-23 09:34:35', '2023-07-23 09:34:35'),
+(60, 53, '1', '2', '1', '2023-07-23 09:34:36', '2023-07-23 09:34:36');
 
 -- --------------------------------------------------------
 
@@ -1519,7 +1610,8 @@ CREATE TABLE `therapy_ingredients` (
 INSERT INTO `therapy_ingredients` (`id`, `name`, `quantity`, `unit`, `created_at`, `updated_at`) VALUES
 (1, 'the ing one', '212', 'r', '2023-06-02 11:43:09', '2023-07-21 10:58:31'),
 (2, 'the ing two', '212', 'r', '2023-06-02 11:43:23', '2023-07-21 10:58:24'),
-(3, 'SM Enayet Mahmood', '444', 'rt', '2023-06-11 13:09:41', '2023-07-21 10:58:38');
+(3, 'SM Enayet Mahmood', '444', 'rt', '2023-06-11 13:09:41', '2023-07-21 10:58:38'),
+(4, 'm1', '2', 'r', '2023-07-23 03:58:12', '2023-07-23 03:58:12');
 
 -- --------------------------------------------------------
 
@@ -1776,6 +1868,12 @@ ALTER TABLE `health_supplements`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `inventory_categories`
+--
+ALTER TABLE `inventory_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `medicines`
 --
 ALTER TABLE `medicines`
@@ -1806,6 +1904,12 @@ ALTER TABLE `model_has_permissions`
 ALTER TABLE `model_has_roles`
   ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `other_ingredients`
+--
+ALTER TABLE `other_ingredients`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `packages`
@@ -1964,6 +2068,13 @@ ALTER TABLE `role_has_permissions`
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `single_ingredients`
+--
+ALTER TABLE `single_ingredients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `single_ingredients_therapy_appointment_detail_id_foreign` (`therapy_appointment_detail_id`);
+
+--
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
@@ -2071,7 +2182,7 @@ ALTER TABLE `walk_by_patient_services`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `agrement_form_ones`
@@ -2125,7 +2236,7 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `doctor_appointments`
 --
 ALTER TABLE `doctor_appointments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `doctor_consult_dates`
@@ -2146,6 +2257,12 @@ ALTER TABLE `health_supplements`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `inventory_categories`
+--
+ALTER TABLE `inventory_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `medicines`
 --
 ALTER TABLE `medicines`
@@ -2161,7 +2278,13 @@ ALTER TABLE `medicine_equipment`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT for table `other_ingredients`
+--
+ALTER TABLE `other_ingredients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -2191,31 +2314,31 @@ ALTER TABLE `patient_files`
 -- AUTO_INCREMENT for table `patient_herbs`
 --
 ALTER TABLE `patient_herbs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `patient_herb_details`
 --
 ALTER TABLE `patient_herb_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `patient_histories`
 --
 ALTER TABLE `patient_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `patient_main_therapies`
 --
 ALTER TABLE `patient_main_therapies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `patient_medical_supplements`
 --
 ALTER TABLE `patient_medical_supplements`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `patient_packages`
@@ -2227,13 +2350,13 @@ ALTER TABLE `patient_packages`
 -- AUTO_INCREMENT for table `patient_therapies`
 --
 ALTER TABLE `patient_therapies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `patient_therapy_details`
 --
 ALTER TABLE `patient_therapy_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -2245,7 +2368,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -2269,7 +2392,13 @@ ALTER TABLE `rewards`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `single_ingredients`
+--
+ALTER TABLE `single_ingredients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -2293,19 +2422,19 @@ ALTER TABLE `therapists`
 -- AUTO_INCREMENT for table `therapy_appointments`
 --
 ALTER TABLE `therapy_appointments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `therapy_appointment_date_and_times`
 --
 ALTER TABLE `therapy_appointment_date_and_times`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `therapy_appointment_details`
 --
 ALTER TABLE `therapy_appointment_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `therapy_details`
@@ -2317,7 +2446,7 @@ ALTER TABLE `therapy_details`
 -- AUTO_INCREMENT for table `therapy_ingredients`
 --
 ALTER TABLE `therapy_ingredients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `therapy_lists`
@@ -2524,6 +2653,12 @@ ALTER TABLE `payments`
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `single_ingredients`
+--
+ALTER TABLE `single_ingredients`
+  ADD CONSTRAINT `single_ingredients_therapy_appointment_detail_id_foreign` FOREIGN KEY (`therapy_appointment_detail_id`) REFERENCES `therapy_appointment_details` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `staff`

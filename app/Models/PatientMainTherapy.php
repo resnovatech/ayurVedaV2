@@ -10,7 +10,7 @@ class PatientMainTherapy extends Model
     use HasFactory;
 
     protected $fillable = [
-        'therapist_id','therapy_appointment_id','patient_id','patient_history_id','name',
+        'therapist_id','therapy_package_id','therapy_appointment_id','patient_id','patient_history_id','name',
         'amount'
     ];
 

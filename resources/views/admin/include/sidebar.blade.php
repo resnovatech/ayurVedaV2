@@ -222,7 +222,7 @@ $usr = Auth::guard('admin')->user();
                 </li>
                 @endif
 
-
+                @if ( $usr->can('therapyListsAdd')  || $usr->can('therapyListsView') ||  $usr->can('therapyListsDelete') ||  $usr->can('therapyListsUpdate') || $usr->can('therapyIngredientsAdd')  || $usr->can('therapyIngredientsView') ||  $usr->can('therapyIngredientsDelete') ||  $usr->can('therapyIngredientsUpdate')|| $usr->can('healthSupplementsAdd')  || $usr->can('healthSupplementsView') ||  $usr->can('healthSupplementsDelete') ||  $usr->can('healthSupplementsUpdate') || $usr->can('therapyPackagesAdd')  || $usr->can('therapyPackagesView') ||  $usr->can('therapyPackagesDelete') ||  $usr->can('therapyPackagesUpdate') || $usr->can('dietChartsAdd')  || $usr->can('dietChartsView') ||  $usr->can('dietChartsDelete') ||  $usr->can('dietChartsUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('dietCharts.edit') || Route::is('dietCharts.create') || Route::is('dietCharts.index') || Route::is('healthSupplements.index') || Route::is('therapyIngredients.index') || Route::is('therapyLists.index') || Route::is('therapyPackages.index') ? 'active' : '' }}" href="#prescriptionList" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarTables">
@@ -262,7 +262,8 @@ $usr = Auth::guard('admin')->user();
                         </ul>
                     </div>
                 </li>
-
+                @endif
+                @if ( $usr->can('medicineListsAdd')  || $usr->can('medicineListsView') ||  $usr->can('medicineListsDelete') ||  $usr->can('medicineListsUpdate') || $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate') || $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate')|| $usr->can('medicineEquipmentAdd')  || $usr->can('medicineEquipmentView') ||  $usr->can('medicineEquipmentDelete') ||  $usr->can('medicineEquipmentUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Medicine Section</span></li>
 
 
@@ -297,8 +298,8 @@ $usr = Auth::guard('admin')->user();
                         </ul>
                     </div>
                 </li>
-
-
+@endif
+@if (  $usr->can('agreementFormThreeAdd')  || $usr->can('agreementFormThreeView') ||  $usr->can('agreementFormThreeDelete') ||  $usr->can('agreementFormThreeUpdate') || $usr->can('agreementFormTwoAdd')  || $usr->can('agreementFormTwoView') ||  $usr->can('agreementFormTwoDelete') ||  $usr->can('agreementFormTwoUpdate')|| $usr->can('agreementFormOneAdd')  || $usr->can('agreementFormOneView') ||  $usr->can('agreementFormOneDelete') ||  $usr->can('agreementFormOneUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Form Section</span></li>
 
 
@@ -341,32 +342,60 @@ $usr = Auth::guard('admin')->user();
                         <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">TreatMent Chart</span>
                     </a>
                 </li>
-                <li class="menu-title"><span data-key="t-menu">Inventory</span></li>
+                @endif
+                @if ($usr->can('therapyMakerAdd') || $usr->can('therapyMakerView') || $usr->can('therapyMakerDelete') || $usr->can('therapyMakerUpdate'))
+                <li class="menu-title"><span data-key="t-menu">Therapy Maker</span></li>
 
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('therapyMakerList.index') ? 'active' : '' }}" href="{{ route('therapyMakerList.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Therapy Maker List</span>
+                    </a>
+                </li>
+                @endif
+
+
+                @if ( $usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate')|| $usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
+                <li class="menu-title"><span data-key="t-menu">Inventory</span></li>
+                @if ($usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('inventoryCategoryList.index') ? 'active' : '' }}" href="{{ route('inventoryCategoryList.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Category List</span>
+                    </a>
+                </li>
+                @endif
+                @if ($usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">
                         <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory List</span>
                     </a>
                 </li>
-
+                @endif
+                @endif
+                @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate') || $usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate') || $usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
                 <li class="menu-title"><span data-key="t-menu">HR Section</span></li>
-
+                @if ($usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('staff.index') ? 'active' : '' }}" href="{{ route('staff.index') }}">
                         <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-widgets">Staff</span>
                     </a>
                 </li>
+                @endif
+                @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('reward.index') ? 'active' : '' }}" href="{{ route('reward.index') }}">
                         <i class="bx bx-money"></i> <span data-key="t-widgets">Reward</span>
                     </a>
                 </li>
+                @endif
+                @if ($usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('therapist.show') || Route::is('therapist.index') ? 'active' : '' }}" href="{{ route('therapist.index') }}">
                         <i class="mdi mdi-doctor"></i> <span data-key="t-widgets">Therapist</span>
                     </a>
                 </li>
-
+                @endif
+@endif
                 @if ($usr->can('permissionAdd') || $usr->can('permissionView') || $usr->can('permissionDelete') || $usr->can('permissionUpdate') || $usr->can('roleAdd') || $usr->can('roleView') || $usr->can('roleDelete') || $usr->can('roleUpdate') || $usr->can('userAdd') || $usr->can('userView') || $usr->can('userDelete') || $usr->can('userUpdate') || $usr->can('systemInformationAdd') || $usr->can('systemInformationView') || $usr->can('systemInformationDelete') || $usr->can('systemInformationUpdate'))
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Setting</span></li>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\PatientMainTherapy;
 use App\Models\Patient;
 use App\Models\WalkByPatient;
 use App\Models\DoctorAppointment;
@@ -39,6 +40,48 @@ class BillingController extends Controller
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
 
+        //new code
+
+//package
+ $singlePackageList = PatientMainTherapy::where('patient_history_id',$id)
+ ->whereNotNull('therapy_package_id')->latest()->get();
+
+
+ $countpatientTherapyList1 = count($singlePackageList);
+ $totalTherapyAmount1 = 0 ;
+ $totalTherapyAmountsingle1 = 0 ;
+ ///new code
+ foreach($singlePackageList as $key=>$allPatientTherapyList){
+     $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+     $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+     $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+     if(($key+1) == $countpatientTherapyList1){
+     $totalTherapyAmount1 = $totalTherapyAmount1 + ($allPatientTherapyList->amount*$getPatientTheraPrice1);
+     }
+
+ }
+
+//endpackage
+
+//single
+$singleTheList = PatientMainTherapy::where('patient_history_id',$id)
+->whereNull('therapy_package_id')->latest()->get();
+$totalTheAmountsingle = 0;
+foreach($singleTheList as $key=>$allPatientTherapyList){
+
+    $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+
+$totalTheAmountsingle = $totalTheAmountsingle + ($allPatientTherapyList->amount*$getTherapyPrices);
+
+}
+
+//endsingle
+
+
+//end new code
+
 
         $patientTherapyList =  PatientTherapy::where('patient_history_id',$id)->where('therapy_type','Package')
         ->latest()->get();
@@ -136,7 +179,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -164,6 +207,11 @@ $getPhoneFromPatient = DB::table('patients')
 
 
         $pdf=PDF::loadView('admin.bill.printInvoice',[
+            'mainTotal'=>$mainTotal,
+            'singleTheList'=>$singleTheList,
+            'singlePackageList'=>$singlePackageList,
+            'totalTheAmountsingle'=>$totalTheAmountsingle,
+            'totalTherapyAmount1'=>$totalTherapyAmount1,
             'totalTherapyAmountsingle'=>$totalTherapyAmountsingle,
             'patientTherapyListSingle'=>$patientTherapyListSingle,
             'patientHistory'=>$patientHistory,
@@ -193,6 +241,48 @@ $getPhoneFromPatient = DB::table('patients')
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
 
+        //new code
+
+//package
+ $singlePackageList = PatientMainTherapy::where('patient_history_id',$id)
+ ->whereNotNull('therapy_package_id')->latest()->get();
+
+
+ $countpatientTherapyList1 = count($singlePackageList);
+ $totalTherapyAmount1 = 0 ;
+ $totalTherapyAmountsingle1 = 0 ;
+ ///new code
+ foreach($singlePackageList as $key=>$allPatientTherapyList){
+     $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+     $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+     $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+     if(($key+1) == $countpatientTherapyList1){
+     $totalTherapyAmount1 = $totalTherapyAmount1 + ($allPatientTherapyList->amount*$getPatientTheraPrice1);
+     }
+
+ }
+
+//endpackage
+
+//single
+$singleTheList = PatientMainTherapy::where('patient_history_id',$id)
+->whereNull('therapy_package_id')->latest()->get();
+$totalTheAmountsingle = 0;
+foreach($singleTheList as $key=>$allPatientTherapyList){
+
+    $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+
+$totalTheAmountsingle = $totalTheAmountsingle + ($allPatientTherapyList->amount*$getTherapyPrices);
+
+}
+
+//endsingle
+
+
+//end new code
+
 
         $patientTherapyList =  PatientTherapy::where('patient_history_id',$id)->where('therapy_type','Package')
         ->latest()->get();
@@ -290,7 +380,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -312,6 +402,10 @@ if(($key+1) == $countpatientHerb){
 
 
         $pdf=PDF::loadView('admin.bill.therapyListFromHistory',[
+            'singleTheList'=>$singleTheList,
+            'singlePackageList'=>$singlePackageList,
+            'totalTheAmountsingle'=>$totalTheAmountsingle,
+            'totalTherapyAmount1'=>$totalTherapyAmount1,
             'totalTherapyAmountsingle'=>$totalTherapyAmountsingle,
             'patientTherapyListSingle'=>$patientTherapyListSingle,
             'patientHistory'=>$patientHistory,
@@ -340,6 +434,48 @@ if(($key+1) == $countpatientHerb){
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
 
+        //new code
+
+//package
+ $singlePackageList = PatientMainTherapy::where('patient_history_id',$id)
+ ->whereNotNull('therapy_package_id')->latest()->get();
+
+
+ $countpatientTherapyList1 = count($singlePackageList);
+ $totalTherapyAmount1 = 0 ;
+ $totalTherapyAmountsingle1 = 0 ;
+ ///new code
+ foreach($singlePackageList as $key=>$allPatientTherapyList){
+     $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+     $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+     $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+     if(($key+1) == $countpatientTherapyList1){
+     $totalTherapyAmount1 = $totalTherapyAmount1 + ($allPatientTherapyList->amount*$getPatientTheraPrice1);
+     }
+
+ }
+
+//endpackage
+
+//single
+$singleTheList = PatientMainTherapy::where('patient_history_id',$id)
+->whereNull('therapy_package_id')->latest()->get();
+$totalTheAmountsingle = 0;
+foreach($singleTheList as $key=>$allPatientTherapyList){
+
+    $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+
+$totalTheAmountsingle = $totalTheAmountsingle + ($allPatientTherapyList->amount*$getTherapyPrices);
+
+}
+
+//endsingle
+
+
+//end new code
+
 
         $patientTherapyList =  PatientTherapy::where('patient_history_id',$id)->where('therapy_type','Package')
         ->latest()->get();
@@ -437,7 +573,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -459,6 +595,10 @@ if(($key+1) == $countpatientHerb){
 
 
         $pdf=PDF::loadView('admin.bill.medicineList',[
+            'singleTheList'=>$singleTheList,
+            'singlePackageList'=>$singlePackageList,
+            'totalTheAmountsingle'=>$totalTheAmountsingle,
+            'totalTherapyAmount1'=>$totalTherapyAmount1,
             'totalTherapyAmountsingle'=>$totalTherapyAmountsingle,
             'patientTherapyListSingle'=>$patientTherapyListSingle,
             'patientHistory'=>$patientHistory,
@@ -484,7 +624,53 @@ if(($key+1) == $countpatientHerb){
 
     public function show($id){
         $mainId = $id;
+
+        //dd($mainId );
         $patientHistory = PatientHistory::find($id);
+
+
+//new code
+
+//package
+ $singlePackageList = PatientMainTherapy::where('patient_history_id',$id)
+ ->whereNotNull('therapy_package_id')->latest()->get();
+
+
+ $countpatientTherapyList1 = count($singlePackageList);
+ $totalTherapyAmount1 = 0 ;
+ $totalTherapyAmountsingle1 = 0 ;
+ ///new code
+ foreach($singlePackageList as $key=>$allPatientTherapyList){
+     $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+     $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+     $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+     if(($key+1) == $countpatientTherapyList1){
+     $totalTherapyAmount1 = $totalTherapyAmount1 + ($allPatientTherapyList->amount*$getPatientTheraPrice1);
+     }
+
+ }
+
+//endpackage
+
+//single
+$singleTheList = PatientMainTherapy::where('patient_history_id',$id)
+->whereNull('therapy_package_id')->latest()->get();
+$totalTheAmountsingle = 0;
+foreach($singleTheList as $key=>$allPatientTherapyList){
+
+    $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+
+$totalTheAmountsingle = $totalTheAmountsingle + ($allPatientTherapyList->amount*$getTherapyPrices);
+
+}
+
+//endsingle
+
+
+//end new code
+
 
 
         $patientTherapyList =  PatientTherapy::where('patient_history_id',$id)->where('therapy_type','Package')
@@ -583,7 +769,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -600,7 +786,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.bill.show',compact('totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.bill.show',compact('mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
     }
 

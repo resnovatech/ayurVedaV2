@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('patient_history_id')->unsigned();
             $table->foreign('patient_history_id')->references('id')->on('patient_histories')->onDelete('cascade');
             $table->string('patient_id');
+            $table->string('therapy_package_id')->nullable();
             $table->string('name');
             $table->string('amount');
             $table->timestamps();

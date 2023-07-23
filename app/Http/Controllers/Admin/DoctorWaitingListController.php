@@ -305,6 +305,7 @@ class DoctorWaitingListController extends Controller
                 foreach($therapyName as $key => $therapyName){
                     $therapyName = new PatientTherapy();
                     $therapyName->name=$inputAllData['therapy_id'][$key];
+                    $therapyName->amount=$request->amount;
                     $therapyName->package_name=$request->therapy_package_id;
                     $therapyName->therapy_type=$request->therapy_type;
                     $therapyName->doctor_id    = $doctorWaitingList->doctor_id;

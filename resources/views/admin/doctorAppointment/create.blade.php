@@ -41,7 +41,13 @@ Doctor Appointment | {{ $ins_name }}
                     <div class="card-body">
                         <div class="live-preview">
                             <div class="row gy-4">
-                                <div class="col-xxl-6 col-md-6">
+                                <div class="col-lg-12">
+                                <label for="" class="form-label">Name</label>
+                                <input type="hidden" name ="patient_id" class="form-control" id="patient_id" placeholder="Name" required>
+                                <input type="text" name ="name" class="form-control nameWiseData" id="searchnew" placeholder="Type Name/Phone/Patient ID" required>
+                                </div>
+
+                                {{-- <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="" class="form-label">Patient ID</label>
                                         <select class="js-example-basic-single form-control" name="patient_id" id="patient_id" required>
@@ -71,7 +77,7 @@ data-nationality="{{ $allPatientList->nationality }}"
                                      @endforeach
                                     </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header align-items-center d-flex">
@@ -87,13 +93,18 @@ data-nationality="{{ $allPatientList->nationality }}"
                                                                 <div class="ribbon ribbon-primary round-shape">
                                                                     Primary
                                                                 </div>
-                                                                <h5 class="fs-14 text-end" id="ptype">Walk By Patient</h5>
+                                                                {{-- <h5 class="fs-14 text-end" id="ptype">Walk By Patient</h5> --}}
 
-                                                                <div class="ribbon-content mt-4 text-muted">
-                                                                    <p>Name : </p> <span id="name"></span>
-                                                                    <p>Age : </p> <span id="age"></span>
-                                                                    <p>Email Address: </p> <span id="email_address"></span>
+                                                                <div class="card-body" id="mainDetailOne">
+
+
+                                                                    <div class="ribbon-content mt-4 text-muted">
+                                                                        <p>Name: <span id="mmName"></span></p>
+                                                                        <p>Age: <span id="mmAge"></span></p>
+                                                                        <p>Email Address: <span id="mmEmail"></span></p>
+                                                                    </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -158,6 +169,43 @@ data-nationality="{{ $allPatientList->nationality }}"
 
 
 @section('script')
+
+<script type="text/javascript">
+
+
+
+
+    $( "#searchnew" ).autocomplete({
+
+
+
+        source: function( request, response ) {
+          $.ajax({
+            url: '{{ route("searchPatientForAppoinmentInfo") }}',
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+        select: function (event, ui) {
+           $('#searchnew').val(ui.item.value);
+           $('#mmName').html(ui.item.value);
+           $('#modalName').val(ui.item.value);
+           $('#patient_id').val(ui.item.patient_reg_id);
+           $('#mmAge').html(ui.item.age);
+           $('#mmEmail').html(ui.item.email);
+           console.log(ui.item);
+           return false;
+        }
+      });
+
+</script>
+
 
 <script>
     // $('#appointment_time').change(function(){

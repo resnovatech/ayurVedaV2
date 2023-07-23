@@ -37,6 +37,8 @@ use App\Http\Controllers\Admin\AgrementFormOneController;
 use App\Http\Controllers\Admin\AgrementFormTwoController;
 use App\Http\Controllers\Admin\AgrementFormThreeController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\InventoryCategoryController;
+use App\Http\Controllers\Admin\TherapyMakerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,7 +78,8 @@ Route::group(['prefix' => 'admin'], function () {
     //therapy_package
 
 
-
+    Route::resource('therapyMakerList', TherapyMakerController::class);
+    Route::resource('inventoryCategoryList', InventoryCategoryController::class);
     Route::resource('inventoryList', InventoryController::class);
 
     Route::resource('agreementFormThree', AgrementFormThreeController::class);
@@ -143,6 +146,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::controller(DoctorAppointmentController::class)->group(function () {
 
         Route::get('/checkAppoinmentInfo', 'checkAppoinmentInfo')->name('checkAppoinmentInfo');
+        Route::get('/searchPatientForAppoinmentInfo', 'searchPatientForAppoinmentInfo')->name('searchPatientForAppoinmentInfo');
 
 
     });

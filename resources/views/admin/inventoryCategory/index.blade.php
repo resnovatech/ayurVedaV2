@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-Medicine Equipment List | {{ $ins_name }}
+Inventory Category List | {{ $ins_name }}
 @endsection
 
 
@@ -13,12 +13,12 @@ Medicine Equipment List | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Medicine Equipment  List</h4>
+                    <h4 class="mb-sm-0">Inventory Category  List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                            <li class="breadcrumb-item active">Medicine Equipment  List</li>
+                            <li class="breadcrumb-item active">Inventory Category  List</li>
                         </ol>
                     </div>
 
@@ -31,7 +31,7 @@ Medicine Equipment List | {{ $ins_name }}
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Medicine Equipment  Info</h4>
+                        <h4 class="card-title mb-0">Inventory Category  Info</h4>
                         @include('flash_message')
                     </div><!-- end card header -->
 
@@ -39,10 +39,10 @@ Medicine Equipment List | {{ $ins_name }}
                         <div id="customerList">
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
-                                    {{-- <div>
-                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Medicine Equipment </button>
+                                    <div>
+                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Inventory Category </button>
 
-                                    </div> --}}
+                                    </div>
                                 </div>
 
                             </div>
@@ -53,8 +53,7 @@ Medicine Equipment List | {{ $ins_name }}
                                     <tr>
                                         <th class="sort" data-sort="customer_name">Sl</th>
                                         <th class="sort" data-sort="customer_name"> Name</th>
-                                        <th class="sort" data-sort="customer_name"> Quantity</th>
-                                        <th class="sort" data-sort="customer_name"> Unit</th>
+
 
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
@@ -66,13 +65,12 @@ Medicine Equipment List | {{ $ins_name }}
 
                                         <td class="id">{{ $key+1 }}</td>
                                         <td class="customer_name">{{ $allmedicineEquipment->name }}</td>
-                                        <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
-                                        <td class="customer_name">{{ $allmedicineEquipment->unit }}</td>
+
                                         <td>
 
+@if($allmedicineEquipment->id > 2)
 
-
-                                            @if (Auth::guard('admin')->user()->can('medicineEquipmentUpdate'))
+                                            @if (Auth::guard('admin')->user()->can('inventoryCategoryUpdate'))
                                             <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg{{ $allmedicineEquipment->id }}"
                                             class="btn btn-primary waves-light waves-effect  btn-sm" >
                                             <i class="ri-pencil-fill"></i></button>
@@ -82,12 +80,12 @@ Medicine Equipment List | {{ $ins_name }}
                                                   <div class="modal-dialog modal-lg">
                                                       <div class="modal-content">
                                                           <div class="modal-header">
-                                                              <h5 class="modal-title" id="myLargeModalLabel">Update Medicine Equipment Name</h5>
+                                                              <h5 class="modal-title" id="myLargeModalLabel">Update Inventory Category Name</h5>
                                                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                               </button>
                                                           </div>
                                                           <div class="modal-body">
-                                                            <form action="{{ route('medicineEquipment.update',$allmedicineEquipment->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                                            <form action="{{ route('inventoryCategoryList.update',$allmedicineEquipment->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <div class="row">
@@ -96,16 +94,7 @@ Medicine Equipment List | {{ $ins_name }}
                                                                         <input type="text" value="{{ $allmedicineEquipment->name }}" name ="name" class="form-control" id="" placeholder="Name" required>
                                                                     </div>
 
-                                                                    <div class="col-12 mb-2">
-                                                                        <label for="" class="form-label">Quantity</label>
-                                                                        <input type="text" name="quantity" value="{{ $allmedicineEquipment->quantity }}"
-                                                                               class="form-control"/>
-                                                                    </div>
-                                                                    <div class="col-12 mb-2">
-                                                                        <label for="" class="form-label">Unit</label>
-                                                                        <input type="text" name="unit" value="{{ $allmedicineEquipment->unit }}"
-                                                                        class="form-control"/>
-                                                                    </div>
+
 
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary mt-3">Update</button>
@@ -120,14 +109,17 @@ Medicine Equipment List | {{ $ins_name }}
 
   {{-- <button type="button" class="btn btn-primary waves-light waves-effect  btn-sm" onclick="window.location.href='{{ route('admin.users.view',$user->id) }}'"><i class="fa fa-eye"></i></button> --}}
 
-                                    @if (Auth::guard('admin')->user()->can('medicineEquipmentDelete'))
+                                    @if (Auth::guard('admin')->user()->can('inventoryCategoryDelete'))
 
   <button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allmedicineEquipment->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
-  <form id="delete-form-{{ $allmedicineEquipment->id }}" action="{{ route('medicineEquipment.destroy',$allmedicineEquipment->id) }}" method="POST" style="display: none;">
+  <form id="delete-form-{{ $allmedicineEquipment->id }}" action="{{ route('inventoryCategoryList.destroy',$allmedicineEquipment->id) }}" method="POST" style="display: none;">
     @method('DELETE')
                                   @csrf
 
                               </form>
+                                                  @endif
+                                                  @else
+
                                                   @endif
 
                                         </td>
@@ -158,11 +150,11 @@ Medicine Equipment List | {{ $ins_name }}
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Medicine Equipment Name</h5>
+                <h5 class="modal-title" id="myModalLabel">Inventory Category Name</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('medicineEquipment.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                <form action="{{ route('inventoryCategoryList.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                     @csrf
                     <div class="row">
                         <div class="col-12 mb-2">
@@ -170,16 +162,7 @@ Medicine Equipment List | {{ $ins_name }}
                             <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
                         </div>
 
-                        <div class="col-12 mb-2">
-                            <label for="" class="form-label">Quantity</label>
-                            <input type="text" name="quantity" value=""
-                                   class="form-control"/>
-                        </div>
-                        <div class="col-12 mb-2">
-                            <label for="" class="form-label">Unit</label>
-                            <input type="text" name="unit" value=""
-                            class="form-control"/>
-                        </div>
+
 
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>

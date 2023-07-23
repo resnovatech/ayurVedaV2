@@ -18,7 +18,7 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
         <input type="hidden" class="form-control" name="therapy_id[]" value="{{ $allTherapyPackage->id }}" >
 
 
-<table class="table table-bordered mt-3 dynamicAddRemove" id="dynamicAddRemove{{ $j+1 }}">
+<table class="table table-bordered mt-3 dynamicAddRemove" id="dynamicAddRemove{{ $j}}">
     <tr>
         <th>Ingredient Name</th>
         <th>Quantity</th>
@@ -45,7 +45,7 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
         </td>
 
         <td>
-            <button type="button" name="add" id="dynamic-ar{{ $j+1 }}"
+            <button type="button" name="add" id="dynamic-ar{{ $j}}"
                     class="btn btn-outline-primary dynamic-ar">Add New Ingredient
             </button>
         </td>
@@ -93,13 +93,13 @@ $therapistList = DB::table('therapists')->latest()->get();
         ++i;
         $("#dynamicAddRemove"+id_for_pass).append('<tr id="mDelete'+i+'">' +
             '<td>' +
-            ' <select class="form-select mb-3" name="ingrident_id[]" aria-label="Default select example">' +
+            ' <select class="form-select mb-3" name="ingrident_id'+id_for_pass+'[]" aria-label="Default select example">' +
             '@foreach($therapyIngredientList as $allTherapyIngredients)<option value="{{ $allTherapyIngredients->id }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="quantity[]"  class="form-control" /></td>' +
+            '<input type="text" name="quantity'+id_for_pass+'[]"  class="form-control" /></td>' +
             '<td>' +
-            ' <select class="form-select mb-3" name="unit[]" aria-label="Default select example">' +
+            ' <select class="form-select mb-3" name="unit'+id_for_pass+'[]" aria-label="Default select example">' +
             ' <option value="gram">gram</option><option value="milligram">milligram</option><option value="liter">liter</option></select>' +
             '</td>' +
             '<td><button type="button" id="remove-input-fieldd'+i+'" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'

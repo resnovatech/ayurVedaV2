@@ -165,7 +165,7 @@ class TherapyAppointmentController extends Controller
 
         ]);
 
-        //dd($request->all());
+       // dd($request->all());
         $patientId = PatientHistory::where('id',$request->patient_id)->value('patient_id');
 
 
@@ -203,15 +203,15 @@ class TherapyAppointmentController extends Controller
         $therapistList = $inputAllData['therapist'];
        // TherapyAppointmentDateAndTime
 
-        foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
-            $therapyAppointmentDetail = new TherapyAppointmentDetail();
-            $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
-            $therapyAppointmentDetail->name=$inputAllData['ingridient_name'][$key];
-            $therapyAppointmentDetail->amount=$inputAllData['ingridient_amount'][$key];
-            $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
-            $therapyAppointmentDetail->save();
+        // foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
+        //     $therapyAppointmentDetail = new TherapyAppointmentDetail();
+        //     $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
+        //     $therapyAppointmentDetail->name=$inputAllData['ingridient_name'][$key];
+        //     $therapyAppointmentDetail->amount=$inputAllData['ingridient_amount'][$key];
+        //     $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
+        //     $therapyAppointmentDetail->save();
 
-           }
+        //    }
 
 
            foreach($therapistList as $key => $therapistList){

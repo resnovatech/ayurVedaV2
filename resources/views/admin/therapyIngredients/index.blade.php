@@ -39,10 +39,10 @@ Therapy Ingredient List | {{ $ins_name }}
                         <div id="customerList">
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
-                                    <div>
+                                    {{-- <div>
                                         <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Therapy Ingredient </button>
 
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                             </div>

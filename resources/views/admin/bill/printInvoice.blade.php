@@ -181,6 +181,82 @@
     </thead>
     <tbody>
 
+                                            <!-- package -->
+                                            <?php
+
+
+                                            $countpatientTherapyList1 = count($singlePackageList);
+                                            $totalTherapyAmount1 = 0 ;
+                                            $totalTherapyAmountsingle1 = 0 ;
+                                            ?>
+                                            <!-- new code -->
+                                            @foreach($singlePackageList as $key=>$allPatientTherapyList)
+                                            <?php
+                                                $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+                                                $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+                                                $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+                                                ?>
+
+                                           <tr>
+
+                                               <td class="text-start">
+                                                   <span class="fw-medium">{{ $getTherapyPriceName1 }}({{ $getPackage1 }})</span>
+
+                                               </td>
+                                               <td>Therapy</td>
+
+                                               @if(($key+1) == $countpatientTherapyList1)
+
+                                               <td>BDT {{ $getPatientTheraPrice1 }}</td>
+
+                                               @else
+                                           <td></td>
+                                               @endif
+
+                                               <td>{{ $allPatientTherapyList->amount }}</td>
+                                               @if(($key+1) == $countpatientTherapyList1)
+
+                                               <td class="text-end">BDT {{ $allPatientTherapyList->amount*$getPatientTheraPrice1 }}</td>
+
+                                               @else
+                                           <td></td>
+                                               @endif
+
+
+                                           </tr>
+
+                                            @endforeach
+
+                                           <!-- endpackage -->
+
+                                           <!-- single-->
+                                           <?
+                                           $totalTheAmountsingle = 0;
+                                           ?>
+                                           @foreach($singleTheList as $key=>$allPatientTherapyList)
+                                           <?php
+                                               $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+                                           $getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+                                           ?>
+                                           <tr>
+
+                                               <td class="text-start">
+                                                   <span class="fw-medium">{{ $getTherapyPriceNames}}</span>
+
+                                               </td>
+                                               <td>Therapy</td>
+                                               <td>BDT {{ $getTherapyPrices }}</td>
+                                               <td>{{ $allPatientTherapyList->amount }}</td>
+                                               <td class="text-end">BDT {{ $allPatientTherapyList->amount*$getTherapyPrices }}</td>
+                                           </tr>
+
+                                           @endforeach
+
+                                           <!--endsingle-->
+
+
+                                           <!--end new code-->
         <?php
 
         $countData = count($patientTherapyList);
@@ -326,7 +402,7 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
 
         <tr style="font-weight:bold">
           <td>Total</td>
-          <td>BDT{{ $totalTherapyAmountsingle +  $totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount }}</td>
+          <td>BDT{{ $mainTotal }}</td>
         </tr>
 
       </table>

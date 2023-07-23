@@ -48,6 +48,24 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
+                'group_name' => 'Inventory',
+                'permissions' => [
+                    'inventoryAdd',
+                    'inventoryView',
+                    'inventoryDelete',
+                    'inventoryUpdate',
+                ]
+            ],
+            [
+                'group_name' => 'Inventory Category',
+                'permissions' => [
+                    'inventoryCategoryAdd',
+                    'inventoryCategoryView',
+                    'inventoryCategoryDelete',
+                    'inventoryCategoryUpdate',
+                ]
+            ],
+            [
                 'group_name' => 'patientAdmit',
                 'permissions' => [
                     'patientAdmitAdd',
@@ -118,6 +136,16 @@ class RolePermissionSeeder extends Seeder
                     'staffUpdate',
                 ]
             ],
+            [
+                'group_name' => 'therapyMaker',
+                'permissions' => [
+                    'therapyMakerAdd',
+                    'therapyMakerView',
+                    'therapyMakerDelete',
+                    'therapyMakerUpdate',
+                ]
+            ],
+
             [
                 'group_name' => 'reward',
                 'permissions' => [

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\PatientPackage;
+use App\Models\PatientMainTherapy;
 use App\Models\Patient;
 use App\Models\WalkByPatient;
 use App\Models\DoctorAppointment;
@@ -36,6 +37,48 @@ class RevisedBillingController extends Controller
     public function show($id){
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
+
+        //new code
+
+//package
+ $singlePackageList = PatientMainTherapy::where('patient_history_id',$id)
+ ->whereNotNull('therapy_package_id')->latest()->get();
+
+
+ $countpatientTherapyList1 = count($singlePackageList);
+ $totalTherapyAmount1 = 0 ;
+ $totalTherapyAmountsingle1 = 0 ;
+ ///new code
+ foreach($singlePackageList as $key=>$allPatientTherapyList){
+     $getTherapyPriceName1 = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+     $getPackage1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('package_name');
+     $getPatientTheraPrice1 = DB::table('therapy_packages')->where('id',$allPatientTherapyList->therapy_package_id)->value('price');
+
+     if(($key+1) == $countpatientTherapyList1){
+     $totalTherapyAmount1 = $totalTherapyAmount1 + ($allPatientTherapyList->amount*$getPatientTheraPrice1);
+     }
+
+ }
+
+//endpackage
+
+//single
+$singleTheList = PatientMainTherapy::where('patient_history_id',$id)
+->whereNull('therapy_package_id')->latest()->get();
+$totalTheAmountsingle = 0;
+foreach($singleTheList as $key=>$allPatientTherapyList){
+
+    $getTherapyPrices = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('amount');
+$getTherapyPriceNames = DB::table('therapy_lists')->where('name',$allPatientTherapyList->name)->value('name');
+
+$totalTheAmountsingle = $totalTheAmountsingle + ($allPatientTherapyList->amount*$getTherapyPrices);
+
+}
+
+//endsingle
+
+
+//end new code
 
 
         $patientTherapyList =  PatientTherapy::where('patient_history_id',$id)->where('therapy_type','Package')
@@ -134,7 +177,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -151,7 +194,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.revisedBill.show',compact('totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.revisedBill.show',compact('mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
 
 
@@ -160,15 +203,30 @@ if(($key+1) == $countpatientHerb){
 
     public function store(Request $request){
 
-        //dd($request->all());
+       // dd($request->all());
 
         $inputAllData = $request->all();
 
-         $therapyName = $inputAllData['therapy_id'];
-         $medicineName = $inputAllData['herb_id'];
-         $supplimentName = $inputAllData['suppliment_id'];
 
 
+
+
+
+
+
+         if (array_key_exists("new_therapy_id", $inputAllData)){
+            $newTherapyName = $inputAllData['new_therapy_id'];
+            foreach($newTherapyName as $key => $newTherapyName){
+             $newTherapyName = PatientMainTherapy::find($inputAllData['new_therapy_id'][$key]);
+             $newTherapyName->amount=$inputAllData['new_therapy_amount'][$key];
+             $newTherapyName->save();
+
+            }
+         }
+
+
+         if (array_key_exists("suppliment_id", $inputAllData)){
+            $supplimentName = $inputAllData['suppliment_id'];
          foreach($supplimentName as $key => $supplimentName){
             $supplimentName = PatientMedicalSupplement::find($inputAllData['suppliment_id'][$key]);
             $supplimentName->quantity=$inputAllData['suppliment_amount'][$key];
@@ -176,9 +234,10 @@ if(($key+1) == $countpatientHerb){
 
            }
 
+        }
 
-
-
+        if (array_key_exists("therapy_id", $inputAllData)){
+            $therapyName = $inputAllData['therapy_id'];
            foreach($therapyName as $key => $therapyName){
             $therapyName = PatientTherapy::find($inputAllData['therapy_id'][$key]);
             $therapyName->amount=$inputAllData['therapy_amount'][$key];
@@ -186,14 +245,17 @@ if(($key+1) == $countpatientHerb){
 
            }
 
+        }
 
+        if (array_key_exists("herb_id", $inputAllData)){
+            $medicineName = $inputAllData['herb_id'];
            foreach($medicineName as $key => $medicineName){
             $medicineName = PatientHerb::find($inputAllData['herb_id'][$key]);
             $medicineName->how_many_dose=$inputAllData['herb_amount'][$key];
             $medicineName->save();
 
            }
-
+        }
            return redirect()->route('revisedBillings.index')->with('success','Updated');
     }
 }
