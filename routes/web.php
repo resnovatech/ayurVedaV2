@@ -39,6 +39,9 @@ use App\Http\Controllers\Admin\AgrementFormThreeController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\InventoryCategoryController;
 use App\Http\Controllers\Admin\TherapyMakerController;
+use App\Http\Controllers\Admin\FacialPackController;
+use App\Http\Controllers\Admin\FacePackController;
+use App\Http\Controllers\Admin\FacePackAppoinmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,6 +80,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     //therapy_package
 
+    Route::resource('facePackAppoinment', FacePackAppoinmentController::class);
+    Route::resource('facialInfoList', FacialPackController::class);
+    Route::resource('facePackInfoList', FacePackController::class);
 
     Route::resource('therapyMakerList', TherapyMakerController::class);
     Route::resource('inventoryCategoryList', InventoryCategoryController::class);

@@ -111,12 +111,12 @@ Inventory Category List | {{ $ins_name }}
 
                                     @if (Auth::guard('admin')->user()->can('inventoryCategoryDelete'))
 
-  <button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allmedicineEquipment->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
+  {{-- <button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allmedicineEquipment->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
   <form id="delete-form-{{ $allmedicineEquipment->id }}" action="{{ route('inventoryCategoryList.destroy',$allmedicineEquipment->id) }}" method="POST" style="display: none;">
     @method('DELETE')
                                   @csrf
 
-                              </form>
+                              </form> --}}
                                                   @endif
                                                   @else
 

@@ -188,6 +188,36 @@ Paid
                                         </thead>
                                         <tbody id="products-list">
                                             <?php
+                                            $countSingleFacePackageList = count($singleFacePackageList);
+                                                           $totalFacialAmount = 0 ;
+
+                                                                                           ?>
+                                                     @foreach($singleFacePackageList as $allSingleFacePackageList)
+                                           <?php
+                                            $getFacePack = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+                                            $getFacePackName = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('pack_name');
+                                           ?>
+                                           <tr>
+                                           <td class="text-start">
+                                               <span class="fw-medium">{{ $getFacePackName}}</span>
+
+                                           </td>
+                                           <td>Face Pack</td>
+                                           <td>৳ {{ $getFacePack }}</td>
+
+                                           <td>
+
+                                            <input type="hidden" name="new_face_pack_id[]" value="{{ $allSingleFacePackageList->id }}"/>
+                                            <input type="text" class="form-control form-control-sm" name="new_face_pack_quantity[]" value="{{ $allSingleFacePackageList->quantity }}"/>
+
+
+
+                                        </td>
+
+                                           <td>{{ $allSingleFacePackageList->quantity*$getFacePack }}</td>
+                                           </tr>
+                                                     @endforeach
+                                            <?php
 
 
  $countpatientTherapyList1 = count($singlePackageList);

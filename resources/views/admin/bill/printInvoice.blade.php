@@ -180,6 +180,29 @@
     </tr>
     </thead>
     <tbody>
+        <?php
+        $countSingleFacePackageList = count($singleFacePackageList);
+                       $totalFacialAmount = 0 ;
+
+                                                       ?>
+                 @foreach($singleFacePackageList as $allSingleFacePackageList)
+       <?php
+        $getFacePack = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+        $getFacePackName = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('pack_name');
+       ?>
+       <tr>
+       <td class="text-start">
+           <span class="fw-medium">{{ $getFacePackName}}</span>
+
+       </td>
+       <td>Face Pack</td>
+       <td>৳ {{ $getFacePack }}</td>
+
+       <td>{{ $allSingleFacePackageList->quantity }}</td>
+
+       <td>{{ $allSingleFacePackageList->quantity*$getFacePack }}</td>
+       </tr>
+                 @endforeach
 
                                             <!-- package -->
                                             <?php

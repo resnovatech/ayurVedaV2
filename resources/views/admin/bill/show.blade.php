@@ -135,7 +135,7 @@ Paid
                                     <!--end col-->
                                     <div class="col-lg-4 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Total Amount</p>
-                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{$totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}</span></h5>
+                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{$totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}</span></h5>
                                     </div>
                                     <!--end col-->
                                 </div>
@@ -185,6 +185,29 @@ Paid
                                         </tr>
                                         </thead>
                                         <tbody id="products-list">
+                                            <?php
+ $countSingleFacePackageList = count($singleFacePackageList);
+                $totalFacialAmount = 0 ;
+
+                                                ?>
+          @foreach($singleFacePackageList as $allSingleFacePackageList)
+<?php
+ $getFacePack = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+ $getFacePackName = DB::table('face_packs')->where('id',$allSingleFacePackageList->face_pack_id)->value('pack_name');
+?>
+<tr>
+<td class="text-start">
+    <span class="fw-medium">{{ $getFacePackName}}</span>
+
+</td>
+<td>Face Pack</td>
+<td>৳ {{ $getFacePack }}</td>
+
+<td>{{ $allSingleFacePackageList->quantity }}</td>
+
+<td>{{ $allSingleFacePackageList->quantity*$getFacePack }}</td>
+</tr>
+          @endforeach
 
                                             <!-- package -->
 <?php

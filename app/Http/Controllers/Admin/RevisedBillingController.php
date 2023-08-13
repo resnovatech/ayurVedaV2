@@ -23,6 +23,8 @@ use App\Models\Therapist;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
+use App\Models\FacePackAppoinmentDetail;
+use App\Models\FacePack;
 use App\Models\Payment;
 use PDF;
 class RevisedBillingController extends Controller
@@ -37,6 +39,26 @@ class RevisedBillingController extends Controller
     public function show($id){
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
+
+         //facepack code
+
+         $singleFacePackageList = FacePackAppoinmentDetail::
+         where('history_id',$id)->latest()->get();
+
+         $countSingleFacePackageList = count($singleFacePackageList);
+         $totalFacialAmount = 0 ;
+
+         foreach($singleFacePackageList as $allSingleFacePackageList){
+
+
+             $getFacePack = FacePack::where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+
+             $totalFacialAmount = $totalFacialAmount + ($getFacePack*$allSingleFacePackageList->quantity);
+
+
+         }
+
+         //end facepack code
 
         //new code
 
@@ -177,7 +199,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -194,7 +216,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.revisedBill.show',compact('mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.revisedBill.show',compact('singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
 
 
@@ -210,7 +232,15 @@ if(($key+1) == $countpatientHerb){
 
 
 
+        if (array_key_exists("new_face_pack_id", $inputAllData)){
+            $newTherapyName1 = $inputAllData['new_face_pack_id'];
+            foreach($newTherapyName1 as $key => $newTherapyName1){
+             $newTherapyName1 = FacePackAppoinmentDetail::find($inputAllData['new_face_pack_id'][$key]);
+             $newTherapyName1->quantity=$inputAllData['new_face_pack_quantity'][$key];
+             $newTherapyName1->save();
 
+            }
+         }
 
 
 

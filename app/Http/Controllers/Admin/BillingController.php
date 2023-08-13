@@ -26,6 +26,9 @@ use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
 use App\Models\Payment;
 use PDF;
+use App\Models\FacePackAppoinmentDetail;
+use App\Models\FacePack;
+use App\Models\FacePackDetail;
 class BillingController extends Controller
 {
     public function index(){
@@ -39,6 +42,27 @@ class BillingController extends Controller
     public function printInvoice($id){
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
+
+
+                //facepack code
+
+                $singleFacePackageList = FacePackAppoinmentDetail::
+                where('history_id',$id)->latest()->get();
+
+                $countSingleFacePackageList = count($singleFacePackageList);
+                $totalFacialAmount = 0 ;
+
+                foreach($singleFacePackageList as $allSingleFacePackageList){
+
+
+                    $getFacePack = FacePack::where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+
+                    $totalFacialAmount = $totalFacialAmount + ($getFacePack*$allSingleFacePackageList->quantity);
+
+
+                }
+
+                //end facepack code
 
         //new code
 
@@ -179,7 +203,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -207,6 +231,8 @@ $getPhoneFromPatient = DB::table('patients')
 
 
         $pdf=PDF::loadView('admin.bill.printInvoice',[
+            'totalFacialAmount'=>$totalFacialAmount,
+            'singleFacePackageList'=>$singleFacePackageList,
             'mainTotal'=>$mainTotal,
             'singleTheList'=>$singleTheList,
             'singlePackageList'=>$singlePackageList,
@@ -240,6 +266,26 @@ $getPhoneFromPatient = DB::table('patients')
 
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
+
+                //facepack code
+
+                $singleFacePackageList = FacePackAppoinmentDetail::
+                where('history_id',$id)->latest()->get();
+
+                $countSingleFacePackageList = count($singleFacePackageList);
+                $totalFacialAmount = 0 ;
+
+                foreach($singleFacePackageList as $allSingleFacePackageList){
+
+
+                    $getFacePack = FacePack::where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+
+                    $totalFacialAmount = $totalFacialAmount + ($getFacePack*$allSingleFacePackageList->quantity);
+
+
+                }
+
+                //end facepack code
 
         //new code
 
@@ -433,6 +479,26 @@ if(($key+1) == $countpatientHerb){
 
         $mainId = $id;
         $patientHistory = PatientHistory::find($id);
+
+                //facepack code
+
+                $singleFacePackageList = FacePackAppoinmentDetail::
+                where('history_id',$id)->latest()->get();
+
+                $countSingleFacePackageList = count($singleFacePackageList);
+                $totalFacialAmount = 0 ;
+
+                foreach($singleFacePackageList as $allSingleFacePackageList){
+
+
+                    $getFacePack = FacePack::where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+
+                    $totalFacialAmount = $totalFacialAmount + ($getFacePack*$allSingleFacePackageList->quantity);
+
+
+                }
+
+                //end facepack code
 
         //new code
 
@@ -629,6 +695,27 @@ if(($key+1) == $countpatientHerb){
         $patientHistory = PatientHistory::find($id);
 
 
+        //facepack code
+
+        $singleFacePackageList = FacePackAppoinmentDetail::
+        where('history_id',$id)->latest()->get();
+
+        $countSingleFacePackageList = count($singleFacePackageList);
+        $totalFacialAmount = 0 ;
+
+        foreach($singleFacePackageList as $allSingleFacePackageList){
+
+
+            $getFacePack = FacePack::where('id',$allSingleFacePackageList->face_pack_id)->value('amount');
+
+            $totalFacialAmount = $totalFacialAmount + ($getFacePack*$allSingleFacePackageList->quantity);
+
+
+        }
+
+        //end facepack code
+
+
 //new code
 
 //package
@@ -769,7 +856,7 @@ if(($key+1) == $countpatientHerb){
 
         ///end new codehh
 
-        $mainTotal = $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+        $mainTotal = $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
 
         //dd($mainTotal);
 
@@ -786,7 +873,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.bill.show',compact('mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.bill.show',compact('singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
     }
 
