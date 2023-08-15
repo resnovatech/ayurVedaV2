@@ -23,6 +23,13 @@ use App\Models\PatientHerb;
 use App\Models\PatientHerbDetail;
 use App\Models\PatientTherapyDetail;
 use App\Models\PatientMedicalSupplement;
+use App\Models\FacialPack;
+use App\Models\FacialPackDetail;
+use App\Models\OtherIngredient;
+use App\Models\FacePack;
+use App\Models\FacePackDetail;
+use App\Models\FacePackAppoinment;
+use App\Models\FacePackAppoinmentDetail;
 class DoctorWaitingListController extends Controller
 {
     public $user;
@@ -107,13 +114,21 @@ class DoctorWaitingListController extends Controller
 
 
            public function addPatientPrescriptionInfo($id){
-            Session::put('doctor_appoinment', $id);
+                $facePackageList = FacePack::latest()->get();
+
+
+                $facePackAppoimentDetail = FacePackAppoinmentDetail::where('appoinment_id',$id)
+->latest()->get();
+                 Session::put('doctor_appoinment', $id);
+
+                 //dd(Session::get('doctor_appoinment'));
+
                  $doctor_appoinment = $id;
                  $therapyLists = TherapyList::latest()->get();
                  $medicineLists = Medicine::latest()->get();
                  $healthSupplements = HealthSupplement::latest()->get();
                  $allPackageList = Package::latest()->get();
-            return view('admin.doctorWaitingListView.addPatientPrescriptionInfo',compact('allPackageList','healthSupplements','medicineLists','doctor_appoinment','therapyLists'));
+            return view('admin.doctorWaitingListView.addPatientPrescriptionInfo',compact('facePackAppoimentDetail','facePackageList','allPackageList','healthSupplements','medicineLists','doctor_appoinment','therapyLists'));
 
            }
 
@@ -212,6 +227,12 @@ class DoctorWaitingListController extends Controller
 
 
             }
+
+           }
+
+           public function addFacePackList(){
+            $facePackLIsts = FacePack::latest()->get();
+            return view('admin.doctorWaitingListView.addFacePackList',compact('facePackLIsts'));
 
            }
 
@@ -416,6 +437,37 @@ class DoctorWaitingListController extends Controller
                }
                //dd($medicineName);
                return redirect('admin/addPatientPrescriptionInfo/'.Session::get('doctor_appoinment'));
+        }
+
+
+        public function postFacePackList(Request $request){
+            $doctorWaitingList = DoctorAppointment::where('id',Session::get('doctor_appoinment'))->first();
+            $finalGetData = PatientHistory::where('doctor_appointment_id',Session::get('doctor_appoinment'))->first();
+            ///dd($request->all());
+            $inputAllData = $request->all();
+
+            $doctorAppointment = new FacePackAppoinment();
+            $doctorAppointment->admin_id = Auth::guard('admin')->user()->id;
+            $doctorAppointment->patient_id = $doctorWaitingList->patient_id;
+            $doctorAppointment->status = 0;
+            $doctorAppointment->save();
+
+            $supplementName = $inputAllData['supplement_name'];
+
+            foreach($supplementName as $key => $supplementName){
+
+
+                $supplementName = new FacePackAppoinmentDetail();
+                $supplementName->face_pack_id=$inputAllData['supplement_name'][$key];
+                $supplementName->quantity=$inputAllData['quantity'][$key];
+                $supplementName->doctor_id    = $doctorWaitingList->doctor_id;
+                $supplementName->appoinment_id    = Session::get('doctor_appoinment');
+                $supplementName->history_id   = $finalGetData->id;
+                $supplementName->save();
+
+            }
+
+            return redirect('admin/addPatientPrescriptionInfo/'.Session::get('doctor_appoinment'));
         }
 
 

@@ -41,7 +41,7 @@ Facial Pack Info List | {{ $ins_name }}
                                 <div class="col-sm-auto">
                                     <div>
                                         @if (Auth::guard('admin')->user()->can('facialInfoListAdd'))
-                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Facial Pack Info </button>
+                                        {{-- <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Facial Pack Info </button> --}}
 @endif
                                     </div>
                                 </div>
@@ -65,7 +65,20 @@ Facial Pack Info List | {{ $ins_name }}
                                     <tr>
 
                                         <td class="id">{{ $key+1 }}</td>
-                                        <td class="customer_name">{{ $allTherapyLists->pack_name }}</td>
+                                        <td class="customer_name">
+
+                                            <?php
+
+
+                                            $packageName = DB::table('face_packs')
+                                            ->where('id',$allTherapyLists->face_pack_id)->value('pack_name');
+
+                                                                                        ?>
+
+                                         {{ $allTherapyLists->pack_name }} -  <b>{{ $packageName }}</b>
+
+
+                                        </td>
 
 
                                         <td>

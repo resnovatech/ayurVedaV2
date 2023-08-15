@@ -147,6 +147,50 @@ $mseeList = DB::table('therapy_lists')->where('id',$allTherapy->name)->value('na
         </div>
     </div>
 
+    <!--get all the data -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Face Package List</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('addFacePackList') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Face Pack </button>
+                </div>
+
+
+                <table class="table table-bordered mt-4" id="dynamicAddRemove1">
+                    <tr>
+                        <th> Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                    @foreach($facePackAppoimentDetail as $allTherapy)
+                    <tr>
+
+                        <td>
+
+                            <?php
+$allTherapyLists = DB::table('face_packs')->where('id',$allTherapy->face_pack_id)
+                ->value('pack_name');
+                                ?>
+
+                            {{ $allTherapyLists }}
+                        </td>
+
+                        <td>
+                            {{ $allTherapy->quantity }}
+                        </td>
+                        @endforeach
+
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!--end get all the data -->
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">

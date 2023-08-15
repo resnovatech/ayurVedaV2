@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('appoinment_id')->nullable();
             $table->string('history_id')->nullable();
             $table->string('face_pack_id')->nullable();
+            $table->string('doctor_id')->nullable();
             $table->string('quantity')->nullable();
             $table->timestamps();
         });

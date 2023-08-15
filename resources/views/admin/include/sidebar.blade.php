@@ -266,13 +266,7 @@ $usr = Auth::guard('admin')->user();
                 @if ($usr->can('facePackAppoinmenttAdd') || $usr->can('facePackAppoinmentView') ||  $usr->can('facePackAppoinmentDelete') ||  $usr->can('facePackAppoinmentUpdate') || $usr->can('facialInfoListAdd')  || $usr->can('facialInfoListView') ||  $usr->can('facialInfoListDelete') ||  $usr->can('facialInfoListUpdate') || $usr->can('facePackAdd')  || $usr->can('facePackView') ||  $usr->can('facePackDelete') ||  $usr->can('facePackUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Facial Section</span></li>
 
-                @if ($usr->can('facialInfoListAdd') || $usr->can('facialInfoListView') || $usr->can('facialInfoListDelete') || $usr->can('facialInfoListUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('facialInfoList.index') ? 'active' : '' }}" href="{{ route('facialInfoList.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Face Pack Info List</span>
-                    </a>
-                </li>
-                @endif
+
                 @if ($usr->can('facePackAdd')  || $usr->can('facePackView') ||  $usr->can('facePackDelete') ||  $usr->can('facePackUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('facePackInfoList.index') ? 'active' : '' }}" href="{{ route('facePackInfoList.index') }}">
@@ -281,11 +275,10 @@ $usr = Auth::guard('admin')->user();
                 </li>
                 @endif
 
-
                 @if ($usr->can('facePackAppoinmentAdd') || $usr->can('facePackAppoinmentView') ||  $usr->can('facePackAppoinmentDelete') ||  $usr->can('facePackAppoinmentUpdate'))
 
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('facePackAppoinment.index') ||  Route::is('facePackAppoinment.create') || Route::is('facePackAppoinment.edit') || Route::is('facePackAppoinment.show') ? 'active':'' }}" href="#fcdoctorAppointment" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLanding">
                         <i class="ri-task-fill"></i> <span data-key="t-landing">Face Pack Appointment</span>
@@ -305,8 +298,16 @@ $usr = Auth::guard('admin')->user();
                         </ul>
 
                     </div>
+                </li> --}}
+                @endif
+                @if ($usr->can('facialInfoListAdd') || $usr->can('facialInfoListView') || $usr->can('facialInfoListDelete') || $usr->can('facialInfoListUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('facialInfoList.index') ? 'active' : '' }}" href="{{ route('facialInfoList.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Face Pack Info List</span>
+                    </a>
                 </li>
                 @endif
+
                 @endif
                 @if ( $usr->can('medicineListsAdd')  || $usr->can('medicineListsView') ||  $usr->can('medicineListsDelete') ||  $usr->can('medicineListsUpdate') || $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate') || $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate')|| $usr->can('medicineEquipmentAdd')  || $usr->can('medicineEquipmentView') ||  $usr->can('medicineEquipmentDelete') ||  $usr->can('medicineEquipmentUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Medicine Section</span></li>

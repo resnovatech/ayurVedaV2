@@ -55,6 +55,7 @@ Therapy Appointment | {{ $ins_name }}
                                     <thead class="table-light">
                                     <tr>
                                         <th class="sort" data-sort="customer_name">Sl No</th>
+                                        <th class="sort" data-sort="customer_name">Type</th>
                                         <th class="sort" data-sort="customer_name">Serial Number</th>
                                         <th class="sort" data-sort="customer_name">Patient Id</th>
                                         <th class="sort" data-sort="customer_name">Patient Name</th>
@@ -79,6 +80,18 @@ Therapy Appointment | {{ $ins_name }}
                                     <tr>
 
                                         <td class="email">{{ $key+1 }}</td>
+                                        <td class="email">
+@if($allTherapyAppointmentDateAndTimeList->face_pack_status == 0)
+
+Therapy
+
+@else
+
+Face Pack
+
+@endif
+
+                                        </td>
                                         <td class="customer_name">{{ $allTherapyAppointmentDateAndTimeList->serial }}</td>
                                         <td class="email">{{ $allTherapyAppointmentDateAndTimeList->patient_id }}</td>
                                         <td class="email">
@@ -105,36 +118,107 @@ Therapy Appointment | {{ $ins_name }}
 
 <td class="phone">Not Received</td>
                                         <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
+
+
+
                                                     @if (Auth::guard('admin')->user()->can('therapyAppointmentView'))
+
+                                                    @if($allTherapyAppointmentDateAndTimeList->face_pack_status == 0)
+
+
+
+@else
+
+<button type="button" class="btn btn-success btn-sm add-btn" data-bs-toggle="modal" data-bs-target="#myModal{{ $allTherapyAppointmentDateAndTimeList->id }}">
+    <i class="ri-eye-fill"></i></button>
+
+
+    <div id="myModal{{ $allTherapyAppointmentDateAndTimeList->id }}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+
+                <?php
+
+                $allTherapyLists = DB::table('face_packs')->where('pack_name',$allTherapyAppointmentDateAndTimeList->therapy)
+                ->first();
+$faceIngredientList = DB::table('facial_packs')
+->where('face_pack_id',$allTherapyLists->id )->get();
+
+                    ?>
+                  <h5 class="modal-title" id="myModalLabel">{{ $allTherapyLists->pack_name }}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+              </div>
+              <div class="modal-body">
+
+                  @foreach($faceIngredientList as $allFaceIngredientList)
+
+
+
+
+
+
+
+                  <div class="card">
+                      <div class="card-header bg-success">
+                          {{ $allFaceIngredientList->pack_name  }}
+</div>
+<div class="card-body">
+<?php
+$facialPackDetail = DB::table('facial_pack_details')
+->where('face_pack_id',$allFaceIngredientList->id )->get();
+
+?>
+
+@foreach($facialPackDetail as $AllfacialPackDetail)
+<?php
+$ingredientName = DB::table('other_ingredients')
+->where('id',$AllfacialPackDetail->ingredient_id )->value('name');
+
+?>
+{{ $ingredientName }} - {{ $AllfacialPackDetail->amount }}<br>
+@endforeach
+</div>
+                  </div>
+
+
+      @endforeach
+
+              </div>
+
+
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+@endif
+
+
+
                                                     {{-- <li><a href="{{ route('walkByPatientTherapy.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li> --}}
                                                     @endif
                                                     @if (Auth::guard('admin')->user()->can('therapyAppointmentUpdate'))
                                                     {{-- <li><a class="dropdown-item edit-item-btn" href="{{ route('therapyAppointments.edit',$allTherapyAppointmentDateAndTimeList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li> --}}
                                                     @endif
                                                     @if (Auth::guard('admin')->user()->can('therapyAppointmentDelete'))
-                                                    <a class="dropdown-item remove-item-btn" onclick="deleteTag({{ $allTherapyAppointmentDateAndTimeList->id}})" >
-                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                                    </a>
+                                                    <button class="btn btn-danger btn-sm add-btn" onclick="deleteTag({{ $allTherapyAppointmentDateAndTimeList->id}})" >
+                                                        <i class="ri-delete-bin-fill"></i>
+                                                    </button>
                                                     <form id="delete-form-{{ $allTherapyAppointmentDateAndTimeList->id }}" action="{{ route('walkByPatientTherapy.destroy',$allTherapyAppointmentDateAndTimeList->id) }}" method="POST" style="display: none;">
                                                         @method('DELETE')
                                                                                       @csrf
 
                                                                                   </form>
                                                     @endif
-                                                </ul>
-                                            </div>
+
+
                                         </td>
                                     </tr>
 @endforeach
                                     </tbody>
                                 </table>
 
-                  
+
 
 
                         </div>

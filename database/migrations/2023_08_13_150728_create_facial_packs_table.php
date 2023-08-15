@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('facial_packs', function (Blueprint $table) {
             $table->id();
+            $table->string('face_pack_id');
             $table->string('pack_name');
             $table->timestamps();
         });

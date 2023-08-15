@@ -182,6 +182,11 @@ Edit Walk By Patient | {{ $ins_name }}
                                             <option value="High blood pressure" {{ 'High blood pressure' == $allHealthDetail->name ? 'selected':''}}>High blood pressure</option>
                                             <option value="Diabetes" {{ 'Diabetes' == $allHealthDetail->name ? 'selected':'' }}>Diabetes</option>
                                             <option value="Recent surgery" {{ 'Recent surgery' == $allHealthDetail->name ? 'selected':''}}>Recent surgery</option>
+                                            <option value="Alergy" {{ 'Alergy' == $allHealthDetail->name ? 'selected':''}}>Alergy</option>
+                                            <option value="Low Blood Pressure" {{ 'Low Blood Pressure' == $allHealthDetail->name ? 'selected':''}}>Low Blood Pressure</option>
+                                            <option value="Ophthalmology Consult" {{ 'Ophthalmology Consult' == $allHealthDetail->name ? 'selected':''}}>Ophthalmology Consult</option>
+                                            <option value="Orthopedic Consult" {{ 'Orthopedic Consult' == $allHealthDetail->name ? 'selected':''}}>Orthopedic Consult</option>
+                                            <option value="Phycology Issue" {{ 'Phycology Issue' == $allHealthDetail->name ? 'selected':''}}>Phycology Issue</option>
                                         </select>
                                     </td>
                                     <td>
@@ -207,16 +212,16 @@ Edit Walk By Patient | {{ $ins_name }}
                 <div class="card">
                     <div class="card-body">
                         <div class="row gy-4">
-                            <div class="col-xxl-12 col-md-12">
+                            {{-- <div class="col-xxl-12 col-md-12">
                                 <div>
                                     <label for="" class="form-label">Did you have symptoms in past 1 weak (high fever, runny nose, cough, others)</label>
                                     <textarea class="form-control" id="" rows="3"
                                               style="height: 101px;" name="do_you_have_symptoms_in_past_one_weak" required>{{ $walkByPatientList->do_you_have_symptoms_in_past_one_weak }}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-xxl-12 col-md-12">
                                 <div>
-                                    <label for="" class="form-label">Have you undergone the covid 19 test?</label>
+                                    <label for="" class="form-label">Have you been vacinated for covid 19?</label>
                                     <select class="form-control" name="covid_test_result" id="" required>
                                         <option value="Yes" {{ 'Yes' == $walkByPatientList->covid_test_result }}>Yes</option>
                                         <option value="No" {{ 'No' == $walkByPatientList->covid_test_result }}>No</option>

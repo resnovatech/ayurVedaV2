@@ -141,16 +141,16 @@ Edit  Patient | {{ $ins_name }}
                 <div class="card">
                     <div class="card-body">
                         <div class="row gy-4">
-                            <div class="col-xxl-12 col-md-12">
+                            {{-- <div class="col-xxl-12 col-md-12">
                                 <div>
                                     <label for="" class="form-label">Did you have symptoms in past 1 weak (high fever, runny nose, cough, others)</label>
                                     <textarea class="form-control" id="" rows="3"
                                               style="height: 101px;" name="do_you_have_symptoms_in_past_one_weak" required>{{ $patientList->do_you_have_symptoms_in_past_one_weak }}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-xxl-12 col-md-12">
                                 <div>
-                                    <label for="" class="form-label">Have you undergone the covid 19 test?</label>
+                                    <label for="" class="form-label">Have you been vacinated for covid 19?</label>
                                     <select class="form-control" name="covid_test_result" id="" required>
                                         <option value="Yes" {{ 'Yes' == $patientList->covid_test_result }}>Yes</option>
                                         <option value="No" {{ 'No' == $patientList->covid_test_result }}>No</option>

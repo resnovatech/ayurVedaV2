@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('therapy_package_id')->nullable();
             $table->string('name');
             $table->string('amount');
+            $table->string('face_pack_status')->nullable();
             $table->timestamps();
         });
     }

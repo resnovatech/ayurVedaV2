@@ -36,7 +36,15 @@ class FacePackController extends Controller
 
 $therapyIngredients =FacialPack::latest()->get();
 
-               return view('admin.facePackLists.index',compact('facialPackLists','therapyIngredients'));
+$otherIngredients =OtherIngredient::latest()->get();
+
+               return view('admin.facePackLists.index',compact('facialPackLists','therapyIngredients','otherIngredients'));
+           }
+
+           public function create(){
+
+            $otherIngredients =OtherIngredient::latest()->get();
+            return view('admin.facePackLists.create',compact('otherIngredients'));
            }
 
 
@@ -85,20 +93,68 @@ $therapyIngredients =FacialPack::latest()->get();
 
              $therapyId = $insertTherapyList->id;
 
-             $therapyIngredientId = $inputAllData['therapy_ingredient_id'];
+             $packTitle = $inputAllData['packTitle'];
+             //$therapyIngredientId = $inputAllData['therapy_ingredient_id'];
+
+             if (array_key_exists("packTitle", $inputAllData)){
+
+                foreach($packTitle as $key => $packTitle){
+                    if (is_null($inputAllData['packTitle'][$key])) {
+
+                    }else{
+                     $facialPackList = new FacialPack();
+                     $facialPackList->pack_name = $inputAllData['packTitle'][$key];
+                     $facialPackList->face_pack_id =  $therapyId;
+                     $facialPackList->save();
 
 
+                     $facialPackListId = $facialPackList->id;
 
-             if (array_key_exists("therapy_ingredient_id", $inputAllData)){
 
-                foreach($therapyIngredientId as $key => $therapyIngredientId){
-                 $therapyDetail= new FacePackDetail();
-                 $therapyDetail->pack_detail_id =$inputAllData['therapy_ingredient_id'][$key];
-                 $therapyDetail->main_pack_id   = $therapyId;
-                 $therapyDetail->save();
+                     if (array_key_exists("therapy_ingredient_id".$key, $inputAllData)){
+                        $color_image_main = $inputAllData["therapy_ingredient_id".$key];
+
+                        foreach($color_image_main as $key_image=>$all_color_image_main){
+
+
+                        // $form1= new ImageList();
+                        // $file=$input["pfiles".$key][$key_image];
+
+                        // $form1->product_id =  $product_id;
+                        // $form1->color_id=$input['maincolor'][$key];
+                        // $form1->save();
+
+                        $therapyDetail= new FacialPackDetail();
+                        $therapyDetail->ingredient_id =$inputAllData['therapy_ingredient_id'.$key][$key_image];
+                        $therapyDetail->amount=$inputAllData['quantity'.$key][$key_image];
+                        $therapyDetail->face_pack_id   = $facialPackListId;
+                        $therapyDetail->save();
+
+                        }
+
+                         }
+
 
                 }
                 }
+
+
+             }
+
+
+
+
+
+            //  if (array_key_exists("therapy_ingredient_id", $inputAllData)){
+
+            //     foreach($therapyIngredientId as $key => $therapyIngredientId){
+            //      $therapyDetail= new FacePackDetail();
+            //      $therapyDetail->pack_detail_id =$inputAllData['therapy_ingredient_id'][$key];
+            //      $therapyDetail->main_pack_id   = $therapyId;
+            //      $therapyDetail->save();
+
+            //     }
+            //     }
 
 
 

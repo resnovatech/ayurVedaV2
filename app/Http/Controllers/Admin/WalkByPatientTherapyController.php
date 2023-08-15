@@ -27,6 +27,13 @@ use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
 use App\Models\SingleIngredient;
+use App\Models\FacialPack;
+use App\Models\FacialPackDetail;
+use App\Models\OtherIngredient;
+use App\Models\FacePack;
+use App\Models\FacePackDetail;
+use App\Models\FacePackAppoinment;
+use App\Models\FacePackAppoinmentDetail;
 class WalkByPatientTherapyController extends Controller
 {
     public $user;
@@ -79,6 +86,9 @@ return response()->json($data);
             $data = view('admin.walkByPatientTherapy.getTherapyTypeSingle',compact('getMainVal'))->render();
             return response()->json($data);
 
+        }elseif($getMainVal== 'Face Pack'){
+            $data = view('admin.walkByPatientTherapy.facePack',compact('getMainVal'))->render();
+            return response()->json($data);
         }else{
             $data = view('admin.walkByPatientTherapy.getTherapyTypePackage',compact('getMainVal'))->render();
             return response()->json($data);
@@ -176,11 +186,13 @@ return response()->json($data);
                 'end_time.*' => 'required',
 
             ]);
-           //dd($request->all());
+
             //dd($request->all());
             $patientId =$request->patient_id;
 
             Session::put('patientId', $patientId);
+            Session::put('patientName', $request->name);
+
             Session::put('therapyPackageId',$request->therapy_package_id);
 
 
@@ -190,6 +202,22 @@ return response()->json($data);
             Session::put('age', $data->age);
             Session::put('email', $data->email_address);
 
+
+            $getPreviousData = PatientHistory::where('patient_id',$patientId)
+            ->where('status',2)->count();
+
+
+            //session()->forget(['patientHistoryUpdateId']);
+
+            //dd(Session::get('patientHistoryUpdateId'));
+
+            if($getPreviousData > 0){
+
+                $patientHistoryUpdateId =Session::get('patientHistoryUpdateId');
+
+                //dd($patientHistoryUpdateId);
+            }else{
+                //dd(225);
            $patientHistoryUpdate = new PatientHistory();
            $patientHistoryUpdate->admin_id =Auth::guard('admin')->user()->id;
            $patientHistoryUpdate->patient_id =$patientId;
@@ -200,19 +228,7 @@ return response()->json($data);
 
            Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
 
-            $therapyAppointment = new TherapyAppointment();
-            $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
-            $therapyAppointment->patient_id =$patientId;
-            $therapyAppointment->status = 0;
-            $therapyAppointment->save();
-
-            $therapyAppointmentId = $therapyAppointment->id;
-
-            $inputAllData = $request->all();
-
-            $therapyAppointmentDetail = $inputAllData['therapy_id'];
-           // $therapistList = $inputAllData['therapist_id'];
-            $therapyNameDetail = $inputAllData['therapy_id'];
+        }
 
 
 
@@ -220,6 +236,21 @@ return response()->json($data);
             $appId = 0;
 
             if($request->therapy_type == 'Single'){
+
+
+                $therapyAppointment = new TherapyAppointment();
+                $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
+                $therapyAppointment->patient_id =$patientId;
+                $therapyAppointment->status = 0;
+                $therapyAppointment->save();
+
+                $therapyAppointmentId = $therapyAppointment->id;
+
+                $inputAllData = $request->all();
+
+                $therapyAppointmentDetail = $inputAllData['therapy_id'];
+               // $therapistList = $inputAllData['therapist_id'];
+                $therapyNameDetail = $inputAllData['therapy_id'];
 
 
                 foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
@@ -250,9 +281,70 @@ return response()->json($data);
 
                    }
 
+            }elseif($request->therapy_type == 'Face Pack'){
+
+                $inputAllData = $request->all();
+                $getPreviousData = FacePackAppoinment::where('patient_id',$patientId)
+                ->where('status',0)->count();
+
+                $doctorAppointment = new FacePackAppoinment();
+                $doctorAppointment->admin_id = Auth::guard('admin')->user()->id;
+                $doctorAppointment->patient_id = $request->patient_id;
+                $doctorAppointment->patient_type ='WalkByPatient';
+                $doctorAppointment->status = 0;
+                $doctorAppointment->save();
+
+                // $therapyAppointment = new TherapyAppointment();
+                // $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
+                // $therapyAppointment->patient_id =$patientId;
+                // $therapyAppointment->status = 0;
+                // $therapyAppointment->save();
+
+                // $therapyAppointmentId = $therapyAppointment->id;
+
+                $facePackId = $doctorAppointment->id;
+
+                $packId = $inputAllData['face_package_id'];
+
+
+                if (array_key_exists("face_package_id", $inputAllData)){
+
+                   foreach($packId as $key => $packId){
+                    $therapyDetail= new FacePackAppoinmentDetail();
+                    $therapyDetail->face_pack_id =$inputAllData['face_package_id'][$key];
+                    $therapyDetail->appoinment_id   = $facePackId;
+                    $therapyDetail->history_id   = $patientHistoryUpdateId;
+                    $therapyDetail->quantity   = 1;
+                    $therapyDetail->save();
+
+
+                    // $therapyAppointmentDetail = new TherapyAppointmentDetail();
+                    // $therapyAppointmentDetail->therapy_name=$inputAllData['face_package_id'][$key];
+                    // $therapyAppointmentDetail->name='Single';
+                    // $therapyAppointmentDetail->amount=1;
+                    // $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
+                    // $therapyAppointmentDetail->save();
+
+
+
+                   }
+                   }
+
             }else{
 
+                $therapyAppointment = new TherapyAppointment();
+                $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
+                $therapyAppointment->patient_id =$patientId;
+                $therapyAppointment->status = 0;
+                $therapyAppointment->save();
 
+                $therapyAppointmentId = $therapyAppointment->id;
+
+                $inputAllData = $request->all();
+
+                $therapyAppointmentDetail = $inputAllData['therapy_id'];
+               // $therapistList = $inputAllData['therapist_id'];
+                $therapyNameDetail = $inputAllData['therapy_id'];
            // TherapyAppointmentDateAndTime
 
             foreach($therapyAppointmentDetail as $key => $therapyAppointmentDetail){
@@ -304,7 +396,7 @@ return response()->json($data);
             $inputAllData = $request->all();
 
 
-
+//dd($inputAllData );
 
 
         $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
@@ -315,6 +407,12 @@ return response()->json($data);
                  ->where('patient_id',Session::get('patientId'))
                   ->where('status',0)
                    ->value('id');
+
+
+                   $faceAppointmentId = DB::table('face_pack_appoinments')
+                   ->where('patient_id',Session::get('patientId'))
+                    ->where('status',0)
+                     ->value('id');
 
 
              $therapistList = $inputAllData['therapist_id'];
@@ -329,7 +427,14 @@ return response()->json($data);
                 $therapyName = new PatientMainTherapy();
                 $therapyName->name=$inputAllData['therapy_id'][$key];
                 $therapyName->therapist_id=$inputAllData['therapist_id'][$key];
-                $therapyName->therapy_appointment_id=$therapyAppointmentId;
+
+                if($inputAllData['face_type'][$key] == 1){
+                    $therapyName->face_pack_status=1;
+
+                }else{
+                    $therapyName->face_pack_status=0;
+                    $therapyName->therapy_appointment_id=$therapyAppointmentId;
+                }
                 $therapyName->amount=1;
                 $therapyName->therapy_package_id   =  Session::get('therapyPackageId');
                 $therapyName->patient_history_id   = Session::get('patientHistoryUpdateId');
@@ -365,18 +470,40 @@ return response()->json($data);
                 $therapistList->date=$inputAllData['date'][$key];
                 $therapistList->start_time=$inputAllData['start_time'][$key];
                 $therapistList->end_time=$inputAllData['end_time'][$key];
+                if($inputAllData['face_type'][$key] == 1){
+                    $therapistList->face_pack_status=1;
+                    $therapistList->therapy_appointment_id   = $faceAppointmentId;
+                }else{
+                    $therapistList->face_pack_status=0;
+                    $therapistList->therapy_appointment_id   = $therapyAppointmentId;
+                }
                 $therapistList->serial=$finalSerialValue;
                 $therapistList->patient_id   = Session::get('patientId');
                 $therapistList->admin_id   = Auth::guard('admin')->user()->id;
-                $therapistList->therapy_appointment_id   = $therapyAppointmentId;
+
                 $therapistList->save();
 
                }
+
                DB::table('therapy_appointments')->where('patient_id',Session::get('patientId'))
                ->where('status',0)
           ->update([
               'status' => 3
            ]);
+
+
+           DB::table('face_pack_appoinments')->where('patient_id',Session::get('patientId'))
+           ->where('status',0)
+      ->update([
+          'status' => 6
+       ]);
+
+
+       DB::table('patient_histories')->where('patient_id',Session::get('patientId'))
+       ->where('status',2)
+  ->update([
+      'status' => 6
+   ]);
 
            session()->forget(['name','age','email','therapyPackageId','patientHistoryUpdateId']);
 

@@ -203,6 +203,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/addMedicalSupplementInPrescription', 'addMedicalSupplementInPrescription')->name('addMedicalSupplementInPrescription');
 
 
+        Route::get('/addFacePackList', 'addFacePackList')->name('addFacePackList');
+        Route::post('/postFacePackList', 'postFacePackList')->name('postFacePackList');
+
         Route::get('/showDataCategoryWise', 'showDataCategoryWise')->name('showDataCategoryWise');
 
         Route::get('/doctorWaitingList', 'doctorWaitingList')->name('doctorWaitingList');
@@ -266,6 +269,11 @@ Route::resource('reward',RewardController::class);
 
 //therapist route
 Route::resource('therapist',TherapistController::class);
+
+Route::controller(TherapistController::class)->group(function () {
+    Route::post('/therapyStatusUpdate', 'therapyStatusUpdate')->name('therapyStatusUpdate');
+});
+
 //end therapist route
 
 

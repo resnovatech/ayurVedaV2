@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('serial');
             $table->string('status')->nullable();
             $table->string('patient_id');
+            $table->string('face_pack_status')->nullable();
+
             $table->string('admin_id');
             $table->timestamps();
         });

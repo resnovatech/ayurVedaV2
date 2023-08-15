@@ -41,7 +41,7 @@ Face Pack List | {{ $ins_name }}
                                 <div class="col-sm-auto">
                                     <div>
                                         @if (Auth::guard('admin')->user()->can('facePackAdd'))
-                                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="ri-add-line align-bottom me-1"></i> Add New Facial Pack Info </button>
+                                        <a href="{{ route('facePackInfoList.create') }}" type="button" class="btn btn-primary add-btn"><i class="ri-add-line align-bottom me-1"></i> Add New Facial Pack Info </a>
 @endif
                                     </div>
                                 </div>
@@ -72,8 +72,8 @@ Face Pack List | {{ $ins_name }}
                                           <?php
 
 
-$faceIngredientList = DB::table('face_pack_details')
-->where('main_pack_id',$allTherapyLists->id )->get();
+$faceIngredientList = DB::table('facial_packs')
+->where('face_pack_id',$allTherapyLists->id )->get();
 
                                             ?>
 
@@ -81,16 +81,7 @@ $faceIngredientList = DB::table('face_pack_details')
 
 
 
-
-
-                                                      <?php
-
-                                                    $getFinalName = DB::table('facial_packs')
-                                                    ->where('id',$allFaceIngredientList->pack_detail_id )->value('pack_name');
-
-                                                      ?>
-
-{{ $getFinalName  }}<br>
+{{ $allFaceIngredientList->pack_name  }}<br>
 
 
 
@@ -104,9 +95,9 @@ $faceIngredientList = DB::table('face_pack_details')
 
 
                                             @if (Auth::guard('admin')->user()->can('facePackUpdate'))
-                                            <a type="button" href="{{ route('facePackInfoList.edit',$allTherapyLists->id) }}"
+                                            {{-- <a type="button" href="{{ route('facePackInfoList.edit',$allTherapyLists->id) }}"
                                             class="btn btn-primary waves-light waves-effect  btn-sm" >
-                                            <i class="ri-pencil-fill"></i></a>
+                                            <i class="ri-pencil-fill"></i></a> --}}
 
 
 
@@ -134,41 +125,27 @@ $faceIngredientList = DB::table('face_pack_details')
 
 
 
-                                                                <?php
 
-                                                              $getFinalName = DB::table('facial_packs')
-                                                              ->where('id',$allFaceIngredientList->pack_detail_id )->value('pack_name');
-
-                                                              $getFinalNameDetail = DB::table('facial_packs')
-                                                              ->where('id',$allFaceIngredientList->pack_detail_id )->get();
-
-                                                                ?>
 
                                                                 <div class="card">
                                                                     <div class="card-header bg-success">
-          {{ $getFinalName  }}
+                                                                        {{ $allFaceIngredientList->pack_name  }}
         </div>
         <div class="card-body">
-            @foreach($getFinalNameDetail as $allFaceIngredientList)
-            <?php
+<?php
+$facialPackDetail = DB::table('facial_pack_details')
+->where('face_pack_id',$allFaceIngredientList->id )->get();
 
+    ?>
 
-            $faceIngredientList1 = DB::table('facial_pack_details')
-            ->where('face_pack_id',$allFaceIngredientList->id )->get();
+    @foreach($facialPackDetail as $AllfacialPackDetail)
+    <?php
+$ingredientName = DB::table('other_ingredients')
+->where('id',$AllfacialPackDetail->ingredient_id )->value('name');
 
-                                                        ?>
-         @foreach($faceIngredientList1 as $allFaceIngredientList1)
-
-         <?php
-
-         $getFinalName22 = DB::table('other_ingredients')
-         ->where('id',$allFaceIngredientList1->ingredient_id )->value('name');
-
-           ?>
-            <li>{{ $getFinalName22  }} - {{ $allFaceIngredientList1->amount }}</li>
-            @endforeach
-            @endforeach
-
+    ?>
+{{ $ingredientName }} - {{ $AllfacialPackDetail->amount }}<br>
+    @endforeach
         </div>
                                                                 </div>
 

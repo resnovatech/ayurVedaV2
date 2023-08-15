@@ -53,7 +53,7 @@ Billing List | {{ $ins_name }}
                                         <th class="sort" data-sort="customer_name">Patient Id</th>
                                         <th class="sort" data-sort="email">Name</th>
                                         <th class="sort" data-sort="email">Phone</th>
-
+                                        <th class="sort" data-sort="email">Date</th>
 
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
@@ -96,7 +96,7 @@ Billing List | {{ $ins_name }}
                                         </td>
 
 
-
+<td>{{ $allPatientHistory->created_at }}</td>
 
                                         <td>
                                             <div class="dropdown d-inline-block">
@@ -114,7 +114,7 @@ Billing List | {{ $ins_name }}
                                     </tbody>
                                 </table>
 
-                            
+
 
 
                         </div>
