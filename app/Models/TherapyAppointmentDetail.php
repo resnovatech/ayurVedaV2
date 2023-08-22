@@ -10,7 +10,7 @@ class TherapyAppointmentDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'therapy_appointment_id', 'therapy_name','name','amount'
+        'therapy_appointment_id', 'therapy_name','name','amount','status'
     ];
 
     public function therapyAppointment()

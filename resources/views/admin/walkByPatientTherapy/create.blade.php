@@ -37,6 +37,7 @@ Therapy Appointment  | {{ $ins_name }}
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mb-0 flex-grow-1">Basic Information</h4>
+                        @include('flash_message')
                     </div><!-- end card header -->
                     <div class="card-body">
                         <div class="live-preview">
@@ -45,7 +46,7 @@ Therapy Appointment  | {{ $ins_name }}
                                     <div>
                                         <div class="col-12 mb-2">
                                             <label for="" class="form-label">Name</label>
-                                            <input type="text" name ="name" class="form-control nameWiseData" id="searchnew" placeholder="Type Name/Phone/Patient ID" required>
+                                            <input type="text" name ="name" value="{{Session::get('name')}}" class="form-control nameWiseData" id="searchnew" placeholder="Type Name/Phone/Patient ID" required>
                                         </div>
                                     </div>
                                 </div>
@@ -182,6 +183,10 @@ class="form-control mt-2" id="checkData"/>
             </select>
 </div>
 <div class="col-lg-2">
+       
+                              
+                               <a   type="button" class="btn btn-danger waves-light waves-effect mt-3  btn-sm" href="{{ route('face_pack_delete',$allfacePackAppoinmentList->id) }}" data-toggle="tooltip" title="Delete">
+                     <i class="ri-delete-bin-5-fill"></i></a>
 </div>
 
             @endforeach
@@ -221,6 +226,9 @@ class="form-control mt-2" id="checkData"/>
                         </select>
             </div>
             <div class="col-lg-2">
+                 <a   type="button" class="btn btn-danger waves-light waves-effect mt-3  btn-sm" href="{{ route('therapy_delete',$allTherapyPackage->id) }}" data-toggle="tooltip" title="Delete">
+                     <i class="ri-delete-bin-5-fill"></i></a>
+ 
             </div>
 
             @endforeach
@@ -294,7 +302,38 @@ class="form-control mt-2" id="checkData"/>
 @section('script')
 
 
-
+<script type="text/javascript">
+    function deleteTag(id) {
+        swal({
+            title: 'Are you sure?',
+            text: "You will not be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    'Cancelled',
+                    'Your data is safe :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 
 
 <script>

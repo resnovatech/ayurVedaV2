@@ -1,163 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+      data-sidebar-image="none" data-preloader="disable">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-   <style>
-        body {
-            color: #333639;
-            font-family: Arial, Helvetica, sans-serif;
+
+    <meta charset="utf-8"/>
+    <title>HNHAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <style>
+        .billing_pdf {
+            padding: 10px;
         }
 
-        /* .body_size
-        {
-            width: 75mm;
-            height: 100mm;
-            padding: 3px;
-        } */
+        [class*="col-"] {
+            float: left;
+
+        }
+
+        [class*="col-"] {
+            width: 100%;
+        }
+
+        .col-1 {
+            width: 50%;
+        }
 
 
+
+        .logo_image {
+            text-align: center;
+        }
+
+        .logo_image img {
+            height: 150px;
+            width: 100px;
+        }
 
         table {
             width: 100%;
         }
 
-        .first_table tr td {
-            width: 50%;
+        .sl_dt {
+            font-size: 18px;
         }
 
-        .first_table tr td:nth-child(1) img {
-            height:70px;
-            width:70px;
+        hr {
+            border: 2px dotted #959595;
         }
 
-        .first_table tr td:nth-child(2)
-        {
-            text-align: right;
-        }
-
-        .first_table tr td:nth-child(2) img {
-            height:40px;
-            width:40px;
-        }
-
-        .first_table tr td:nth-child(2) p {
-            font-size:8px;
-            padding:0;
-            margin:0;
-        }
-        .first_table tr td:nth-child(2) h4 {
-            font-size:12px;
-            padding:0;
-            margin:0;
-        }
-
-        hr{
-            margin-bottom: 0;
-            margin-top:0;
-        }
-
-        .second_table tr td {
-            font-size: 13px;
-            vertical-align: top;
-        }
-
-        .second_table tr td:nth-child(1) {
-            width: 40%;
-        }
-        .second_table tr td p{
-            margin: 0;
-            padding: 2px;
-        }
-
-        .second_table tr td:nth-child(2)
-        {
-            font-weight: bold;
-            width: 60%;
-        }
-
-        .third_table {
-            border-collapse: collapse;
-            margin-top: 5px;
-            font-size: 10px;
-        }
-        .third_table th {
-            padding: 2px;
+        .item_table td, th {
+            border: 1px solid;
             text-align: left;
-            background-color: #F8F9FA;
-            border: 1px solid #e9ecef;
+            padding: 10px;
         }
 
-        .third_table tr th:nth-child(2)
-        {
-            width: 40px;
+        .item_table {
+            border-collapse: collapse;
         }
 
-        .third_table td {
-            border: 1px solid #e9ecef;
-            padding: 4px;
-        }
-
-        .forth_table
-        {
-            font-size: 12px;
-            vertical-align: top;
-        }
-        .forth_table tr td:nth-child(1)
-        {
-            width: 40%;
-        }
-        .forth_table tr td:nth-child(2)
-        {
-            width: 60%;
-        }
-
-        .inner-table tr td:nth-child(1)
-        {
-            width: 65%;
-        }
     </style>
+
 </head>
+
 <body>
+<div class="billing_pdf">
+    <div class="uppder_section">
+        <div class="col-1">
+            <div class="upper_text">
+                <h3>Health & Healing <br> Ayurveda Research Center</h3>
+                <p>Address: House No: 88, Road: 23 <br> Block A, Banani, Dhaka, Bangladesh </p>
+                <p>hnharbd@gmail.com</p>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="logo_image">
+                <img src="{{ asset('/') }}{{ $logo }}" alt="">
+            </div>
+        </div>
+    </div>
 
 
-
-            <table class="first_table">
+    <table class="sl_dt">
         <tr>
-            <td>
-                <img src="{{ asset('/') }}{{ $logo }}" height="50" alt="">
-            </td>
-            <td>
-                {{-- <img src="{{ asset('/') }}{{ $logo }}" height="50" alt=""> --}}
-                <p style="font-weight: bold;">Date: {{ $patientHistory->created_at->format('d F Y') }}</p>
-                <p style="font-weight: bold;">Mobile No: {{ $ins_phone }}</p>
-                <h4>{{ $ins_name }}</h4>
-            </td>
+            <td>Invoice No <br> <b>#<?php echo mt_rand(1000000, 9999999);?></b></td>
+            <td>Date <br> <b>{{ $patientHistory->created_at->format('d F Y') }}</b></td>
+            <td>Payment Status <br> <b>Paid</b></td>
+            <td>Total Amount <br> <b>{{ $mainTotal }} Taka</b></td>
         </tr>
     </table>
 
     <hr>
 
-    <table class="second_table">
+    <table class="sl_dt">
         <tr>
-            <td>Customer Name</td>
-            <td>:@if(empty($getNameFromWalkByPatient))
+            <td style="width: 10%">Name:</td>
+            <td>@if(empty($getNameFromWalkByPatient))
                 {{ $getNameFromPatient }}
                 @else
                 {{ $getNameFromWalkByPatient }}
                 @endif</td>
         </tr>
         <tr>
-
-            <td>Mobile Number</td>
-            <td>:@if(empty($getPhoneFromWalkByPatient))
-                {{ $getPhoneFromPatient }}
-                @else
-                {{ $getPhoneFromWalkByPatient }}
-                @endif</td>
-        </tr>
-        <tr>
-            <td>Address</td>
+            <td>Address:</td>
             <td>:@if(empty($getAddressFromWalkByPatient))
                 {{ $getAddressFromPatient }}
                 @else
@@ -166,20 +113,16 @@
         </tr>
     </table>
 
+    <hr>
 
+    <table class="item_table">
+        <tr>
+            <th scope="col">Product Details</th>
 
-<table class="third_table">
-
-    <thead>
-    <tr>
-        <th scope="col">Product Details</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Rate</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col" class="text-end">Amount</th>
-    </tr>
-    </thead>
-    <tbody>
+            <th scope="col">Rate</th>
+            <th scope="col">Quantity</th>
+            <th scope="col" class="text-end">Amount</th>
+        </tr>
         <?php
         $countSingleFacePackageList = count($singleFacePackageList);
                        $totalFacialAmount = 0 ;
@@ -192,10 +135,10 @@
        ?>
        <tr>
        <td class="text-start">
-           <span class="fw-medium">{{ $getFacePackName}}</span>
+           <span class="fw-medium"><span style="color: #3f3f3f;">Face Pack</span> :{{ $getFacePackName}}</span>
 
        </td>
-       <td>Face Pack</td>
+
        <td>৳ {{ $getFacePack }}</td>
 
        <td>{{ $allSingleFacePackageList->quantity }}</td>
@@ -224,10 +167,10 @@
                                            <tr>
 
                                                <td class="text-start">
-                                                   <span class="fw-medium">{{ $getTherapyPriceName1 }}({{ $getPackage1 }})</span>
+                                                   <span class="fw-medium"><span style="color: #3f3f3f;">Therapy</span> :{{ $getTherapyPriceName1 }}({{ $getPackage1 }})</span>
 
                                                </td>
-                                               <td>Therapy</td>
+
 
                                                @if(($key+1) == $countpatientTherapyList1)
 
@@ -265,10 +208,10 @@
                                            <tr>
 
                                                <td class="text-start">
-                                                   <span class="fw-medium">{{ $getTherapyPriceNames}}</span>
+                                                   <span class="fw-medium"><span style="color: #3f3f3f;">Therapy</span> :{{ $getTherapyPriceNames}}</span>
 
                                                </td>
-                                               <td>Therapy</td>
+                                               {{-- <td>Therapy</td> --}}
                                                <td>BDT {{ $getTherapyPrices }}</td>
                                                <td>{{ $allPatientTherapyList->amount }}</td>
                                                <td class="text-end">BDT {{ $allPatientTherapyList->amount*$getTherapyPrices }}</td>
@@ -299,10 +242,10 @@ $getPatientTheraPrice = DB::table('therapy_packages')->where('id',$allPatientThe
     <tr>
 
         <td class="text-start">
-            <span class="fw-medium">{{ $getTherapyPriceName }}({{ $getPackage }})</span>
+            <span class="fw-medium"><span style="color: #3f3f3f;">Therapy</span> :{{ $getTherapyPriceName }}({{ $getPackage }})</span>
 
         </td>
-        <td>Therapy</td>
+
         @if(($key+1) == $countpatientTherapyList)
 
         <td>BDT{{ $getPatientTheraPrice }}</td>
@@ -331,10 +274,10 @@ $getTherapyPriceName = DB::table('therapy_lists')->where('id',$allPatientTherapy
 <tr>
 
     <td class="text-start">
-        <span class="fw-medium">{{ $getTherapyPriceName}}</span>
+        <span class="fw-medium"><span style="color: #3f3f3f;">Therapy</span> :{{ $getTherapyPriceName}}</span>
 
     </td>
-    <td>Therapy</td>
+
     <td>BDT{{ $getTherapyPrice }}</td>
     <td>{{ $allPatientTherapyList->amount }}</td>
     <td class="text-end">BDT{{ $allPatientTherapyList->amount*$getTherapyPrice }}</td>
@@ -358,10 +301,10 @@ $getPatientHerb = DB::table('packages')->where('id',$allPatientHerbList->package
     <tr>
 
         <td class="text-start">
-            <span class="fw-medium">{{ $allPatientHerbList->name }}({{ $getPackage }})</span>
+            <span class="fw-medium"><span style="color: #3f3f3f;">Medicine</span> :{{ $allPatientHerbList->name }}({{ $getPackage }})</span>
 
         </td>
-           <td>Medicine</td>
+
 
            @if(($key+1) == $countpatientHerb)
 
@@ -396,42 +339,68 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
     <tr>
 
         <td class="text-start">
-            <span class="fw-medium">{{ $allPatientMedicalSupplement->name }}</span>
+            <span class="fw-medium"><span style="color: #3f3f3f;">Health Suppliment</span> :{{ $allPatientMedicalSupplement->name }}</span>
 
         </td>
-           <td>Health Suppliment</td>
+
         <td>BDT{{ $getPatientMedicalSupplement }}</td>
         <td>{{ $allPatientMedicalSupplement->quantity }}</td>
         <td class="text-end">BDT{{ $getPatientMedicalSupplement*$allPatientMedicalSupplement->quantity  }}</td>
     </tr>
     @endforeach
 
+    <?php $tt = 0 ?>
+         @foreach($getAllPaymentHistory as $key=>$allGetAllPaymentHistory)
+                                 
+<?php  $tt = $tt + $allGetAllPaymentHistory->payment_amount ?>
 
-
-
-    </tbody>
-</table>
-
-<table class="forth_table">
-
-
-    <tr>
-    <td>
-                {{-- <h4>COD Charge: <br> <span style="font-size:8px;">Powered By ResNova Tech Limited</span>
-                </h4> --}}
-            </td>
-    <td>
-      <table class="inner-table">
-
-        <tr style="font-weight:bold">
-          <td>Total</td>
-          <td>BDT{{ $mainTotal }}</td>
+                                    @endforeach
+        <tr>
+            <td colspan="4">Total(Taka)</td>
+            <td>{{ $mainTotal }}  Taka</td>
         </tr>
+         <tr>
+            <td colspan="4">Discount(%)</td>
+            <td>{{$ffB->invoice_id}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Advance(Taka)</td>
+            <td>{{$tt}} Taka</td>
+        </tr>
+        <tr>
+            <td colspan="4">Due Payment(Taka)</td>
+            <td>{{$ffB->payment_status}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Vat(%)</td>
+            <td>{{$ffB->vat}}</td>
+        </tr> 
+        <tr>
+            <td colspan="4">Net Amount(Taka)</td>
+            <td>{{$ffB->total_amount}} Taka</td>
+        </tr>
+    </table>
 
-      </table>
-    </td>
-  </tr>
-</table>
+    <table style="margin-top: 100px">
+        <tr>
+            <td style="text-align:left">Payment Status: Cash</td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Signature</td>
+        </tr>
+    </table>
 
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+</div>
 </body>
+
 </html>
+
+

@@ -11,16 +11,17 @@ use App\Models\PatientHerbDetail;
 use App\Models\PatientTherapyDetail;
 use App\Models\InventoryCategory;
 use App\Models\OtherIngredient;
+use App\Models\InventoryName;
 class InventoryController extends Controller
 {
     public function index(){
-
+        $inventoryNames = InventoryName::latest()->get();
         $medicineEquipments = MedicineEquipment::latest()->get();
         $therapyIngredients = TherapyIngredient::latest()->get();
         $inventoryCategorys = InventoryCategory::latest()->get();
         $otherIngredients = OtherIngredient::latest()->get();
 
-        return view('admin.inventory.index',compact('otherIngredients','inventoryCategorys','therapyIngredients','medicineEquipments'));
+        return view('admin.inventory.index',compact('inventoryNames','otherIngredients','inventoryCategorys','therapyIngredients','medicineEquipments'));
     }
 
 

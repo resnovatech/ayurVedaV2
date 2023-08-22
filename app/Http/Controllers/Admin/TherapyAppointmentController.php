@@ -35,6 +35,26 @@ class TherapyAppointmentController extends Controller
             return $next($request);
         });
     }
+    
+    
+    public function all_appoinment_detail(){
+          if (is_null($this->user) || !$this->user->can('all_therapryView')) {
+                   abort(403, 'Sorry !! You are Unauthorized to View !');
+               }
+               $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::latest()->get();
+
+               $tomorrow = Carbon::tomorrow()->toDateString();
+               $yesterday  = Carbon::yesterday ()->toDateString();
+
+               $therapyAppointmentDateAndTimeListTomorrow = TherapyAppointmentDateAndTime::where('date',$tomorrow)->latest()->get();
+               $therapyAppointmentDateAndTimeListYesterday = TherapyAppointmentDateAndTime::where('date',$yesterday)->latest()->get();
+
+
+
+
+
+               return view('admin.therapyAppointment.index1',compact('therapyAppointmentDateAndTimeListYesterday','therapyAppointmentDateAndTimeListTomorrow','therapyAppointmentDateAndTimeList'));
+    }
 
 
     public function index(){

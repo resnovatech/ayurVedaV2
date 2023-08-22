@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
+use App\Models\PatientTherapy;
 class TherapistController extends Controller
 {
     public $user;
@@ -25,6 +26,98 @@ class TherapistController extends Controller
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
+    }
+
+    public function therapyStatusUpdate(Request $request){
+
+
+        if($request->mstatus == 2){
+
+
+            $appoinmentId = TherapyAppointmentDetail::where('id',$request->id)
+            ->value('therapy_appointment_id');
+
+            TherapyAppointmentDetail::where('therapy_appointment_id',$appoinmentId)
+            ->update([
+                'status' => $request->status
+             ]);
+
+
+             if($request->status == 'Ongoing'){
+
+                //dd(11);
+                   $newStatus = 'Ongoing Process';
+                   TherapyAppointmentDateAndTime::where('therapy_appointment_id',$appoinmentId)
+            ->update([
+                'status' => $newStatus
+             ]);
+
+
+             PatientTherapy::where('id',$appoinmentId)
+             ->update([
+                 'status' => $newStatus
+              ]);
+            }elseif($request->status == 'Finished'){
+                $newStatus = 'Ready';
+                TherapyAppointmentDateAndTime::where('id',$appoinmentId)
+            ->update([
+                'status' => $newStatus
+             ]);
+
+
+             PatientTherapy::where('id',$appoinmentId)
+             ->update([
+                 'status' => $newStatus
+              ]);
+            }
+
+
+
+        }else{
+
+        //dd($request->all());
+
+        $appoinmentId = TherapyAppointmentDetail::where('id',$request->id)
+        ->value('therapy_appointment_id');
+//dd($appoinmentId);
+
+        TherapyAppointmentDateAndTime::where('id',$request->id)
+       ->update([
+           'status' => $request->status
+        ]);
+
+        if($request->status == 'Ingredient Request Ready'){
+
+            //dd(11);
+               $newStatus = 'Request';
+               TherapyAppointmentDetail::where('therapy_appointment_id',$appoinmentId)
+        ->update([
+            'status' => $newStatus
+         ]);
+
+
+         PatientTherapy::where('id',$appoinmentId)
+         ->update([
+             'status' => $newStatus
+          ]);
+        }elseif($request->status == 'End'){
+            $newStatus = 'Finished';
+            TherapyAppointmentDetail::where('id',$appoinmentId)
+        ->update([
+            'status' => $newStatus
+         ]);
+
+
+         PatientTherapy::where('id',$appoinmentId)
+         ->update([
+             'status' => $newStatus
+          ]);
+        }
+
+    }
+        return redirect()->back()->with('success','Updated successfully!');
+
+
     }
 
 
@@ -46,29 +139,30 @@ class TherapistController extends Controller
            public function show($id){
 
             $therapistList = Therapist::find($id);
-
             $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('date',date('Y-m-d'))
-            ->where('therapist',$id)->latest()->get();
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
 
             $tomorrow = Carbon::tomorrow()->toDateString();
             $yesterday  = Carbon::yesterday ()->toDateString();
 
             $therapyAppointmentDateAndTimeListTomorrow = TherapyAppointmentDateAndTime::where('date',$tomorrow)
-            ->where('therapist',$id)->latest()->get();
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
             $therapyAppointmentDateAndTimeListYesterday = TherapyAppointmentDateAndTime::where('date',$yesterday)
-            ->where('therapist',$id)->latest()->get();
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
 
 
-            $therapyAppointmentComplete = TherapyAppointmentDateAndTime::where('status',1)
-            ->where('therapist',$id)->latest()->get();
+            $therapyAppointmentComplete = TherapyAppointmentDateAndTime::where('status','End')
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
 
 
             $therapyAppointmentPending = TherapyAppointmentDateAndTime::whereNull('status')
-            ->where('therapist',$id)->latest()->get();
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
+
+            //dd($therapyAppointmentPending);
 
 
-            $therapyAppointmentCancellled = TherapyAppointmentDateAndTime::where('status',0)
-            ->where('therapist',$id)->latest()->get();
+            $therapyAppointmentCancellled = TherapyAppointmentDateAndTime::where('status','Cancelled')
+            ->where('therapist',$id)->where('face_pack_status',0)->latest()->get();
 
 
             return view('admin.therapistList.view',

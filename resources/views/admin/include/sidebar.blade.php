@@ -389,6 +389,19 @@ $usr = Auth::guard('admin')->user();
                     </a>
                 </li>
                 @endif
+
+                 @if ($usr->can('all_therapryAdd') || $usr->can('all_therapryView') || $usr->can('all_therapryDelete') || $usr->can('all_therapryUpdate'))
+                <li class="menu-title"><span data-key="t-menu">Therapy Appoinment Detail</span></li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('all_appoinment_detail') ? 'active' : '' }}" href="{{ route('all_appoinment_detail') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Appoinment List</span>
+                    </a>
+                </li>
+                @endif
+
+
                 @if ($usr->can('therapyMakerAdd') || $usr->can('therapyMakerView') || $usr->can('therapyMakerDelete') || $usr->can('therapyMakerUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Therapy Maker</span></li>
 
@@ -407,6 +420,13 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('inventoryCategoryList.index') ? 'active' : '' }}" href="{{ route('inventoryCategoryList.index') }}">
                         <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Category List</span>
+                    </a>
+                </li>
+                @endif
+                @if ($usr->can('inventoryNameAdd') || $usr->can('inventoryNameView') || $usr->can('inventoryNameDelete') || $usr->can('inventoryNameUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('inventoryNameInfo.index') ? 'active' : '' }}" href="{{ route('inventoryNameInfo.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Name List</span>
                     </a>
                 </li>
                 @endif
@@ -472,6 +492,22 @@ $usr = Auth::guard('admin')->user();
                             </a>
                             </li>
                             @endif
+
+                            @if ($usr->can('discount.Add') || $usr->can('discount.view') || $usr->can('discount.delete') || $usr->can('discount.update'))
+                            <li class="nav-item">
+                                <a href="{{ route('discount.index') }}" class="nav-link {{ Route::is('discount.index') ? 'active' : '' }}"><span data-key="t-job">Discount</span>
+                            </a>
+                            </li>
+                            @endif
+
+                            @if ($usr->can('vatAdd') || $usr->can('vatView') || $usr->can('vatDelete') || $usr->can('vatUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('vat.index') }}" class="nav-link {{ Route::is('vat.index') ? 'active' : '' }}"><span data-key="t-job">Vat</span>
+                            </a>
+                            </li>
+                            @endif
+
+
                         </ul>
                     </div>
                 </li>

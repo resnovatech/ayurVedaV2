@@ -42,6 +42,9 @@ use App\Http\Controllers\Admin\TherapyMakerController;
 use App\Http\Controllers\Admin\FacialPackController;
 use App\Http\Controllers\Admin\FacePackController;
 use App\Http\Controllers\Admin\FacePackAppoinmentController;
+use App\Http\Controllers\InventoryNameController;
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\VatController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,9 +83,14 @@ Route::group(['prefix' => 'admin'], function () {
 
     //therapy_package
 
+    Route::resource('discount', DiscountController::class);
+    Route::resource('vat', VatController::class);
+
     Route::resource('facePackAppoinment', FacePackAppoinmentController::class);
     Route::resource('facialInfoList', FacialPackController::class);
     Route::resource('facePackInfoList', FacePackController::class);
+
+    Route::resource('inventoryNameInfo',InventoryNameController::class);
 
     Route::resource('therapyMakerList', TherapyMakerController::class);
     Route::resource('inventoryCategoryList', InventoryCategoryController::class);
@@ -107,6 +115,9 @@ Route::group(['prefix' => 'admin'], function () {
   Route::controller(TherapyAppointmentController::class)->group(function () {
       Route::get('/getTherapyAppointmentDetail', 'getTherapyAppointmentDetail')->name('getTherapyAppointmentDetail');
       Route::get('/getTherapyListDetail', 'getTherapyListDetail')->name('getTherapyListDetail');
+
+
+       Route::get('/all_appoinment_detail', 'all_appoinment_detail')->name('all_appoinment_detail');
 
   });
 
@@ -135,6 +146,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/patientFinalSubmit', 'patientFinalSubmit')->name('patientFinalSubmit');
         Route::get('/searchPatientForTherapy', 'searchPatientForTherapy')->name('searchPatientForTherapy');
        Route::get('/walkByPatientTherapyMain', 'walkByPatientTherapyMain')->name('walkByPatientTherapyMain');
+
+        Route::get('/therapy_delete/{id}', 'therapy_delete')->name('therapy_delete');
+        Route::get('/face_pack_delete/{id}', 'face_pack_delete')->name('face_pack_delete');
    });
 
 
@@ -161,12 +175,15 @@ Route::group(['prefix' => 'admin'], function () {
      Route::resource('billings', BillingController::class);
 
      Route::controller(BillingController::class)->group(function () {
+
+
+          Route::get('/final_billing', 'final_billing')->name('final_billing');
           Route::get('/medicineList/{id}', 'medicineList')->name('medicineList');
           Route::get('/therapyListFromHistory/{id}', 'therapyListFromHistory')->name('therapyListFromHistory');
 
 
          Route::post('/paymentMoney', 'paymentMoney')->name('paymentMoney');
-         Route::get('/printInvoice/{id}', 'printInvoice')->name('printInvoice');
+         Route::get('/printInvoice', 'printInvoice')->name('printInvoice');
          Route::get('/moveToReversed/{id}', 'moveToReversed')->name('moveToReversed');
      });
      //billing_controller

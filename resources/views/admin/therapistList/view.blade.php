@@ -206,11 +206,13 @@ Therapist Profile | {{ $ins_name }}
 <form method="post" action="{{ route('therapyStatusUpdate') }}">
     @csrf
                                                         <select class="form-control" name="status">
-                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                         </select>
                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -301,11 +303,13 @@ Therapist Profile | {{ $ins_name }}
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                                                                                    <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                                                 <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -399,11 +403,13 @@ Therapist Profile | {{ $ins_name }}
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                                                                                    <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                                                 <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -506,11 +512,14 @@ Therapist Profile | {{ $ins_name }}
                                 <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                     @csrf
                                                                                         <select class="form-control" name="status">
-                                                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                                                         </select>
                                                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -605,13 +614,16 @@ Therapist Profile | {{ $ins_name }}
                             <td class="phone"><form method="post" action="{{ route('therapyStatusUpdate') }}">
                                 @csrf
                                                                                     <select class="form-control" name="status">
-                                                                                        <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                                                        <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                        <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                                                        <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                                                        <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                                                        <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                        <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                                                        <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                                                        <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                                                        <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                                                     </select>
-                                                                                    <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
+                                                                                    <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->status }}" name="id" />
                                                                                     <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
                             </form></td>
                                             <td>
@@ -704,11 +716,14 @@ Therapist Profile | {{ $ins_name }}
                                 <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                     @csrf
                                                                                         <select class="form-control" name="status">
-                                                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Pending</option>
-                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ready</option>
-                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>Ongoing Process</option>
-                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->id ? 'selected':''}}>End</option>
+                                                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
+                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
+                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
+                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
+
+
+                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
                                                                                         </select>
                                                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>

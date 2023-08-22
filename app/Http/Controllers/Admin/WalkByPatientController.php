@@ -71,7 +71,7 @@ class WalkByPatientController extends Controller
             'nationality' => 'required',
             'how_did_you_come_to_know_about_this_center' => 'required',
             'do_you_have_earlier_experience_of_ayurveda_please_give_details' => 'required',
-            'do_you_have_symptoms_in_past_one_weak' => 'required',
+            // 'do_you_have_symptoms_in_past_one_weak' => 'required',
             'covid_test_result' => 'required',
             'disease_name.*' => 'required',
             'detail.*' => 'required',

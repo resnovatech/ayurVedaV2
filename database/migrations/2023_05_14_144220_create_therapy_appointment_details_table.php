@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('therapy_name');
             $table->text('name')->nullable();
             $table->string('amount')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

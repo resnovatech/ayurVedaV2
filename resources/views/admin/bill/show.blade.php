@@ -35,7 +35,7 @@ Billing Information List | {{ $ins_name }}
                 <div class="card" >
                     <div class="card-body" >
                         <div class="btn-group">
-                            <a href="{{ route('printInvoice',$patientHistory->id) }}" class="btn btn-primary">Print</a>
+                            <!--<a href="{{ route('printInvoice',$patientHistory->id) }}" class="btn btn-primary">Print</a>-->
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Payment</button>
 
                             <!-- Modal -->
@@ -55,6 +55,7 @@ Billing Information List | {{ $ins_name }}
                 <select class="form-control" name="payment_type" id="payment_type" required>
                     <option value="cash">cash</option>
                     <option value="check">check</option>
+                    <option value="card">card</option>
                 </select>
 
                 <label for="" class="form-label">Amount</label>
@@ -431,19 +432,88 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
                                         </tbody>
                                     </table><!--end table-->
                                 </div>
+                                <form action="{{ route('printInvoice') }}" method="get">
+                                    <input type="hidden" class="form control" name="main_id" value="{{$patientHistory->id}}" readonly/>
+                                    
                                 <div class="border-top border-top-dashed mt-2">
                                     <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto" style="width:250px">
                                         <tbody>
                                         <tr>
                                             <td>Total</td>
-                                            <td class="text-end">৳ {{$mainTotal }}</td>
+                                            <td class="text-end">৳ <input type="text" class="form control" name="main_total" value="{{$mainTotal }}"/></td>
                                         </tr>
+  <tr>
+            <td colspan="4">Discount(%)</td>
+            <td>
+                
+                @if(!$ffB)
+                
+                <input type="text" class="form control" name="discount" value="0"/>
+                
+                @else
+                  <input type="text" class="form control" name="discount" value="{{$ffB->invoice_id}}"/>
+               @endif
+                
+                </td>
+        </tr>
+        <?php $tt = 0 ?>
+         @foreach($getAllPaymentHistory as $key=>$allGetAllPaymentHistory)
+                                 
+<?php  $tt = $tt + $allGetAllPaymentHistory->payment_amount ?>
 
+                                    @endforeach
+                                    
+                                    
+        <tr>
+            <td colspan="4">Advance(Taka)</td>
+            <td><input type="text" class="form control" name="advance" value="{{$tt}}" readonly/></td>
+        </tr>
+        <tr>
+            <td colspan="4">Due Payment(Taka)</td>
+            <td>
+                
+                
+                  @if(!$ffB)
+                
+                <input type="text" class="form control" name="due" value="0"/>
+                
+                @else
+                  <input type="text" class="form control" name="due" value="{{$ffB->payment_status}}"/>
+               @endif
+                
+                </td>
+        </tr>
+        <tr>
+            <td colspan="4">Vat(%)</td>
+            <td>
+                  @if(!$ffB)
+                
+                <input type="text" class="form control" name="vat" value="0"/>
+                
+                @else
+                  <input type="text" class="form control" name="vat" value="{{$ffB->vat}}"/>
+               @endif
+               
+                
+                </td>
+        </tr>
+        <tr>
+            <td colspan="4">Net Amount(Taka)</td>
+            <td>
+                @if(!$ffB)
+                <input type="text" class="form control" name="net_amount" readonly value="{{$mainTotal - $tt}}"/>
+                @else
+                <input type="text" class="form control" name="net_amount" readonly value="{{$ffB->total_amount}}"/>
+                @endif
+                
+                </td>
+        </tr>
                                         </tbody>
                                     </table>
                                     <!--end table-->
                                 </div>
-
+                                <button class="btn btn-success" type="submit">print</button>
+</form>
                                 <div class="hstack gap-2 justify-content-end d-print-none mt-4">
                                     {{-- <a href="javascript:window.print()" class="btn btn-soft-primary"><i class="ri-printer-line align-bottom me-1"></i> Print</a> --}}
 

@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-Walk By Patient List | {{ $ins_name }}
+Walking patient  List | {{ $ins_name }}
 @endsection
 
 
@@ -13,12 +13,12 @@ Walk By Patient List | {{ $ins_name }}
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Walk By Patient List</h4>
+                    <h4 class="mb-sm-0">Walking patient  List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                            <li class="breadcrumb-item active">Walk-By-Patient</li>
+                            <li class="breadcrumb-item active">Walking patient </li>
                         </ol>
                     </div>
 
@@ -40,7 +40,7 @@ Walk By Patient List | {{ $ins_name }}
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
                                     <div>
-                                        <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('walkByPatients.create') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Walk By Patient</button>
+                                        <button type="button" class="btn btn-primary add-btn" onclick="location.href='{{ route('walkByPatients.create') }}'"><i class="ri-add-line align-bottom me-1"></i> Add New Walking patient </button>
 
                                     </div>
                                 </div>

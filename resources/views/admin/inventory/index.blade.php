@@ -203,7 +203,14 @@ Inventory List | {{ $ins_name }}
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Name</label>
-                                                <input type="text" value="{{ $allmedicineEquipment->name }}" name ="name" class="form-control" id="" placeholder="Name" required>
+                                                {{-- <input type="text" value="{{ $allmedicineEquipment->name }}" name ="name" class="form-control" id="" placeholder="Name" required> --}}
+
+                                                <select name ="name" class="form-control">
+                                                    <option>--Select One --</option>
+                                                    @foreach($inventoryNames as $AllInventory)
+                    <option value="{{ $AllInventory->name }}"  {{ $allmedicineEquipment->name == $AllInventory->name ? 'selected':''}}>{{ $AllInventory->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
                                             <div class="col-12 mb-2">
@@ -294,7 +301,13 @@ Inventory List | {{ $ins_name }}
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Name</label>
-                            <input type="text" name ="name" class="form-control" id="" placeholder="Name" required>
+                            {{-- <input type="text" name ="name" class="form-control" id="" placeholder="Name" required> --}}
+                            <select name ="name" class="form-control">
+                                <option>--Select One --</option>
+                                @foreach($inventoryNames as $AllInventory)
+<option value="{{ $AllInventory->name }}">{{ $AllInventory->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-12 mb-2">

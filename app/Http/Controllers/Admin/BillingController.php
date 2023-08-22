@@ -25,6 +25,7 @@ use App\Models\TherapyAppointment;
 use App\Models\TherapyAppointmentDateAndTime;
 use App\Models\TherapyAppointmentDetail;
 use App\Models\Payment;
+use App\Models\Bill;
 use PDF;
 use App\Models\FacePackAppoinmentDetail;
 use App\Models\FacePack;
@@ -39,8 +40,54 @@ class BillingController extends Controller
     }
 
 
-    public function printInvoice($id){
-        $mainId = $id;
+    public function printInvoice(Request $request){
+        
+        //dd($request->all());
+        $mainId = $request->main_id;
+        $id = $request->main_id;
+        
+        if($request->discount == 0 || empty($request->discount)){
+            
+            $dis = 0;
+        }else{
+            
+        
+        $dis = ($request->main_total*$request->discount)/100;
+        
+        }
+        
+        
+        
+        if($request->vat == 0 || empty($request->vat)){
+            
+            $vat = 0;
+        }else{
+            
+        
+        $vat = ($request->main_total*$request->vat)/100;
+        
+        }
+        
+        
+        $final =($request->main_total+$vat)- ($request->advance+$dis);
+        
+        //dd($final);
+        
+         $newData = new Bill;
+         $newData->patient_id = $request->main_id;
+         $newData->invoice_id = $request->discount;
+         $newData->payment_status = $request->due;
+         $newData->vat = $request->vat;
+         $newData->	total_amount = $final;
+         $newData->save();
+         
+         $mainnId = $newData->id;
+         
+         
+         $ffB = Bill::where('id',$mainnId)->where('patient_id',$request->main_id)->first();
+         
+         
+        
         $patientHistory = PatientHistory::find($id);
 
 
@@ -231,6 +278,7 @@ $getPhoneFromPatient = DB::table('patients')
 
 
         $pdf=PDF::loadView('admin.bill.printInvoice',[
+            'ffB'=>$ffB,
             'totalFacialAmount'=>$totalFacialAmount,
             'singleFacePackageList'=>$singleFacePackageList,
             'mainTotal'=>$mainTotal,
@@ -689,6 +737,8 @@ if(($key+1) == $countpatientHerb){
 
 
     public function show($id){
+        
+        $ffB = Bill::where('patient_id',$id)->orderBy('id','desc')->first();
         $mainId = $id;
 
         //dd($mainId );
@@ -873,7 +923,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.bill.show',compact('singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.bill.show',compact('ffB','singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
     }
 

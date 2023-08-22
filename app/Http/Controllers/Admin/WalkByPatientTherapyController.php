@@ -46,6 +46,41 @@ class WalkByPatientTherapyController extends Controller
             return $next($request);
         });
     }
+    
+    public function face_pack_delete($id){
+        $therapyTypeOne = FacePackAppoinmentDetail::where('id',$id)->value('appoinment_id');
+        $therapyTypeTwo = FacePackAppoinmentDetail::where('id',$id)->value('history_id');
+        
+        PatientHistory::where('id',$therapyTypeTwo)->delete();
+        FacePackAppoinment::where('id',$therapyTypeOne)->delete();
+        FacePackAppoinmentDetail::where('id',$id)->delete();
+        
+         return redirect()->back()->with('error','Deleted successfully!');
+    }
+    
+    public function therapy_delete($id){
+        
+        $therapyType = TherapyAppointmentDetail::where('id',$id)->value('name');
+        
+     
+        
+        if($therapyType == 'Single'){
+            
+                    $therapyTypeOne = TherapyAppointmentDetail::where('id',$id)->value('therapy_appointment_id');
+                       //dd($therapyTypeOne);
+                       $therapyTypeTwo = TherapyAppointment::where('id',$therapyTypeOne)->value('history_id');
+        
+        PatientHistory::where('id',$therapyTypeTwo)->delete();
+                    TherapyAppointment::where('id',$therapyTypeOne)->delete();
+                   TherapyAppointmentDetail::where('id',$id)->delete();
+                    return redirect()->back()->with('error','Deleted successfully!');
+            
+            
+        }else{
+              $therapyTypeOne = TherapyAppointmentDetail::where('id',$id)->delete();
+            return redirect()->back()->with('error','Deleted successfully!');
+        }
+    }
 
 
     public function searchPatientForTherapy(Request $request)
@@ -213,8 +248,9 @@ return response()->json($data);
 
             if($getPreviousData > 0){
 
-                $patientHistoryUpdateId =Session::get('patientHistoryUpdateId');
-
+                $patientHistoryUpdateId =PatientHistory::where('patient_id',$patientId)
+            ->where('status',2)->value('id');
+Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 //dd($patientHistoryUpdateId);
             }else{
                 //dd(225);
@@ -241,6 +277,7 @@ return response()->json($data);
                 $therapyAppointment = new TherapyAppointment();
                 $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
                 $therapyAppointment->patient_id =$patientId;
+                $therapyAppointment->history_id = $patientHistoryUpdateId;
                 $therapyAppointment->status = 0;
                 $therapyAppointment->save();
 
@@ -335,6 +372,7 @@ return response()->json($data);
                 $therapyAppointment = new TherapyAppointment();
                 $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
                 $therapyAppointment->patient_id =$patientId;
+                 $therapyAppointment->history_id = $patientHistoryUpdateId;
                 $therapyAppointment->status = 0;
                 $therapyAppointment->save();
 
@@ -396,12 +434,14 @@ return response()->json($data);
             $inputAllData = $request->all();
 
 
-//dd($inputAllData );
+//dd(Session::get('patientId'));
 
 
         $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
                   ->where('status',2)
                    ->value('id');
+                   
+                  // dd(Session::get('patientHistoryUpdateId'));
 
         $therapyAppointmentId = DB::table('therapy_appointments')
                  ->where('patient_id',Session::get('patientId'))
