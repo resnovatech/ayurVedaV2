@@ -79,6 +79,7 @@ $msList = DB::table('patient_medical_supplements')->where('status',0)
                             <table class="table table-bordered mt-4" id="dynamicAddRemove1">
                                 <tr>
                                     <th>Therapy Name</th>
+                                       <th>Quantity</th>
                                     <th>Package</th>
                                 </tr>
                                 @foreach($therapyList as $allTherapy)
@@ -91,6 +92,8 @@ $mseeList = DB::table('therapy_lists')->where('id',$allTherapy->name)->value('na
                                         ?>
                                         {{ $mseeList }}
                                     </td>
+                                    
+                                       <th>{{$allTherapy->amount}}</th>
 
                                     <td>
                                         @if($allTherapy->package_name == 'Single')

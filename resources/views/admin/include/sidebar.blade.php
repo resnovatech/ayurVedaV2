@@ -493,7 +493,7 @@ $usr = Auth::guard('admin')->user();
                             </li>
                             @endif
 
-                            @if ($usr->can('discount.Add') || $usr->can('discount.view') || $usr->can('discount.delete') || $usr->can('discount.update'))
+                            @if ($usr->can('discount.Add') || $usr->can('discount.View') || $usr->can('discount.Delete') || $usr->can('discount.Update'))
                             <li class="nav-item">
                                 <a href="{{ route('discount.index') }}" class="nav-link {{ Route::is('discount.index') ? 'active' : '' }}"><span data-key="t-job">Discount</span>
                             </a>

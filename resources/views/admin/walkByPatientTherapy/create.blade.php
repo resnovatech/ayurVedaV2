@@ -101,7 +101,11 @@ Therapy Appointment  | {{ $ins_name }}
                 </button>
             </div>
         </div>
-
+<!--<select class="js-example-basic-multiple" name="states[]" multiple="multiple">-->
+<!--  <option value="AL">Alabama</option>-->
+<!--    ...-->
+<!--  <option value="WY">Wyoming</option>-->
+<!--</select>-->
         <?php
 
 
@@ -148,6 +152,8 @@ $facePackAppoinmentList = DB::table('face_pack_appoinments')
 
             <h4 class="card-title mb-0 flex-grow-1">Therapy/FacePack Appointment Date & Time</h4>
             @foreach($facePackAppoinmentList as $j=>$allfacePackAppoinmentList)
+            
+            
 
             <?php
             $facePack = DB::table('face_packs')->where('id',$allfacePackAppoinmentList->face_pack_id)
@@ -156,25 +162,54 @@ $facePackAppoinmentList = DB::table('face_pack_appoinments')
 <input type="hidden" required  name="face_type[]" value="1"
 class="form-control mt-2" id="checkData"/>
 <div class="col-lg-2">
-    <input type="text" required  name="therapy_id[]" value="{{ $facePack }}"
+    
+    <!--label-->
+    
+  <label class="mt-2">Name  <span class="text-danger"><b>(Face Pack)</b></span></label>
+
+    <!--label-->
+    <input type="text" required  name="therapy_id[{{$j+4000}}][]" value="{{ $facePack }}"
                class="form-control mt-2" id="checkData"/>
     </div>
 
 <div class="col-lg-2">
-<input type="date" required  name="date[]" value=""
-           class="form-control mt-2" id="checkData"/>
+      <!--label-->
+    
+  <label class="mt-2">Appointment Date</label>
+    <!--label-->
+<input type="date" required  name="date[{{$j+4000}}][]" value=""
+           class="form-control mt-2 " id="checkData"/>
 </div>
 <div class="col-lg-2">
-    <input type="time" required name="start_time[]" id="checkStartTime"
+    
+       <!--label-->
+    
+  <label class="mt-2">Start Time</label>
+    <!--label-->
+    
+    <input type="time" required name="start_time[{{$j+4000}}][]" id="checkStartTime"
            class="form-control mt-2"/>
 </div>
 <div class="col-lg-2">
-    <input type="time" required name="end_time[]" id="checkEndTime"
+    
+       <!--label-->
+    
+  <label class="mt-2">End Time</label>
+    <!--label-->
+    
+    <input type="time" required name="end_time[{{$j+4000}}][]" id="checkEndTime"
            class="form-control mt-2"/>
 </div>
 <div class="col-lg-2">
+    
+         <!--label-->
+    
+  <label class="mt-2">Therapist List</label>
+    <!--label-->
+    
+ 
 
-           <select class="form-select mt-2 " id="therapist_id" required aria-label="Default select example" name="therapist_id[]">
+           <select class="js-example-basic-multiple mt-2"  required  name="therapist_id{{$j+4000}}[{{$j+4000}}][]" multiple="multiple">
             <option value="">--Please Select --</option>
                 @foreach($therapistList as $allTherapistList)
                 <option value="{{ $allTherapistList->id }}">{{ $allTherapistList->name }}</option>
@@ -183,41 +218,71 @@ class="form-control mt-2" id="checkData"/>
             </select>
 </div>
 <div class="col-lg-2">
-       
+        
                               
-                               <a   type="button" class="btn btn-danger waves-light waves-effect mt-3  btn-sm" href="{{ route('face_pack_delete',$allfacePackAppoinmentList->id) }}" data-toggle="tooltip" title="Delete">
+                               <a   type="button" class="btn btn-danger waves-light waves-effect mt-5  btn-sm" href="{{ route('face_pack_delete',$allfacePackAppoinmentList->id) }}" data-toggle="tooltip" title="Delete">
                      <i class="ri-delete-bin-5-fill"></i></a>
 </div>
 
             @endforeach
 
-            @foreach($therapyAppoinmentList as $j=>$allTherapyPackage)
+            @foreach($therapyAppoinmentList as $k=>$allTherapyPackage)
 
             <?php
 $therapYListPackage = DB::table('therapy_lists')->where('id',$allTherapyPackage->therapy_name)->value('name');
             ?>
-<input type="hidden" required  name="face_type[]" value="0"
+<input type="hidden" required  name="face_type_t[]" value="0"
 class="form-control mt-2" id="checkData"/>
             <div class="col-lg-2">
-                <input type="text" required  name="therapy_id[]" value="{{ $therapYListPackage }}"
+                <!--label-->
+    
+    <label class="mt-2">
+        
+        Name
+        @if($allTherapyPackage->name =="Single")
+        <span class="text-danger"><b>(Single)</b></span>
+        @else
+        <span class="text-danger"><b>(Package)</b></span>
+        
+        @endif
+        
+        
+        </label>
+    <!--label-->
+                <input type="text" required  name="therapy_id_t[{{$k}}][]" value="{{ $therapYListPackage }}"
                            class="form-control mt-2" id="checkData"/>
                 </div>
 
             <div class="col-lg-2">
-            <input type="date" required  name="date[]" value=""
+                  <!--label-->
+    
+  <label class="mt-2">Appointment Date</label>
+    <!--label-->
+            <input type="date" required  name="date_t[{{$k}}][]" value=""
                        class="form-control mt-2" id="checkData"/>
             </div>
             <div class="col-lg-2">
-                <input type="time" required name="start_time[]" id="checkStartTime"
+                  <!--label-->
+    
+  <label class="mt-2">Start Time</label>
+    <!--label-->
+                <input type="time" required name="start_time_t[{{$k}}][]" id="checkStartTime"
                        class="form-control mt-2"/>
             </div>
             <div class="col-lg-2">
-                <input type="time" required name="end_time[]" id="checkEndTime"
+                       <!--label-->
+    
+  <label class="mt-2">End Time</label>
+    <!--label-->
+                <input type="time" required name="end_time_t[{{$k}}][]" id="checkEndTime"
                        class="form-control mt-2"/>
             </div>
             <div class="col-lg-2">
-
-                       <select class="form-select mt-2 " id="therapist_id" required aria-label="Default select example" name="therapist_id[]">
+       <!--label-->
+    
+  <label class="mt-2">Therapist List</label>
+    <!--label-->
+                       <select class="form-select mt-2 js-example-basic-multiple"  required aria-label="Default select example" name="therapist_id_t{{$k}}[{{$k}}][]" multiple="multiple">
                         <option value="">--Please Select --</option>
                             @foreach($therapistList as $allTherapistList)
                             <option value="{{ $allTherapistList->id }}">{{ $allTherapistList->name }}</option>
@@ -226,7 +291,7 @@ class="form-control mt-2" id="checkData"/>
                         </select>
             </div>
             <div class="col-lg-2">
-                 <a   type="button" class="btn btn-danger waves-light waves-effect mt-3  btn-sm" href="{{ route('therapy_delete',$allTherapyPackage->id) }}" data-toggle="tooltip" title="Delete">
+                 <a   type="button" class="btn btn-danger waves-light waves-effect mt-5  btn-sm" href="{{ route('therapy_delete',$allTherapyPackage->id) }}" data-toggle="tooltip" title="Delete">
                      <i class="ri-delete-bin-5-fill"></i></a>
  
             </div>

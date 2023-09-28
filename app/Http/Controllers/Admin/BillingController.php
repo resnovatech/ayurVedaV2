@@ -40,51 +40,17 @@ class BillingController extends Controller
     }
 
 
-    public function printInvoice(Request $request){
+    public function printInvoice($id){
         
-        //dd($request->all());
-        $mainId = $request->main_id;
-        $id = $request->main_id;
-        
-        if($request->discount == 0 || empty($request->discount)){
-            
-            $dis = 0;
-        }else{
-            
-        
-        $dis = ($request->main_total*$request->discount)/100;
-        
-        }
-        
-        
-        
-        if($request->vat == 0 || empty($request->vat)){
-            
-            $vat = 0;
-        }else{
-            
-        
-        $vat = ($request->main_total*$request->vat)/100;
-        
-        }
-        
-        
-        $final =($request->main_total+$vat)- ($request->advance+$dis);
-        
-        //dd($final);
-        
-         $newData = new Bill;
-         $newData->patient_id = $request->main_id;
-         $newData->invoice_id = $request->discount;
-         $newData->payment_status = $request->due;
-         $newData->vat = $request->vat;
-         $newData->	total_amount = $final;
-         $newData->save();
-         
-         $mainnId = $newData->id;
+       
          
          
-         $ffB = Bill::where('id',$mainnId)->where('patient_id',$request->main_id)->first();
+          $ffB = Bill::where('patient_id',$id)->orderBy('id','desc')->first();
+        $mainId = $id;
+        
+        
+        $paymentP = DB::table('payments')->where('bill_id',$id )->orderBy('id','desc')->first();
+        $paymentPa = DB::table('payments')->where('bill_id',$id )->sum('advance_amount');
          
          
         
@@ -278,6 +244,8 @@ $getPhoneFromPatient = DB::table('patients')
 
 
         $pdf=PDF::loadView('admin.bill.printInvoice',[
+            'paymentPa'=>$paymentPa,
+            'paymentP'=>$paymentP,
             'ffB'=>$ffB,
             'totalFacialAmount'=>$totalFacialAmount,
             'singleFacePackageList'=>$singleFacePackageList,
@@ -740,6 +708,10 @@ if(($key+1) == $countpatientHerb){
         
         $ffB = Bill::where('patient_id',$id)->orderBy('id','desc')->first();
         $mainId = $id;
+        
+        
+        $paymentP = DB::table('payments')->where('bill_id',$id )->orderBy('id','desc')->first();
+        $paymentPa = DB::table('payments')->where('bill_id',$id )->sum('advance_amount');
 
         //dd($mainId );
         $patientHistory = PatientHistory::find($id);
@@ -923,7 +895,7 @@ if(($key+1) == $countpatientHerb){
                                       $getAllPaymentHistoryAmount = Payment::where('bill_id',$patientHistory->id)->sum('payment_amount');
                                      $getAllPaymentHistory = Payment::where('bill_id',$patientHistory->id)->latest()->get();
 
-        return view('admin.bill.show',compact('ffB','singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
+        return view('admin.bill.show',compact('paymentPa','paymentP','ffB','singleFacePackageList','totalFacialAmount','mainTotal','singleTheList','singlePackageList','totalTheAmountsingle','totalTherapyAmount1','totalTherapyAmountsingle','patientTherapyListSingle','totalPackageAmount','getAllPaymentHistoryAmount','getAllPaymentHistory','getNameFromPatient','getNameFromWalkByPatient','totalPatientMedicalSupplementAmount','totalMedicineAmount','totalTherapyAmount','getPhoneFromPatient','getPhoneFromWalkByPatient','patientHistory','mainId','patientTherapyList','patientHerb','patientPackage','patientMedicalSupplement'));
 
     }
 
@@ -931,13 +903,55 @@ if(($key+1) == $countpatientHerb){
     public function paymentMoney(Request $request){
 
     //dd($request->all());
+    
+    if($request->pstep == 'dstep'){
+        
+        
+        $paymentP = DB::table('payments')->where('bill_id',$request->id )->orderBy('id','desc')->first();
+        
+        $calresult = $request->due_amount - $request->advance_amount;
+        
+         $new_payment = new Payment();
+    $new_payment->bill_id = $request->id;
+    $new_payment->payment_type = $request->payment_type;
+    $new_payment->payment_amount = $paymentP->payment_amount;
+    $new_payment->main_discount = $paymentP->main_discount;
+    $new_payment->all_discount = $paymentP->all_discount;
+    $new_payment->special_discount = $paymentP->special_discount;
+    $new_payment->vat = $paymentP->vat;
+    $new_payment->net_amount = $paymentP->net_amount;
+    $new_payment->round_off = $paymentP->round_off;
+    $new_payment->grand_total = $paymentP->grand_total;
+    $new_payment->advance_amount = $request->advance_amount;
+    $new_payment->due_amount = $calresult;
+    if($calresult == 0){
+        $new_payment->status = 3;
+        
+    }else{
+        
+        $new_payment->status = 2;
+    }
+    $new_payment->save();
+    
+    
+    }else{
 
     $new_payment = new Payment();
     $new_payment->bill_id = $request->id;
     $new_payment->payment_type = $request->payment_type;
     $new_payment->payment_amount = $request->amount;
+    $new_payment->main_discount = $request->main_discount;
+    $new_payment->all_discount = $request->all_discount;
+    $new_payment->special_discount = $request->special_discount;
+    $new_payment->vat = $request->vat;
+    $new_payment->net_amount = $request->net_amount;
+    $new_payment->round_off = $request->round_off;
+    $new_payment->grand_total = $request->grand_total;
+    $new_payment->advance_amount = $request->advance_amount;
+    $new_payment->due_amount = $request->due_amount;
+    $new_payment->status = 1;
     $new_payment->save();
-
+}
     return redirect()->back()->with('success','paid');
 
     }

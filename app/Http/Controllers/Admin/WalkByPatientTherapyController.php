@@ -141,8 +141,9 @@ return response()->json($data);
                    abort(403, 'Sorry !! You are Unauthorized to Add !');
                }
                $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('date',date('Y-m-d'))->latest()->get();
+               $therapyAppointmentDateAndTimeListAll = TherapyAppointmentDateAndTime::latest()->get();
        //dd(1);
-               return view('admin.walkByPatientTherapy.index',compact('therapyAppointmentDateAndTimeList'));
+               return view('admin.walkByPatientTherapy.index',compact('therapyAppointmentDateAndTimeList','therapyAppointmentDateAndTimeListAll'));
            }
 
 
@@ -434,7 +435,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
             $inputAllData = $request->all();
 
 
-//dd(Session::get('patientId'));
+
 
 
         $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
@@ -455,39 +456,193 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                      ->value('id');
 
 
-             $therapistList = $inputAllData['therapist_id'];
-            $therapyNameDetail = $inputAllData['therapy_id'];
+            // $therapistList = $inputAllData['therapist_id'];
+           
+            
+            
+           // dd($therapyNameDetail);
+//dd( $inputAllData);
 
 
-            //Session::put('therapyPackageId', $request->therapy_package_id);
-
-                foreach($therapyNameDetail as $key => $therapyNameDetail){
-
-
-                $therapyName = new PatientMainTherapy();
-                $therapyName->name=$inputAllData['therapy_id'][$key];
-                $therapyName->therapist_id=$inputAllData['therapist_id'][$key];
-
-                if($inputAllData['face_type'][$key] == 1){
-                    $therapyName->face_pack_status=1;
-
-                }else{
-                    $therapyName->face_pack_status=0;
-                    $therapyName->therapy_appointment_id=$therapyAppointmentId;
-                }
+  if (array_key_exists("face_type", $inputAllData)){
+      
+      $faceTypeList = $inputAllData['face_type'];
+      
+      
+         foreach($faceTypeList as $i=>$AllFaceTypeList){
+                
+                
+              
+                    
+                    //dd($AllfaceTypeList[$i]);
+                    
+                    
+                     $therapyNameDetail = $inputAllData['therapy_id'][4000+$i];
+                     
+                     //dd($therapyNameDetail);
+                     //main list
+                     foreach($therapyNameDetail as $j=>$AllTherapyNameDetail){
+                         
+                         $var = 4000+$j;
+                          $therapistNameDetail = $inputAllData['therapist_id'.$var][4000+$j];
+                          $convertInString =  $tags = implode(', ',$therapistNameDetail);
+                          
+                          //dd($convertInString);
+                          
+                          //fistInsert
+                          
+                          
+                            $therapyName = new PatientMainTherapy();
+                $therapyName->name=$AllTherapyNameDetail;
+                $therapyName->therapist_id=$convertInString;
+                $therapyName->face_pack_status=1;
                 $therapyName->amount=1;
                 $therapyName->therapy_package_id   =  Session::get('therapyPackageId');
                 $therapyName->patient_history_id   = Session::get('patientHistoryUpdateId');
                 $therapyName->patient_id   = Session::get('patientId');
                 $therapyName->save();
+                          
+                          
+                          
+                          
+                          //endFirstInsert
+                          
+                          //set Appoinment Detail
+                          
+                          
+                foreach($therapistNameDetail as $k => $AllTherapistNameDetail){
+                    
+                    
+                //array to string
+                
+                
+                          $convertInStringDate = implode(', ',$inputAllData['date'][4000+$j]);
+                           $convertInStringStart = implode(', ',$inputAllData['start_time'][4000+$j]);
+                            $convertInStringEnd = implode(', ',$inputAllData['end_time'][4000+$j]);
+                
+               //dd($convertInStringStart.'-'.$convertInStringEnd );
+                //end array to string
+                    
+                   // dd(11);
+
+                $getSerialValue =  TherapyAppointmentDateAndTime::where('therapist',$AllTherapistNameDetail)
+                ->where('therapy',$AllTherapyNameDetail)
+                ->where('date',$convertInStringDate)
+                ->value('serial');
+
+                if(empty($getSerialValue)){
+
+
+                 $finalSerialValue = 1;
+
+                }else{
+                 $finalSerialValue = $getSerialValue + 1;
+
+                }
+                
+
+ 
+
+
+
+                $therapistList1 = new TherapyAppointmentDateAndTime();
+                $therapistList1->therapist=$AllTherapistNameDetail;
+                $therapistList1->therapy=$AllTherapyNameDetail;
+                $therapistList1->date=$convertInStringDate;
+                $therapistList1->start_time= $convertInStringStart;
+                $therapistList1->end_time= $convertInStringEnd;
+                $therapistList1->face_pack_status=1;
+                $therapistList1->therapy_appointment_id   = $faceAppointmentId;
+            
+                $therapistList1->serial=$finalSerialValue;
+                $therapistList1->patient_id   = Session::get('patientId');
+                $therapistList1->admin_id   = Auth::guard('admin')->user()->id;
+  // dd($inputAllData['end_time'][4000+$i]);
+                $therapistList1->save();
 
                }
+                          
+                          
+                          //end Appoinment Detail
+                         
+                         
+                         
+                     }
+                     
+                     //end main list
+                    
+                    
+                    
+                
+                
+                
+                
+            }
+      
+  }
+  
+  
+   if (array_key_exists("face_type_t", $inputAllData)){
+       
+       $therapyTypeList = $inputAllData['face_type_t'];
+       
+       
+          foreach($therapyTypeList as $i=>$AllFaceTypeList){
+                
+                
+              
+                    
+                    
+                     //dd($AllFaceTypeList); 
+                      
+                       $therapyNameDetail = $inputAllData['therapy_id_t'][$i];
+                       
+                           foreach($therapyNameDetail as $j=>$AllTherapyNameDetail){
+                         
+                         $var = $j;
+                          $therapistNameDetail = $inputAllData['therapist_id_t'.$var][$j];
+                          $convertInString =  $tags = implode(', ',$therapistNameDetail);
+                          
+                          
+                            //fistInsert
+                          
+                          
+                            $therapyName = new PatientMainTherapy();
+                $therapyName->name=$AllTherapyNameDetail[$j];
+                $therapyName->therapist_id=$convertInString;
+                  $therapyName->face_pack_status=0;
+                    $therapyName->therapy_appointment_id=$therapyAppointmentId;
+                $therapyName->amount=1;
+                $therapyName->therapy_package_id   =  Session::get('therapyPackageId');
+                $therapyName->patient_history_id   = Session::get('patientHistoryUpdateId');
+                $therapyName->patient_id   = Session::get('patientId');
+                $therapyName->save();
+                          
+                          
+                          
+                          
+                          //endFirstInsert
+                          
+                          
+                               //set Appoinment Detail
+                          
+                          
+                foreach($therapistNameDetail as $k => $AllTherapistNameDetail){
+                    
+                    
+                //array to string
+                
+                
+                          $convertInStringDate = implode(', ',$inputAllData['date_t'][$j]);
+                           $convertInStringStart = implode(', ',$inputAllData['start_time_t'][$j]);
+                            $convertInStringEnd = implode(', ',$inputAllData['end_time_t'][$j]);
+                
+               // dd($convertInStringDate );
+                //end array to string
 
-                foreach($therapistList as $key => $therapistList){
-
-                $getSerialValue =  TherapyAppointmentDateAndTime::where('therapist',$inputAllData['therapist_id'][$key])
-                ->where('therapy',$inputAllData['therapy_id'][$key])
-                ->where('date',$inputAllData['date'][$key])
+                $getSerialValue =  TherapyAppointmentDateAndTime::where('therapist',$AllTherapistNameDetail)
+                ->where('therapy',$AllTherapyNameDetail[$j])
+                ->where('date',$convertInStringDate)
                 ->value('serial');
 
                 if(empty($getSerialValue)){
@@ -505,18 +660,14 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
 
 
                 $therapistList = new TherapyAppointmentDateAndTime();
-                $therapistList->therapist=$inputAllData['therapist_id'][$key];
-                $therapistList->therapy=$inputAllData['therapy_id'][$key];
-                $therapistList->date=$inputAllData['date'][$key];
-                $therapistList->start_time=$inputAllData['start_time'][$key];
-                $therapistList->end_time=$inputAllData['end_time'][$key];
-                if($inputAllData['face_type'][$key] == 1){
-                    $therapistList->face_pack_status=1;
-                    $therapistList->therapy_appointment_id   = $faceAppointmentId;
-                }else{
-                    $therapistList->face_pack_status=0;
+                $therapistList->therapist=$AllTherapistNameDetail;
+                $therapistList->therapy=$AllTherapyNameDetail[$j];
+                     $therapistList->date=$convertInStringDate;
+                $therapistList->start_time= $convertInStringStart;
+                $therapistList->end_time= $convertInStringEnd;
+                  $therapistList->face_pack_status=0;
                     $therapistList->therapy_appointment_id   = $therapyAppointmentId;
-                }
+              
                 $therapistList->serial=$finalSerialValue;
                 $therapistList->patient_id   = Session::get('patientId');
                 $therapistList->admin_id   = Auth::guard('admin')->user()->id;
@@ -524,6 +675,31 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapistList->save();
 
                }
+                          
+                          
+                          //end Appoinment Detail
+                          
+                          
+                           }
+                    
+                    
+                    
+           
+                
+                
+                
+            }
+      
+  }
+
+
+
+
+
+
+              
+
+              
 
                DB::table('therapy_appointments')->where('patient_id',Session::get('patientId'))
                ->where('status',0)

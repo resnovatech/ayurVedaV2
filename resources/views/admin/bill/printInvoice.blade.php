@@ -355,29 +355,109 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
 <?php  $tt = $tt + $allGetAllPaymentHistory->payment_amount ?>
 
                                     @endforeach
-        <tr>
-            <td colspan="4">Total(Taka)</td>
-            <td>{{ $mainTotal }}  Taka</td>
-        </tr>
          <tr>
+                                            <td colspan="4">Total</td>
+                                            <td class="text-end">{{$mainTotal }}</td>
+                                        </tr>
+  <tr>
             <td colspan="4">Discount(%)</td>
-            <td>{{$ffB->invoice_id}}</td>
+            <td>
+                
+                @if(!$paymentP)
+                
+        
+                
+                @else
+                  {{$paymentP->all_discount}}
+               @endif
+                
+                </td>
         </tr>
-        <tr>
-            <td colspan="4">Advance(Taka)</td>
-            <td>{{$tt}} Taka</td>
+        
+        
+          <tr>
+            <td colspan="4">Special Discount(%)</td>
+            <td>
+                
+                @if(!$paymentP)
+                
+        
+                
+                @else
+                  {{$paymentP->special_discount}}
+               @endif
+                
+                </td>
         </tr>
-        <tr>
-            <td colspan="4">Due Payment(Taka)</td>
-            <td>{{$ffB->payment_status}}</td>
-        </tr>
-        <tr>
+      
+                 <tr>
             <td colspan="4">Vat(%)</td>
-            <td>{{$ffB->vat}}</td>
+            <td>
+                  @if(!$paymentP)
+                
+         
+                
+                @else
+               {{$paymentP->vat}}
+               @endif
+               
+                
+                </td>
         </tr> 
+        
         <tr>
             <td colspan="4">Net Amount(Taka)</td>
-            <td>{{$ffB->total_amount}} Taka</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->net_amount}}
+                @endif
+                
+                </td>
+        </tr>
+        
+        
+         <tr>
+            <td colspan="4">Round Off (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->round_off}}
+                @endif
+                
+                </td>
+        </tr>
+        
+        
+        
+        <tr>
+            <td colspan="4">Grand Total (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->grand_total}}
+                @endif
+                
+                </td>
+        </tr>
+                                    
+        <tr>
+            <td colspan="4">Advance/Total Pay(Taka)</td>
+            <td>{{$paymentPa}}</td>
+        </tr>
+       <tr>
+            <td colspan="4">Due Amount (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->due_amount}}
+                @endif
+                
+                </td>
         </tr>
     </table>
 

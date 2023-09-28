@@ -183,7 +183,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
          Route::post('/paymentMoney', 'paymentMoney')->name('paymentMoney');
-         Route::get('/printInvoice', 'printInvoice')->name('printInvoice');
+         Route::get('/printInvoice/{id}', 'printInvoice')->name('printInvoice');
          Route::get('/moveToReversed/{id}', 'moveToReversed')->name('moveToReversed');
      });
      //billing_controller

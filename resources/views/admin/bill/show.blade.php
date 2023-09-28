@@ -35,35 +35,288 @@ Billing Information List | {{ $ins_name }}
                 <div class="card" >
                     <div class="card-body" >
                         <div class="btn-group">
-                            <!--<a href="{{ route('printInvoice',$patientHistory->id) }}" class="btn btn-primary">Print</a>-->
+                            <a href="{{ route('printInvoice',$patientHistory->id) }}" class="btn btn-primary">Print</a>
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Payment</button>
 
                             <!-- Modal -->
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            
+            <?php  
+             
+              $dueStatus = DB::table('payments')->where('bill_id',$patientHistory->id )->orderBy('id','desc')->value('status');
+              $dueAmount = DB::table('payments')->where('bill_id',$patientHistory->id )->orderBy('id','desc')->value('due_amount');
+              $grandTotal = DB::table('payments')->where('bill_id',$patientHistory->id )->orderBy('id','desc')->value('grand_total');
+            
+            //dd($dueAmount);
+            ?>
+            
+         @if(empty($dueStatus))
             <form action="{{ route('paymentMoney') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                 @csrf
-
-                <label for="" class="form-label">Payment type</label>
+                
+                <div class="row">
+                     <div class="col-md-6">
+                             <label for="" class="form-label">Payment type</label>
                 <select class="form-control" name="payment_type" id="payment_type" required>
+                     <option value="">--- Select One ---</option>
+                     <option value="Mobile Banking">Mobile Banking</option>
                     <option value="cash">cash</option>
                     <option value="check">check</option>
                     <option value="card">card</option>
                 </select>
-
-                <label for="" class="form-label">Amount</label>
-                <input type="number" class="form-control" name="amount" id="" value="" >
+                    </div>
+                    
+                     <div class="col-md-6">
+                                <label for="" class="form-label">Total Amount</label>
+                <input type="number" readonly class="form-control" name="amount" id="amount" value="{{$totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}" >
                 <input type="hidden" class="form-control" name="id" id="" value="{{ $patientHistory->id }}" >
+                    </div>
+                    
+                    <!--discount code-->
+                     <div class="col-md-3 mt-2">
+                             <label for="" class="form-label">Discount</label>
+                <select class="form-control" name="main_discount" id="main_discount" required>
+                   
+                     <option value="No" >No</option>
+                    <option value="Yes">Yes</option>
+                 </select>
+                    </div>
+                    
+                    <?php   
+                    $newMainTotal = $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+                    $allDiscountLists = DB::table('discounts')->latest()->get();
+                    $allVat = DB::table('vats')->orderBy('id','desc')->value('amount');
+                    
+                    $phpVatCal = ($newMainTotal*$allVat) / 100;
+                    
+                    $finalPhpVal = $newMainTotal +  $phpVatCal;
+                    ?>
+                    
+                    <div class="col-md-3 mt-2">
+                             <label for="" class="form-label">All Discount</label>
+                <select class="form-control" name="all_discount" id="all_discount" disabled>
+                      <option value="">--- Select One ---</option>
+                   @foreach($allDiscountLists as $mainDis)
+                     <option value="{{$mainDis->amount}}" >{{$mainDis->amount}}%({{$mainDis->client_type}})</option>
+                     @endforeach
+                     </select>
+                 
+                    </div>
+                    
+                    
+                      <div class="col-md-3 mt-2">
+                                <label for="" class="form-label">Special Discount (%)</label>
+                <input type="number" value="0" class="form-control" name="special_discount" id="special_discount" value="" >
+              
+                    </div>
+                    
+                    
+                      <div class="col-md-3 mt-2">
+                                <label for="" class="form-label">Vat (%)</label>
+                <input type="number" class="form-control" name="vat" id="vat" value="{{$allVat}}" >
+              
+                    </div>
+                    
+                     <div class="col-md-4 mt-2">
+                                <label for="" class="form-label">Net Amount</label>
+                <input type="text" readonly value="{{$finalPhpVal }}" class="form-control" name="net_amount" id="net_amount" / >
+              
+                    </div>
+                    
+                     <div class="col-md-4 mt-2">
+                                <label for="" class="form-label">Round Off</label>
+                <input type="number" value="0" class="form-control" name="round_off" id="round_off" / >
+              
+                    </div>
+                    
+                     <div class="col-md-4 mt-2">
+                                <label for="" class="form-label">Grand Total</label>
+                <input type="text" readonly value="{{$finalPhpVal }}" class="form-control" name="grand_total" id="grand_total" / >
+              
+                    </div>
+                    
+                      <div class="col-md-6 mt-2">
+                                <label for="" class="form-label">Advance Amount</label>
+                <input type="number" value="0" class="form-control" name="advance_amount" id="advance_amount" / >
+            
+                    </div>
+                    
+                       <div class="col-md-6 mt-2">
+                                <label for="" class="form-label">Due Amount</label>
+                <input type="number" value="0" class="form-control" name="due_amount" id="due_amount" readonly / >
+              
+                    </div>
+                    
+                    
+                </div>
+
+            
+
+         
 
                 <button type="submit" class="btn btn-primary mt-4">Submit</button>
             </form>
+            @elseif($dueStatus == 1 || $dueStatus == 2)
+            
+                             <div class="row">
+                     <div class="col-md-4">
+            
+             <form action="{{ route('paymentMoney') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                @csrf
+                
+                 <div class="row">
+                     <div class="col-md-12">
+                             <label for="" class="form-label">Payment type</label>
+                <select class="form-control" name="payment_type" id="payment_type" required>
+                     <option value="">--- Select One ---</option>
+                     <option value="Mobile Banking">Mobile Banking</option>
+                    <option value="cash">cash</option>
+                    <option value="check">check</option>
+                    <option value="card">card</option>
+                </select>
+                    </div>
+                    
+                     <div class="col-md-12 mt-2">
+                                <label for="" class="form-label">Grand Total</label>
+                <input type="text" readonly value="{{$grandTotal }}" class="form-control" name="grand_total" id="grand_total" / >
+                <input type="hidden" readonly value="dstep" class="form-control" name="pstep" / >
+                   <input type="hidden" class="form-control" name="id" id="" value="{{ $patientHistory->id }}" >
+                    </div>
+                    
+                      <div class="col-md-12 mt-2">
+                                <label for="" class="form-label">Due Amount</label>
+                <input type="number"  class="form-control" name="due_amount" value="{{$dueAmount}}" id="due_amount" readonly / >
+              
+                    </div>
+                    
+                     <div class="col-md-12 mt-2">
+                                <label for="" class="form-label">Pay Amount</label>
+                <input type="number" value="0" class="form-control" name="advance_amount"  / >
+            
+                    </div>
+                    
+                    </div>
+                 <button type="submit" class="btn btn-primary mt-4">Submit</button>
+            </form>
+            
+            </div>
+            
+             <div class="col-md-8">
+                 
+                 
+                   <div class="card" >
+                    <div class="card-header" >
+                        Payment history
+                    </div>
+                    <div class="card-body" >
+                        <div class="table-responsive">
+                            <table class="table table-borderless text-center table-nowrap align-middle mb-0">
+                                <thead>
+                                <tr class="table-active">
+
+                                    <th scope="col">SL</th>
+                                    <th scope="col">Payment type</th>
+                                    <th scope="col">Payable Amount</th>
+                                    <th scope="col">Main Discount(%)</th>
+                                    <th scope="col">Special Discount(%)</th>
+                                    <th scope="col">Vat(%)</th>
+                                    <th scope="col">Net Amount</th>
+                                    <th scope="col">Round Off</th>
+                                    <th scope="col">Grand Total</th>
+                                    <th scope="col">Advance Pay\Total Pay</th>
+                                    <th scope="col">Due</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($getAllPaymentHistory as $key=>$allGetAllPaymentHistory)
+                                    <tr>
+                                        <th>{{ $key+1 }}</th>
+<th>{{ $allGetAllPaymentHistory->payment_type }}</th>
+<th>{{ $allGetAllPaymentHistory->payment_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->all_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->special_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->vat }}</th>
+<th>{{ $allGetAllPaymentHistory->net_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->round_off }}</th>
+<th>{{ $allGetAllPaymentHistory->grand_total }}</th>
+<th>{{ $allGetAllPaymentHistory->advance_amount	 }}</th>
+<th>{{ $allGetAllPaymentHistory->due_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->created_at->format('d F Y') }}</th>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                
+                
+                 
+                 </div>
+            
+            </div>
+              @elseif($dueStatus == 3)
+             <div class="card" >
+                    <div class="card-header" >
+                        Payment history
+                    </div>
+                    <div class="card-body" >
+                        <div class="table-responsive">
+                            <table class="table table-borderless text-center table-nowrap align-middle mb-0">
+                                <thead>
+                                <tr class="table-active">
+
+                                    <th scope="col">SL</th>
+                                    <th scope="col">Payment type</th>
+                                    <th scope="col">Payable Amount</th>
+                                    <th scope="col">Main Discount(%)</th>
+                                    <th scope="col">Special Discount(%)</th>
+                                    <th scope="col">Vat(%)</th>
+                                    <th scope="col">Net Amount</th>
+                                    <th scope="col">Round Off</th>
+                                    <th scope="col">Grand Total</th>
+                                    <th scope="col">Advance Pay\Total Pay</th>
+                                    <th scope="col">Due</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($getAllPaymentHistory as $key=>$allGetAllPaymentHistory)
+                                    <tr>
+                                        <th>{{ $key+1 }}</th>
+<th>{{ $allGetAllPaymentHistory->payment_type }}</th>
+<th>{{ $allGetAllPaymentHistory->payment_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->all_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->special_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->vat }}</th>
+<th>{{ $allGetAllPaymentHistory->net_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->round_off }}</th>
+<th>{{ $allGetAllPaymentHistory->grand_total }}</th>
+<th>{{ $allGetAllPaymentHistory->advance_amount	 }}</th>
+<th>{{ $allGetAllPaymentHistory->due_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->created_at->format('d F Y') }}</th>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            
+            @endif
+            
+            
         </div>
 
       </div>
@@ -123,13 +376,23 @@ Billing Information List | {{ $ins_name }}
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Payment Status</p>
                                         <span class="badge badge-soft-success fs-11" id="payment-status">
 
-                                            @if($getAllPaymentHistoryAmount == ($totalPatientMedicalSupplementAmount + $totalMedicineAmount + $totalTherapyAmount) )
-Paid
-                                            @else
-
-                                            Unpaid
-
-                                            @endif
+           @if(!$paymentP)
+         Unpaid
+                @else
+                
+                
+               @if( $paymentP->due_amount == 0)
+               
+               Paid
+               
+               
+               @else
+               
+           UnPaid
+           
+           @endif
+           
+                @endif
 
                                         </span>
                                     </div>
@@ -432,88 +695,123 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
                                         </tbody>
                                     </table><!--end table-->
                                 </div>
-                                <form action="{{ route('printInvoice') }}" method="get">
+                               
                                     <input type="hidden" class="form control" name="main_id" value="{{$patientHistory->id}}" readonly/>
                                     
                                 <div class="border-top border-top-dashed mt-2">
                                     <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto" style="width:250px">
                                         <tbody>
                                         <tr>
-                                            <td>Total</td>
-                                            <td class="text-end">৳ <input type="text" class="form control" name="main_total" value="{{$mainTotal }}"/></td>
+                                            <td colspan="4">Total</td>
+                                            <td class="text-end">৳ {{$mainTotal }}</td>
                                         </tr>
   <tr>
             <td colspan="4">Discount(%)</td>
             <td>
                 
-                @if(!$ffB)
+                @if(!$paymentP)
                 
-                <input type="text" class="form control" name="discount" value="0"/>
+        
                 
                 @else
-                  <input type="text" class="form control" name="discount" value="{{$ffB->invoice_id}}"/>
+                  {{$paymentP->all_discount}}
                @endif
                 
                 </td>
         </tr>
-        <?php $tt = 0 ?>
-         @foreach($getAllPaymentHistory as $key=>$allGetAllPaymentHistory)
-                                 
-<?php  $tt = $tt + $allGetAllPaymentHistory->payment_amount ?>
-
-                                    @endforeach
-                                    
-                                    
-        <tr>
-            <td colspan="4">Advance(Taka)</td>
-            <td><input type="text" class="form control" name="advance" value="{{$tt}}" readonly/></td>
-        </tr>
-        <tr>
-            <td colspan="4">Due Payment(Taka)</td>
+        
+        
+          <tr>
+            <td colspan="4">Special Discount(%)</td>
             <td>
                 
+                @if(!$paymentP)
                 
-                  @if(!$ffB)
-                
-                <input type="text" class="form control" name="due" value="0"/>
+        
                 
                 @else
-                  <input type="text" class="form control" name="due" value="{{$ffB->payment_status}}"/>
+                  {{$paymentP->special_discount}}
                @endif
                 
                 </td>
         </tr>
-        <tr>
+      
+                 <tr>
             <td colspan="4">Vat(%)</td>
             <td>
-                  @if(!$ffB)
+                  @if(!$paymentP)
                 
-                <input type="text" class="form control" name="vat" value="0"/>
+         
                 
                 @else
-                  <input type="text" class="form control" name="vat" value="{{$ffB->vat}}"/>
+               {{$paymentP->vat}}
                @endif
                
                 
                 </td>
-        </tr>
+        </tr> 
+        
         <tr>
             <td colspan="4">Net Amount(Taka)</td>
             <td>
-                @if(!$ffB)
-                <input type="text" class="form control" name="net_amount" readonly value="{{$mainTotal - $tt}}"/>
+                @if(!$paymentP)
+         
                 @else
-                <input type="text" class="form control" name="net_amount" readonly value="{{$ffB->total_amount}}"/>
+           {{$paymentP->net_amount}}
                 @endif
                 
                 </td>
         </tr>
+        
+        
+         <tr>
+            <td colspan="4">Round Off (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->round_off}}
+                @endif
+                
+                </td>
+        </tr>
+        
+        
+        
+        <tr>
+            <td colspan="4">Grand Total (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->grand_total}}
+                @endif
+                
+                </td>
+        </tr>
+                                    
+        <tr>
+            <td colspan="4">Advance/Total Pay(Taka)</td>
+            <td>{{$paymentPa}}</td>
+        </tr>
+       <tr>
+            <td colspan="4">Due Amount (Taka)</td>
+            <td>
+                @if(!$paymentP)
+         
+                @else
+           {{$paymentP->due_amount}}
+                @endif
+                
+                </td>
+        </tr>
+       
+        
                                         </tbody>
                                     </table>
                                     <!--end table-->
                                 </div>
-                                <button class="btn btn-success" type="submit">print</button>
-</form>
+      
                                 <div class="hstack gap-2 justify-content-end d-print-none mt-4">
                                     {{-- <a href="javascript:window.print()" class="btn btn-soft-primary"><i class="ri-printer-line align-bottom me-1"></i> Print</a> --}}
 
@@ -543,7 +841,15 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
 
                                     <th scope="col">SL</th>
                                     <th scope="col">Payment type</th>
-                                    <th scope="col">Payment Cash</th>
+                                    <th scope="col">Payable Amount</th>
+                                    <th scope="col">Main Discount(%)</th>
+                                    <th scope="col">Special Discount(%)</th>
+                                    <th scope="col">Vat(%)</th>
+                                    <th scope="col">Net Amount</th>
+                                    <th scope="col">Round Off</th>
+                                    <th scope="col">Grand Total</th>
+                                    <th scope="col">Advance Pay\Total Pay</th>
+                                    <th scope="col">Due</th>
                                     <th scope="col">Date</th>
                                 </tr>
                                 </thead>
@@ -553,6 +859,14 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
                                         <th>{{ $key+1 }}</th>
 <th>{{ $allGetAllPaymentHistory->payment_type }}</th>
 <th>{{ $allGetAllPaymentHistory->payment_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->all_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->special_discount }}</th>
+<th>{{ $allGetAllPaymentHistory->vat }}</th>
+<th>{{ $allGetAllPaymentHistory->net_amount }}</th>
+<th>{{ $allGetAllPaymentHistory->round_off }}</th>
+<th>{{ $allGetAllPaymentHistory->grand_total }}</th>
+<th>{{ $allGetAllPaymentHistory->advance_amount	 }}</th>
+<th>{{ $allGetAllPaymentHistory->due_amount }}</th>
 <th>{{ $allGetAllPaymentHistory->created_at->format('d F Y') }}</th>
                                     </tr>
                                     @endforeach
@@ -573,5 +887,191 @@ $getPatientMedicalSupplement =DB::table('health_supplements')->where('name',$all
 
 
 @section('script')
+
+<script>
+    $('#main_discount').on('change', function() {
+  var mainValue = this.value;
+  
+  
+     if(mainValue == 'Yes'){
+         
+        
+     $("#all_discount").removeAttr('disabled'); 
+         
+     }else{
+         
+         $("#all_discount").attr('disabled','disabled'); 
+         
+     }
+  
+  
+});
+
+//main discount
+
+ $('#all_discount').on('change', function() {
+     
+     var mainDiscount =this.value;
+     var mainMainTotal = $('#amount').val();
+     var mainVat = $('#vat').val();
+     var mainSpecialDiscount = $('#special_discount').val();
+     
+     
+     if(mainSpecialDiscount == 0){
+     
+     
+     var perCal =(parseInt(mainMainTotal)*parseInt(mainDiscount)) / 100;
+     var perCalVat =(parseInt(mainMainTotal)*parseInt(mainVat)) / 100;
+     
+     var finalCal = parseInt(mainMainTotal) +parseInt(perCalVat) - parseInt(perCal)
+     }else{
+         
+         
+          var perCal =(parseInt(mainMainTotal)*parseInt(mainDiscount)) / 100;
+     var perCalVat =(parseInt(mainMainTotal)*parseInt(mainVat)) / 100;
+     
+     
+      var perCalSpecial =(parseInt(mainMainTotal)*parseInt(mainSpecialDiscount)) / 100;
+     
+     var finalCal = (parseInt(mainMainTotal) +parseInt(perCalVat)) - (parseInt(perCal)+parseInt(perCalSpecial))
+         
+         
+     }
+     
+     $('#net_amount').val(finalCal);
+     $('#grand_total').val(finalCal);
+     
+      var roundOff =$('#round_off').val(); 
+     var netAmount =$('#net_amount').val();
+     
+     
+     
+     
+     
+     var finalCal12 = parseInt(netAmount) - parseInt(roundOff);
+     
+      $('#grand_total').val(finalCal12);
+      
+         var advanceAmount =$('#advance_amount').val(); 
+     var grandTotal =$('#grand_total').val();
+     
+     
+     
+     
+     
+     var finalCal32 = parseInt(grandTotal) - parseInt(advanceAmount);
+     
+      $('#due_amount').val(finalCal32);
+     
+});
+//end main discount
+
+//special discount
+
+ $('#special_discount').on('keyup', function() {
+     
+     var mainDisNew =$('#main_discount').val(); 
+     var mainDiscount =$('#all_discount').val();
+     var mainMainTotal = $('#amount').val();
+     var mainVat = $('#vat').val();
+     var mainSpecialDiscount = $('#special_discount').val();
+     
+     
+     if(mainDisNew == 'No'){
+     
+     
+   
+     var perCalVat =(parseInt(mainMainTotal)*parseInt(mainVat)) / 100;
+     
+     
+      var perCalSpecial =(parseInt(mainMainTotal)*parseInt(mainSpecialDiscount)) / 100;
+     
+     var finalCal = (parseInt(mainMainTotal) +parseInt(perCalVat)) - (parseInt(perCalSpecial))
+     }else{
+         
+         
+          var perCal =(parseInt(mainMainTotal)*parseInt(mainDiscount)) / 100;
+     var perCalVat =(parseInt(mainMainTotal)*parseInt(mainVat)) / 100;
+     
+     
+      var perCalSpecial =(parseInt(mainMainTotal)*parseInt(mainSpecialDiscount)) / 100;
+     
+     var finalCal = (parseInt(mainMainTotal) +parseInt(perCalVat)) - (parseInt(perCal)+parseInt(perCalSpecial))
+         
+         
+     }
+     
+       $('#net_amount').val(finalCal);
+     $('#grand_total').val(finalCal);
+     
+     
+      var roundOff =$('#round_off').val(); 
+     var netAmount =$('#net_amount').val();
+     
+     
+     
+     
+     
+     var finalCal12 = parseInt(netAmount) - parseInt(roundOff);
+     
+      $('#grand_total').val(finalCal12);
+      
+      
+      
+       var advanceAmount =$('#advance_amount').val(); 
+     var grandTotal =$('#grand_total').val();
+     
+     
+     
+     
+     
+     var finalCal32 = parseInt(grandTotal) - parseInt(advanceAmount);
+     
+      $('#due_amount').val(finalCal32);
+     
+});
+//end special discount
+
+
+//start roud off 
+
+$('#round_off').on('keyup', function() {
+    
+     var roundOff =$('#round_off').val(); 
+     var netAmount =$('#net_amount').val();
+     
+     
+     
+     
+     
+     var finalCal = parseInt(netAmount) - parseInt(roundOff);
+     
+      $('#grand_total').val(finalCal);
+
+});
+//end round off
+
+//advance cal
+
+
+$('#advance_amount').on('keyup', function() {
+    
+     var advanceAmount =$('#advance_amount').val(); 
+     var grandTotal =$('#grand_total').val();
+     
+     
+     
+     
+     
+     var finalCal = parseInt(grandTotal) - parseInt(advanceAmount);
+     
+      $('#due_amount').val(finalCal);
+
+});
+
+
+
+//end advance cal
+</script>
 
 @endsection

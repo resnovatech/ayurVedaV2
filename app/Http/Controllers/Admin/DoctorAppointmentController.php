@@ -76,7 +76,7 @@ return response()->json($data);
         if (is_null($this->user) || !$this->user->can('doctorAppointmentView')) {
             abort(403, 'Sorry !! You are Unauthorized to View !');
                }
-
+//dd(date('Y-m-d'));
           $doctorAppointmentList = DoctorAppointment::where('appointment_date',date('Y-m-d'))->latest()->get();
 
 
