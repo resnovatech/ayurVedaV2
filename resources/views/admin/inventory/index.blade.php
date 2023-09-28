@@ -99,11 +99,18 @@ Inventory List | {{ $ins_name }}
                   $quantityOne =   DB::table('therapy_appointment_details')
         ->where('name', $allTherapyIngredients->id)->sum('amount');
 
+
+        $quantityThree =   DB::table('inventory_damages')
+        ->where('status','therapy')
+        ->where('name', $allTherapyIngredients->name)->sum('quantity');
+
+
+
         $quantityTwo =   DB::table('patient_therapy_details')
         ->where('ingredient_name', $allTherapyIngredients->id)->sum('quantity');
 ?>
 
-                    {{ $allTherapyIngredients->quantity - ($quantityOne + $quantityTwo ) }}
+                    {{ $allTherapyIngredients->quantity - ($quantityOne + $quantityTwo + $quantityThree ) }}
 
 
                 </td>
@@ -143,8 +150,15 @@ Inventory List | {{ $ins_name }}
                     <?php
                   $quantityOne =   DB::table('patient_herb_details')
         ->where('ingredient_name', $allmedicineEquipment->id)->sum('quantity');
+
+
+        $quantityThree =   DB::table('inventory_damages')
+        ->where('status','Medicine')
+        ->where('name', $allmedicineEquipment->name)->sum('quantity');
+
+
 ?>
-                    {{ $allmedicineEquipment->quantity  - $quantityOne  }}
+                    {{ $allmedicineEquipment->quantity  - ($quantityOne + $quantityThree)  }}
 
 
                 </td>
@@ -164,6 +178,7 @@ Inventory List | {{ $ins_name }}
                 <th class="sort" data-sort="customer_name">Sl</th>
                 <th class="sort" data-sort="customer_name"> Name</th>
                 <th class="sort" data-sort="customer_name"> Quantity</th>
+                <th class="sort" data-sort="customer_name"> Available Quantity</th>
                 <th class="sort" data-sort="customer_name"> Unit</th>
 
                 <th class="sort" data-sort="action">Action</th>
@@ -177,6 +192,20 @@ Inventory List | {{ $ins_name }}
                 <td class="id">{{ $key+1 }}</td>
                 <td class="customer_name">{{ $allmedicineEquipment->name }}</td>
                 <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
+
+
+                <td class="customer_name">
+<?php
+ $quantityThree =   DB::table('inventory_damages')
+        ->where('status','other')
+        ->where('name', $allmedicineEquipment->name)->sum('quantity');
+
+//dd($quantityThree);
+    ?>
+{{ $allmedicineEquipment->quantity - $quantityThree  }}
+
+                </td>
+
                 <td class="customer_name">{{ $allmedicineEquipment->unit }}</td>
                 <td>
 

@@ -437,6 +437,19 @@ $usr = Auth::guard('admin')->user();
                     </a>
                 </li>
                 @endif
+
+
+
+                @if ($usr->can('inventoryDamageAdd') || $usr->can('inventoryDamageView') || $usr->can('inventoryDamageDelete') || $usr->can('inventoryDamageUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('inventoryDamage.index') ? 'active' : '' }}" href="{{ route('inventoryDamage.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Damage</span>
+                    </a>
+                </li>
+                @endif
+
+
+
                 @endif
                 @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate') || $usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate') || $usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
                 <li class="menu-title"><span data-key="t-menu">HR Section</span></li>

@@ -45,6 +45,7 @@ use App\Http\Controllers\Admin\FacePackAppoinmentController;
 use App\Http\Controllers\InventoryNameController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\VatController;
+use App\Http\Controllers\Admin\InventoryDamageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +83,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [DashBoardController::class, 'index'])->name('admin.dashboard');
 
     //therapy_package
+
+
+
+
+    Route::resource('inventoryDamage', InventoryDamageController::class);
 
     Route::resource('discount', DiscountController::class);
     Route::resource('vat', VatController::class);
