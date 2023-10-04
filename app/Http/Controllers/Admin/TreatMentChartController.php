@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\Therapist;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\WalkByPatient;
 use App\Models\DoctorAppointment;
 use App\Models\TreatMentChart;
 use App\Models\PatientTherapy;
+use App\Models\FacePackAppoinmentDetail;
+use App\Models\PatientHerb;
+use App\Models\PatientMedicalSupplement;
+use App\Models\PatientHistory;
 class TreatMentChartController extends Controller
 {
     public $user;
@@ -59,9 +64,17 @@ class TreatMentChartController extends Controller
 
                 $registerId = $request->registerId;
 
-                $getAllTheTherapy = PatientTherapy::where('patient_id',$registerId)->get();
 
-                $data = view('admin.treatMentChartList.getTherapyInformation',compact('getAllTheTherapy'))->render();
+                $lastPatientHistoryId  = PatientHistory::orderBy('id','desc')
+                ->where('patient_id',$registerId)->value('id');
+
+                $getAllTheTherapy = PatientTherapy::where('patient_history_id',$lastPatientHistoryId)->get();
+                $getAllFacePack = FacePackAppoinmentDetail::where('history_id',$lastPatientHistoryId)->get();
+                $getAllPatientHerb = PatientHerb::where('patient_history_id',$lastPatientHistoryId)->get();
+                $getAllPatientMedicalSupplement = PatientMedicalSupplement::where('patient_history_id',$lastPatientHistoryId)->get();
+
+                $therapistList = Therapist::latest()->get();
+                $data = view('admin.treatMentChartList.getTherapyInformation',compact('registerId','therapistList','getAllPatientMedicalSupplement','getAllPatientHerb','getAllFacePack','getAllTheTherapy'))->render();
                 return response()->json($data);
 
 
@@ -72,17 +85,17 @@ class TreatMentChartController extends Controller
                public function store(Request $request){
 
 
-                $request->validate([
-
-                    'main_day.*' => 'required',
-                    'patient_id.*' => 'required',
-                    'time_of_the_day.*' => 'required',
-                    'therapy_id.*' => 'required',
-
-                ]);
+                // $request->validate([
 
 
-               // dd($request->all());
+                //     'patient_id.*' => 'required',
+                //     'time_of_the_day.*' => 'required',
+                //     'therapy_id.*' => 'required',
+
+                // ]);
+
+
+                //dd($request->all());
 
 
                 $inputAllData = $request->all();
@@ -94,9 +107,11 @@ class TreatMentChartController extends Controller
                 $herbName = new TreatMentChart();
                 $herbName->patient_id=$inputAllData['patient_id'][$key];
                 $herbName->therapy_id=$inputAllData['therapy_id'][$key];
+                $herbName->appointment_date=$inputAllData['appointment_date'][$key];
                 $herbName->patient_type=$request->patient_type;
-                $herbName->day=$inputAllData['main_day'][$key];
+                $herbName->therapist=$inputAllData['therapist'][$key];
                 $herbName->time_of_the_day=$inputAllData['time_of_the_day'][$key];
+                $herbName->status=$inputAllData['status'][$key];
                 $herbName->save();
 
                }
@@ -106,6 +121,20 @@ class TreatMentChartController extends Controller
 
 
 
+               }
+
+
+
+               public function destroy($id)
+               {
+
+                //    if (is_null($this->user) || !$this->user->can('therapyListsDelete')) {
+                //        abort(403, 'Sorry !! You are Unauthorized to Delete !');
+                //    }
+
+
+                TreatMentChart::destroy($id);
+                   return redirect()->route('treatMentChart.index')->with('error','Deleted successfully!');
                }
 
 

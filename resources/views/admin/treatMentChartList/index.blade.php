@@ -52,10 +52,12 @@ TreatMent Chart List
                                     <thead >
                                     <tr>
                                         <th >Sl</th>
-                                        <th>Therapy Name</th>
-                                        <th>Therapy Ingridents</th>
-                                        <th >Days</th>
+                                        <th>Appoinment Date</th>
+                                        <th>Therapist Name</th>
+                                        <th>Therapy/Facepack/Herb/Medical Supplicant Name</th>
+                                        <th>Type</th>
                                         <th >Time Of The Day</th>
+                                        <th >Action</th>
                                     </tr>
                                     </thead>
                                     <tbody >
@@ -63,31 +65,67 @@ TreatMent Chart List
                                         @foreach($treatMentChartList as $key=>$allTreatMentChartList)
                                         <tr>
                                         <td >{{ $key+1 }}</td>
-                                        <td>{{ $allTreatMentChartList->therapy_id }}</td>
+                                        <td>{{  date("d-m-Y", strtotime($allTreatMentChartList->appointment_date))  }}</td>
                                         <td>
 
                                             <?php
+                                            $getNameTherapist = DB::table('therapists')
+                                                        ->where('id',$allTreatMentChartList->therapist)->value('name');
 
-                                            $ingredientList = DB::table('therapy_lists')->where('name',$allTreatMentChartList->therapy_id )->value('id');
-                                            $mainId = DB::table('therapy_details')->where('therapy_list_id',$ingredientList)->get();
+                                                                ?>
 
+                                                                {{ $getNameTherapist }}
 
-                                            $convert_name_title = $mainId->implode("therapy_ingredient_id", " ");
-                                            $separated_data_title = explode(" ", $convert_name_title);
-
-                                            $listOfIngredients = DB::table('therapy_ingredients')->whereIn('id',$separated_data_title)->get();
-
-
-                                            ?>
-
-                                            @foreach($listOfIngredients as $allListOfIngredients)
-
-                                            {{ $allListOfIngredients->name }}
-                                           @endforeach
 
                                         </td>
-                                        <td>{{ $allTreatMentChartList->day }}</td>
+                                        <td>
+
+
+                                            @if($allTreatMentChartList->status == 'therapy')
+                                            <?php
+                                            $therapyName = DB::table('therapy_lists')->where('id',$allTreatMentChartList->therapy_id)->value('name');
+
+                                                ?>
+                                            {{ $therapyName }}
+
+                                            @elseif($allTreatMentChartList->status == 'facepack')
+
+
+                                            <?php
+                                            $therapyName = DB::table('face_packs')->where('id',$allTreatMentChartList->therapy_id)->value('pack_name');
+
+                                                ?>
+                                            {{ $therapyName }}
+
+                                            @else
+
+
+                                            {{ $allTreatMentChartList->therapy_id }}
+
+                                            @endif
+
+
+                                        </td>
+                                        <td>
+                                            {{ $allTreatMentChartList->status }}
+
+                                        </td>
                                         <td>{{ $allTreatMentChartList->time_of_the_day }}</td>
+
+                                        <td>
+
+
+
+                                            <button   type="button" class="btn btn-danger waves-light waves-effect  btn-sm" onclick="deleteTag({{ $allTreatMentChartList->id}})" data-toggle="tooltip" title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
+                                            <form id="delete-form-{{ $allTreatMentChartList->id }}" action="{{ route('treatMentChart.destroy',$allTreatMentChartList->id) }}" method="POST" style="display: none;">
+                                              @method('DELETE')
+                                                                            @csrf
+
+                                                                        </form>
+
+
+
+                                        </td>
 
                                        </tr>
 
