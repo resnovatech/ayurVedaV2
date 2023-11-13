@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('salary_generates', function (Blueprint $table) {
             $table->id();
+            $table->string('detail_id');
+            $table->string('start_date');
+            $table->string('end_date');
+            $table->string('add_by');
             $table->timestamps();
         });
     }

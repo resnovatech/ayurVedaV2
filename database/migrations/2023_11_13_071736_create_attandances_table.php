@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('attandances', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_id');
+            $table->string('status');
+            $table->string('date');
             $table->timestamps();
         });
     }

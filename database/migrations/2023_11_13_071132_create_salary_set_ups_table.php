@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('salary_set_ups', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_name');
+            $table->string('employee_id');
+            $table->string('total');
+            $table->string('action');
             $table->timestamps();
         });
     }
