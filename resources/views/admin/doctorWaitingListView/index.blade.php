@@ -50,6 +50,7 @@ Doctor Waiting List | {{ $ins_name }}
                                     <tr>
 
                                         <th class="sort" data-sort="customer_name">SL No</th>
+                                        <th class="sort" data-sort="customer_name">Appointment Date</th>
                                         <th class="sort" data-sort="customer_name">Patient Id</th>
                                         <th class="sort" data-sort="email">Name</th>
                                         <th class="sort" data-sort="email">Phone</th>
@@ -76,6 +77,7 @@ Doctor Waiting List | {{ $ins_name }}
 
 
                                         <td class="customer_name">{{ $key+1}}</td>
+                                        <td>{{$allDoctorAppointmentList->appointment_date}}</td>
                                         <td class="email">{{ $allDoctorAppointmentList->patient_id }}</td>
                                         <td class="email">
 
@@ -123,7 +125,7 @@ Ongoing
                                     </tbody>
                                 </table>
 
-                           
+
 
 
                         </div>

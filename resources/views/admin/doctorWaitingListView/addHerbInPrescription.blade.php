@@ -126,6 +126,8 @@ $packages =DB::table('packages')->latest()->get();
                 '<input type="text" required class="form-control" id="hquantity0" name="hquantity[]"></td>' +
                 '<td>'+
                 '<input type="text" required class="form-control" id="hunit'+i+'" name="hunit[]">'+
+                '<td>'+
+                '<input type="text" required value="no not available" class="form-control" id="hnote'+i+'" name="hnote[]">'+
 
                 '</td>'+
                 '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TherapyIngredient;
 use Illuminate\Support\Facades\Auth;
+use DB;
 class TherapyIngredientController extends Controller
 {
     public $user;
@@ -78,8 +79,34 @@ class TherapyIngredientController extends Controller
             $input = $request->all();
 
             $medicine->fill($input)->save();
+            
+               if($request->getData == 0){
+                
+                
+            }else{
+                
+                
+                   $inputAllData = $request->all();
 
-    return redirect()->route('therapyIngredients.index')->with('success','Updated successfully!');
+                $ing_name = $inputAllData['mainId'];
+                
+                
+                foreach($ing_name as $k=>$ing_names){
+                 
+                 
+                    DB::table('therapy_ing_detail')->where('id',$inputAllData['mainId'][$k])->update([
+                         
+                   'quantity' => $inputAllData['updateQuantity'][$k],
+                   'unit' => $inputAllData['updateUnit'][$k],
+              
+                   'updated_at' => Carbon::now()
+                  ]);
+                }
+                
+                
+            }
+
+    return redirect()->back()->with('success','Updated successfully!');
 
 
 

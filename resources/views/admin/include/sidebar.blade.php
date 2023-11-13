@@ -44,27 +44,44 @@ $usr = Auth::guard('admin')->user();
                 @endif
                 @if ($usr->can('walkByPatientAdd') || $usr->can('walkByPatientView') || $usr->can('walkByPatientDelete') || $usr->can('walkByPatientUpdate') || $usr->can('patientAdd') || $usr->can('patientView') || $usr->can('patientDelete') || $usr->can('patientUpdate') || $usr->can('patientAdmitAdd') || $usr->can('patientAdmitView') || $usr->can('patientAdmitDelete') || $usr->can('patientAdmitUpdate'))
 
-                <li class="menu-title"><span data-key="t-menu">Reception</span></li>
+                <li class="menu-title"><span data-key="t-menu">Front Desk</span></li>
+
+
+                @if ($usr->can('receptioninsTherapyView'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('therapyListForReceptionist') ? 'active' : '' }}" href="{{ route('therapyListForReceptionist') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Appointment list for front desk</span>
+                    </a>
+                </li>
+                @endif
+
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index') || Route::is('patientAdmits.show') || Route::is('patients.edit') || Route::is('patients.create') || Route::is('patients.index') || Route::is('patients.show') || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index') || Route::is('walkByPatients.show') ? 'active' : '' }}" href="#sidebarIcons" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarIcons">
-                        <i class="ri-user-shared-line"></i> <span data-key="t-icons">Patient</span>
+                        <i class="ri-user-shared-line"></i> <span data-key="t-icons">Client</span>
                     </a>
                     <div class="collapse menu-dropdown {{Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index') || Route::is('patientAdmits.show') || Route::is('patients.edit') || Route::is('patients.create') || Route::is('patients.index') || Route::is('patients.show')  || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index') || Route::is('walkByPatients.show') ? 'show' : '' }}" id="sidebarIcons">
                         <ul class="nav nav-sm flex-column">
+                             @if ( $usr->can('patientAdd')  || $usr->can('patientView') ||  $usr->can('patientDelete') ||  $usr->can('patientUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('patients.create') }}" class="nav-link {{ Route::is('patients.show') || Route::is('patients.edit') || Route::is('patients.create')   ? 'active' : '' }}" data-key="t-boxicons">Client</a>
+                            </li>
+                            @endif
                             @if ( $usr->can('walkByPatientAdd')  || $usr->can('walkByPatientView') ||  $usr->can('walkByPatientDelete') ||  $usr->can('walkByPatientUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('walkByPatients.index') }}" class="nav-link {{ Route::is('walkByPatients.show') || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index')  ? 'active' : '' }}" data-key="t-remix">Walking Patient</a>
+                                <a href="{{ route('walkByPatients.create') }}" class="nav-link {{ Route::is('walkByPatients.show') || Route::is('walkByPatients.edit') || Route::is('walkByPatients.create') || Route::is('walkByPatients.index')  ? 'active' : '' }}" data-key="t-remix">Patient</a>
                             </li>
                             @endif
-                            @if ( $usr->can('patientAdd')  || $usr->can('patientView') ||  $usr->can('patientDelete') ||  $usr->can('patientUpdate'))
-                            <li class="nav-item">
-                                <a href="{{ route('patients.index') }}" class="nav-link {{ Route::is('patients.show') || Route::is('patients.edit') || Route::is('patients.create') || Route::is('patients.index')  ? 'active' : '' }}" data-key="t-boxicons">Patient</a>
-                            </li>
-                            @endif
+
                             @if ( $usr->can('patientAdmitAdd')  || $usr->can('patientAdmitView') ||  $usr->can('patientAdmitDelete') ||  $usr->can('patientAdmitUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('patientAdmits.index') }}" class="nav-link {{ Route::is('patientAdmits.show') || Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index')  ? 'active' : '' }}" data-key="t-material-design">Patient Admit</a>
+                                <a href="{{ route('patientAdmits.create') }}" class="nav-link {{ Route::is('patientAdmits.show') || Route::is('patientAdmits.edit') || Route::is('patientAdmits.create') || Route::is('patientAdmits.index')  ? 'active' : '' }}" data-key="t-material-design">Admission</a>
+                            </li>
+                            @endif
+
+                               @if ( $usr->can('patientAdmitView')  || $usr->can('patientView') ||  $usr->can('walkByPatientView'))
+                            <li class="nav-item">
+                                <a href="{{ route('patients.index') }}" class="nav-link {{  Route::is('patients.index')  ? 'active' : '' }}" data-key="t-boxicons">Patient List</a>
                             </li>
                             @endif
                         </ul>
@@ -148,6 +165,33 @@ $usr = Auth::guard('admin')->user();
                 </li>
                 @endif
 
+
+                  @if ($usr->can('signatureTherapyAdd') || $usr->can('signatureTherapyView') ||  $usr->can('signatureTherapyDelete') ||  $usr->can('signatureTherapyyUpdate'))
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('signatureTherapyAdd') ||  Route::is('signatureTherapyList') || Route::is('signatureTherapyEdit')  ? 'active':'' }}" href="#therapyAppointment234" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarLanding">
+                        <i class="ri-file-list-2-fill"></i> <span data-key="t-landing">Signature Package Appointment</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ Route::is('signatureTherapyAdd') ||  Route::is('signatureTherapyList') || Route::is('signatureTherapyEdit')  ? 'show':'' }}" id="therapyAppointment234">
+                        <ul class="nav nav-sm flex-column">
+                            @if ($usr->can('walkByPatientTherapyAdd'))
+                            <li class="nav-item">
+                                <a href="{{ route('signatureTherapyAdd') }}" class="nav-link {{ Route::is('signatureTherapyAdd')  ? 'active' : '' }}" data-key="t-one-page">Add New Signature Package Appointment</a>
+                            </li>
+                            @endif
+                            @if ($usr->can('walkByPatientTherapyView') ||  $usr->can('walkByPatientTherapyDelete') ||  $usr->can('walkByPatientTherapyUpdate'))
+                            <li class="nav-item">
+                                <a href="{{ route('signatureTherapyList') }}" class="nav-link {{ Route::is('signatureTherapyList') || Route::is('signatureTherapyAdd') || Route::is('signatureTherapyEdit') ? 'active' : '' }}" data-key="t-nft-landing"> Signature Package Appointment List </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+
+
                 @if ($usr->can('BillingAdd') || $usr->can('BillingView') ||  $usr->can('BillingDelete') ||  $usr->can('BillingUpdate') || $usr->can('revisedBillingAdd') || $usr->can('revisedBillingView') ||  $usr->can('revisedBillingDelete') ||  $usr->can('revisedBillingUpdate'))
 
                 <li class="nav-item">
@@ -164,7 +208,7 @@ $usr = Auth::guard('admin')->user();
                             @endif
                             @if ($usr->can('revisedBillingAdd') ||  $usr->can('revisedBillingView') ||  $usr->can('revisedBillingDelete') ||  $usr->can('revisedBillingUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('revisedBillings.index') }}" class="nav-link {{ Route::is('revisedBillings.index') || Route::is('revisedBillings.index') || Route::is('revisedBillings.edit') || Route::is('revisedBillings.show') ? 'active' : '' }}" data-key="t-grid-js">Revised Bill Quotation</a>
+                                <a href="{{ route('revisedBillings.index') }}" class="nav-link {{ Route::is('revisedBillings.index') || Route::is('revisedBillings.index') || Route::is('revisedBillings.edit') || Route::is('revisedBillings.show') ? 'active' : '' }}" data-key="t-grid-js">Revised Billing List</a>
                             </li>
                             @endif
                         </ul>
@@ -190,7 +234,7 @@ $usr = Auth::guard('admin')->user();
 
 @if ($usr->can('patientPrescriptionListAdd') ||  $usr->can('patientPrescriptionListView') ||  $usr->can('patientPrescriptionListDelete') ||  $usr->can('patientPrescriptionListUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('patientPrecriptions.index') }}" class="nav-link {{ Route::is('patientPrecriptions.index') || Route::is('patientPrecriptions.show') ? 'active' : '' }}" data-key="t-grid-js">Patient Prescription List</a>
+                                <a href="{{ route('patientPrecriptions.index') }}" class="nav-link {{ Route::is('patientPrecriptions.index') || Route::is('patientPrecriptions.show') ? 'active' : '' }}" data-key="t-grid-js">Patient Attend</a>
                             </li>
 @endif
 
@@ -243,14 +287,14 @@ $usr = Auth::guard('admin')->user();
                             @endif
 
                             @if ( $usr->can('therapyIngredientsAdd')  || $usr->can('therapyIngredientsView') ||  $usr->can('therapyIngredientsDelete') ||  $usr->can('therapyIngredientsUpdate'))
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('therapyIngredients.index') }}" class="nav-link {{ Route::is('therapyIngredients.index') ? 'active' : '' }}" data-key="t-grid-js">Therapy Ingredient</a>
-                            </li>
+                            </li> --}}
                             @endif
 
                             @if ( $usr->can('therapyListsAdd')  || $usr->can('therapyListsView') ||  $usr->can('therapyListsDelete') ||  $usr->can('therapyListsUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('therapyLists.index') }}" class="nav-link {{ Route::is('therapyLists.index') ? 'active' : '' }}" data-key="t-grid-js">Therapy List</a>
+                                <a href="{{ route('therapyLists.index') }}" class="nav-link {{ Route::is('therapyLists.index') ? 'active' : '' }}" data-key="t-grid-js">All Therapy List</a>
                             </li>
                             @endif
 
@@ -259,56 +303,27 @@ $usr = Auth::guard('admin')->user();
                                 <a href="{{ route('therapyPackages.index') }}" class="nav-link {{ Route::is('therapyPackages.index') ? 'active' : '' }}" data-key="t-grid-js">Therapy Package</a>
                             </li>
                             @endif
-                        </ul>
-                    </div>
-                </li>
-                @endif
-                @if ($usr->can('facePackAppoinmenttAdd') || $usr->can('facePackAppoinmentView') ||  $usr->can('facePackAppoinmentDelete') ||  $usr->can('facePackAppoinmentUpdate') || $usr->can('facialInfoListAdd')  || $usr->can('facialInfoListView') ||  $usr->can('facialInfoListDelete') ||  $usr->can('facialInfoListUpdate') || $usr->can('facePackAdd')  || $usr->can('facePackView') ||  $usr->can('facePackDelete') ||  $usr->can('facePackUpdate'))
-                <li class="menu-title"><span data-key="t-menu">Facial Section</span></li>
 
-
-                @if ($usr->can('facePackAdd')  || $usr->can('facePackView') ||  $usr->can('facePackDelete') ||  $usr->can('facePackUpdate'))
+                             @if ($usr->can('facePackAdd')  || $usr->can('facePackView') ||  $usr->can('facePackDelete') ||  $usr->can('facePackUpdate'))
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('facePackInfoList.index') ? 'active' : '' }}" href="{{ route('facePackInfoList.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Face Pack  List</span>
+                    <a class="nav-link {{ Route::is('facePackInfoList.index') ? 'active' : '' }}" href="{{ route('facePackInfoList.index') }}">
+                        <span data-key="t-widgets">Facial Pack  List</span>
                     </a>
                 </li>
                 @endif
 
-                @if ($usr->can('facePackAppoinmentAdd') || $usr->can('facePackAppoinmentView') ||  $usr->can('facePackAppoinmentDelete') ||  $usr->can('facePackAppoinmentUpdate'))
-
-
+                 @if ($usr->can('facialInfoListAdd') || $usr->can('facialInfoListView') || $usr->can('facialInfoListDelete') || $usr->can('facialInfoListUpdate'))
                 {{-- <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('facePackAppoinment.index') ||  Route::is('facePackAppoinment.create') || Route::is('facePackAppoinment.edit') || Route::is('facePackAppoinment.show') ? 'active':'' }}" href="#fcdoctorAppointment" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="ri-task-fill"></i> <span data-key="t-landing">Face Pack Appointment</span>
+                    <a class="nav-link {{ Route::is('facialInfoList.index') ? 'active' : '' }}" href="{{ route('facialInfoList.index') }}">
+                        <span data-key="t-widgets">Facial Pack Info List</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ Route::is('facePackAppoinment.index') ||  Route::is('facePackAppoinment.create') || Route::is('facePackAppoinment.edit') || Route::is('facePackAppoinment.show') ? 'show':'' }}" id="fcdoctorAppointment">
-                        <ul class="nav nav-sm flex-column">
-                            @if ($usr->can('facePackAppoinmentAdd'))
-                            <li class="nav-item">
-                                <a href="{{ route('facePackAppoinment.create') }}" class="nav-link {{ Route::is('facePackAppoinment.create')  ? 'active' : '' }}" data-key="t-one-page">Add New Appointment</a>
-                            </li>
-                            @endif
-                            @if ($usr->can('facePackAppoinmentView') ||  $usr->can('facePackAppoinmentDelete') ||  $usr->can('facePackAppoinmentUpdate'))
-                            <li class="nav-item">
-                                <a href="{{ route('facePackAppoinment.index') }}" class="nav-link {{ Route::is('facePackAppoinment.index') || Route::is('facePackAppoinment.edit') || Route::is('facePackAppoinment.show') ? 'active' : '' }}" data-key="t-nft-landing"> Appointment List </a>
-                            </li>
-                            @endif
-                        </ul>
-
-                    </div>
                 </li> --}}
                 @endif
-                @if ($usr->can('facialInfoListAdd') || $usr->can('facialInfoListView') || $usr->can('facialInfoListDelete') || $usr->can('facialInfoListUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('facialInfoList.index') ? 'active' : '' }}" href="{{ route('facialInfoList.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Face Pack Info List</span>
-                    </a>
+                        </ul>
+                    </div>
                 </li>
                 @endif
 
-                @endif
                 @if ( $usr->can('medicineListsAdd')  || $usr->can('medicineListsView') ||  $usr->can('medicineListsDelete') ||  $usr->can('medicineListsUpdate') || $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate') || $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate')|| $usr->can('medicineEquipmentAdd')  || $usr->can('medicineEquipmentView') ||  $usr->can('medicineEquipmentDelete') ||  $usr->can('medicineEquipmentUpdate'))
                 <li class="menu-title"><span data-key="t-menu">Medicine Section</span></li>
 
@@ -322,7 +337,7 @@ $usr = Auth::guard('admin')->user();
                         <ul class="nav nav-sm flex-column">
                             @if ( $usr->can('medicineEquipmentAdd')  || $usr->can('medicineEquipmentView') ||  $usr->can('medicineEquipmentDelete') ||  $usr->can('medicineEquipmentUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('medicineEquipment.index') }}" class="nav-link {{ Route::is('medicineEquipment.index') ? 'active' : '' }}" data-key="t-basic-tables">Medicine Equipment</a>
+                                <a href="{{ route('medicineEquipment.index') }}" class="nav-link {{ Route::is('medicineEquipment.index') ? 'active' : '' }}" data-key="t-basic-tables">Medicine Name</a>
                             </li>
                             @endif
                             @if ( $usr->can('powderAdd')  || $usr->can('powderView') ||  $usr->can('powderDelete') ||  $usr->can('powderUpdate'))
@@ -332,12 +347,12 @@ $usr = Auth::guard('admin')->user();
                             @endif
                             @if ( $usr->can('packageAdd')  || $usr->can('packageView') ||  $usr->can('packageDelete') ||  $usr->can('packageUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('packageList.index') }}" class="nav-link {{ Route::is('packageList.index') ? 'active' : '' }}" data-key="t-grid-js">Package List</a>
+                                <a href="{{ route('packageList.index') }}" class="nav-link {{ Route::is('packageList.index') ? 'active' : '' }}" data-key="t-grid-js">Medicine Package </a>
                             </li>
                             @endif
                             @if ( $usr->can('medicineListsAdd')  || $usr->can('medicineListsView') ||  $usr->can('medicineListsDelete') ||  $usr->can('medicineListsUpdate'))
                             <li class="nav-item">
-                                <a href="{{ route('medicineLists.index') }}" class="nav-link {{ Route::is('medicineLists.index') ? 'active' : '' }}" data-key="t-grid-js">Tablet List</a>
+                                <a href="{{ route('medicineLists.index') }}" class="nav-link {{ Route::is('medicineLists.index') ? 'active' : '' }}" data-key="t-grid-js">Tablet Name</a>
                             </li>
                             @endif
 
@@ -415,7 +430,7 @@ $usr = Auth::guard('admin')->user();
 
 
                 @if ( $usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate')|| $usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
-                <li class="menu-title"><span data-key="t-menu">Inventory</span></li>
+                <li class="menu-title"><span data-key="t-menu">Inventory  </span></li>
                 @if ($usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('inventoryCategoryList.index') ? 'active' : '' }}" href="{{ route('inventoryCategoryList.index') }}">
@@ -430,6 +445,15 @@ $usr = Auth::guard('admin')->user();
                     </a>
                 </li>
                 @endif
+
+                 @if ($usr->can('inventoryMixerAdd') || $usr->can('inventoryMixerView') || $usr->can('inventoryMixerDelete') || $usr->can('inventoryMixerUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('inventoryMixerList') || Route::is('inventoryMixerAdd') || Route::is('inventoryMixerEdit') ? 'active' : '' }}" href="{{ route('inventoryMixerList') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Mixer List</span>
+                    </a>
+                </li>
+                @endif
+
                 @if ($usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate'))
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">
@@ -444,6 +468,15 @@ $usr = Auth::guard('admin')->user();
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Route::is('inventoryDamage.index') ? 'active' : '' }}" href="{{ route('inventoryDamage.index') }}">
                         <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Damage</span>
+                    </a>
+                </li>
+                @endif
+
+
+                 @if ($usr->can('otherEquipmentAdd') || $usr->can('otherEquipmentView') || $usr->can('otherEquipmentDelete') || $usr->can('otherEquipmentUpdate'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Route::is('otherEquipment.index') ? 'active' : '' }}" href="{{ route('otherEquipment.index') }}">
+                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Other Equipment</span>
                     </a>
                 </li>
                 @endif

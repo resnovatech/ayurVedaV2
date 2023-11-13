@@ -76,7 +76,7 @@ Billing Information List | {{ $ins_name }}
                     
                      <div class="col-md-6">
                                 <label for="" class="form-label">Total Amount</label>
-                <input type="number" readonly class="form-control" name="amount" id="amount" value="{{$totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}" >
+                <input type="number" readonly class="form-control" name="amount" id="amount" value="{{$signaturePackageAmount+$totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}" >
                 <input type="hidden" class="form-control" name="id" id="" value="{{ $patientHistory->id }}" >
                     </div>
                     
@@ -91,7 +91,7 @@ Billing Information List | {{ $ins_name }}
                     </div>
                     
                     <?php   
-                    $newMainTotal = $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
+                    $newMainTotal = $signaturePackageAmount + $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount;
                     $allDiscountLists = DB::table('discounts')->latest()->get();
                     $allVat = DB::table('vats')->orderBy('id','desc')->value('amount');
                     
@@ -399,7 +399,7 @@ Billing Information List | {{ $ins_name }}
                                     <!--end col-->
                                     <div class="col-lg-4 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Total Amount</p>
-                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{$totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}</span></h5>
+                                        <h5 class="fs-14 mb-0">৳ <span id="total-amount">{{$signaturePackageAmount + $totalFacialAmount + $totalTheAmountsingle + $totalTherapyAmount1 + $totalTherapyAmountsingle + $totalTherapyAmount +$totalMedicineAmount + $totalPatientMedicalSupplementAmount }}</span></h5>
                                     </div>
                                     <!--end col-->
                                 </div>
@@ -449,6 +449,21 @@ Billing Information List | {{ $ins_name }}
                                         </tr>
                                         </thead>
                                         <tbody id="products-list">
+                                            @foreach($signaturePackagePriceLIst as $signaturePackagePriceLIsts)
+                                            
+                                            <tr>
+<td class="text-start">
+    <span class="fw-medium">{{ $signaturePackagePriceLIsts->name}}</span>
+
+</td>
+<td>{{ $signaturePackagePriceLIsts->name}}</td>
+<td>{{ $signaturePackagePriceLIsts->price}}</td>
+<td>{{ $signaturePackagePriceLIsts->quantity}}</td>
+<td>{{ $signaturePackagePriceLIsts->price*$signaturePackagePriceLIsts->quantity}}</td>
+</tr>
+                                            
+                                            
+                                            @endforeach
                                             <?php
  $countSingleFacePackageList = count($singleFacePackageList);
                 $totalFacialAmount = 0 ;

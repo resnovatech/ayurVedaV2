@@ -73,8 +73,9 @@ class TherapyPackageController extends Controller
 
 
               $arr_all = implode(",",$request->therapy_list);
+              $arr_all1 = implode(",",$request->time_list);
 
-              $data = array('package_name' => $request->package_name,'price'=>$request->price,'therapy_list'=>$arr_all);
+              $data = array('package_name' => $request->package_name,'price'=>$request->price,'therapy_list'=>$arr_all,'time_list'=>$arr_all1);
 
 
               TherapyPackage::create($data);
@@ -102,10 +103,10 @@ class TherapyPackageController extends Controller
 
             $input = $request->all();
             $arr_all = implode(",",$request->therapy_list);
+  $arr_all1 = implode(",",$request->time_list);
 
 
-
-            $data = array('package_name' => $request->package_name,'price'=>$request->price,'therapy_list'=>$arr_all);
+            $data = array('package_name' => $request->package_name,'price'=>$request->price,'therapy_list'=>$arr_all,'time_list'=>$arr_all1);
             $medicine->fill($data)->save();
 
     return redirect()->route('therapyPackages.index')->with('success','Updated successfully!');

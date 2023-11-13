@@ -10,7 +10,7 @@ class MedicineEquipment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','quantity','unit'
+        'other_category','other_type','name','quantity','unit'
     ];
 
 

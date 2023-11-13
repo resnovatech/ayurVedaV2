@@ -136,14 +136,10 @@ Therapist Profile | {{ $ins_name }}
                                                             </li>
                                                             <li class="nav-item">
                                                                 <a class="nav-link" data-bs-toggle="tab" href="#weekly" role="tab">
-                                                                    Tomorrow
+                                                                    Next
                                                                 </a>
                                                             </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab" href="#monthly" role="tab">
-                                                                    Yesterday
-                                                                </a>
-                                                            </li>
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -207,12 +203,11 @@ Therapist Profile | {{ $ins_name }}
     @csrf
                                                         <select class="form-control" name="status">
                                                             <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
+                                                                                            <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                            <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                            <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                            <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                            <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
                                                         </select>
                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -261,6 +256,87 @@ Therapist Profile | {{ $ins_name }}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody class="list form-check-all">
+                                                                    @foreach($therapyAppointmentDateAndTimeListTomorrowM as $key=>$allTherapyAppointmentDateAndTimeList)
+
+                                                                    <?php
+                                                                       $getNameFromWalkByPatient = DB::table('walk_by_patients')
+                                                                       ->where('patient_reg_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
+                                                                       $getNameFromPatient = DB::table('patients')
+                                                                       ->where('patient_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
+
+
+                                                                     ?>
+
+                                                                       <tr>
+
+                                                                           <td class="email">{{ $key+1 }}</td>
+                                                                           <td class="customer_name">{{ $allTherapyAppointmentDateAndTimeList->serial }}</td>
+                                                                           <td class="email">{{ $allTherapyAppointmentDateAndTimeList->patient_id }}</td>
+                                                                           <td class="email">
+
+                                                                               @if(empty($getNameFromWalkByPatient))
+
+                                                           {{ $getNameFromPatient }}
+                                                                               @else
+                                                           {{ $getNameFromWalkByPatient }}
+                                                                               @endif
+                                                                           </td>
+                                                                           <td class="email">
+
+                                                                               <?php
+                                                           $getNameTherapist = DB::table('therapists')
+                                                                       ->where('id',$allTherapyAppointmentDateAndTimeList->therapist)->value('name');
+
+                                                                               ?>
+
+                                                                               {{ $getNameTherapist }}
+
+                                                                           </td>
+                                                                           <td class="phone">{{ $allTherapyAppointmentDateAndTimeList->date }}</td>
+
+                                                           <td class="phone">
+                                                               <form method="post" action="{{ route('therapyStatusUpdate') }}">
+                                                                   @csrf
+                                                                                                                       <select class="form-control" name="status">
+                                                                                                                        <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                                                        <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                                                        <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                                                        <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                                                        <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                                                        <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
+                                                                                                                       </select>
+                                                                                                                       <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
+                                                                                                                       <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
+                                                               </form>
+                                                           </td>
+                                                                           <td>
+
+                                                                                       @if (Auth::guard('admin')->user()->can('therapyAppointmentView'))
+                                                                                       {{-- <li><a href="{{ route('therapyAppointments.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li> --}}
+
+
+
+
+
+
+                                                                                       @endif
+                                                                                       @if (Auth::guard('admin')->user()->can('therapyAppointmentUpdate'))
+                                                                                       {{-- <li><a class="dropdown-item edit-item-btn" href="{{ route('therapyAppointments.edit',$allTherapyAppointmentDateAndTimeList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li> --}}
+                                                                                       @endif
+                                                                                       @if (Auth::guard('admin')->user()->can('therapyAppointmentDelete'))
+                                                                                       <button class="btn btn-danger btn-sm add-btn" onclick="deleteTag({{ $allTherapyAppointmentDateAndTimeList->id}})" >
+                                                                                           <i class="ri-delete-bin-fill"></i>
+                                                                                       </button>
+                                                                                       <form id="delete-form-{{ $allTherapyAppointmentDateAndTimeList->id }}" action="{{ route('therapyAppointments.destroy',$allTherapyAppointmentDateAndTimeList->id) }}" method="POST" style="display: none;">
+                                                                                           @method('DELETE')
+                                                                                                                         @csrf
+
+                                                                                                                     </form>
+                                                                                       @endif
+
+                                                                           </td>
+                                                                       </tr>
+                                                           @endforeach
                                                                 @foreach($therapyAppointmentDateAndTimeListTomorrow as $key=>$allTherapyAppointmentDateAndTimeList)
 
                                                              <?php
@@ -304,12 +380,11 @@ Therapist Profile | {{ $ins_name }}
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
                                                                                                                     <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
+                                                                                                                    <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                                                    <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                                                    <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                                                    <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                                                    <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                                                 <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -346,100 +421,7 @@ Therapist Profile | {{ $ins_name }}
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div class="tab-pane" id="monthly" role="tabpanel">
-                                                            <table  class="display table table-bordered" style="width:100%">
-                                                                <thead class="table-light">
-                                                                <tr>
-                                                                    <th class="sort" data-sort="customer_name">Sl No</th>
-                                                                    <th class="sort" data-sort="customer_name">Serial Number</th>
-                                                                    <th class="sort" data-sort="customer_name">Patient Id</th>
-                                                                    <th class="sort" data-sort="customer_name">Patient Name</th>
-                                                                    <th class="sort" data-sort="email">Doctor Name</th>
-                                                                    <th class="sort" data-sort="phone">Appointment Data</th>
-                                                                      <th class="sort" data-sort="phone">Status</th>
-                                                                    <th class="sort" data-sort="action">Action</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody class="list form-check-all">
-                                                                @foreach($therapyAppointmentDateAndTimeListYesterday as $key=>$allTherapyAppointmentDateAndTimeList)
 
-                                                             <?php
-                                                                $getNameFromWalkByPatient = DB::table('walk_by_patients')
-                                                                ->where('patient_reg_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
-                                                                $getNameFromPatient = DB::table('patients')
-                                                                ->where('patient_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
-
-
-                                                              ?>
-
-                                                                <tr>
-
-                                                                    <td class="email">{{ $key+1 }}</td>
-                                                                    <td class="customer_name">{{ $allTherapyAppointmentDateAndTimeList->serial }}</td>
-                                                                    <td class="email">{{ $allTherapyAppointmentDateAndTimeList->patient_id }}</td>
-                                                                    <td class="email">
-
-                                                                        @if(empty($getNameFromWalkByPatient))
-
-                                                    {{ $getNameFromPatient }}
-                                                                        @else
-                                                    {{ $getNameFromWalkByPatient }}
-                                                                        @endif
-                                                                    </td>
-                                                                    <td class="email">
-
-                                                                        <?php
-                                                    $getNameTherapist = DB::table('therapists')
-                                                                ->where('id',$allTherapyAppointmentDateAndTimeList->therapist)->value('name');
-
-                                                                        ?>
-
-                                                                        {{ $getNameTherapist }}
-
-                                                                    </td>
-                                                                    <td class="phone">{{ $allTherapyAppointmentDateAndTimeList->date }}</td>
-
-                                                    <td class="phone">
-                                                        <form method="post" action="{{ route('therapyStatusUpdate') }}">
-                                                            @csrf
-                                                                                                                <select class="form-control" name="status">
-                                                                                                                    <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                                                                                    <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                                                    <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                                                                                    <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                                                                                    <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
-                                                                                                                </select>
-                                                                                                                <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
-                                                                                                                <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
-                                                        </form>
-                                                    </td>
-                                                                    <td>
-
-                                                                                @if (Auth::guard('admin')->user()->can('therapyAppointmentView'))
-                                                                                {{-- <li><a href="{{ route('therapyAppointments.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li> --}}
-                                                                                @endif
-                                                                                @if (Auth::guard('admin')->user()->can('therapyAppointmentUpdate'))
-                                                                                {{-- <li><a class="dropdown-item edit-item-btn" href="{{ route('therapyAppointments.edit',$allTherapyAppointmentDateAndTimeList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li> --}}
-                                                                                @endif
-                                                                                @if (Auth::guard('admin')->user()->can('therapyAppointmentDelete'))
-                                                                                <button class="btn btn-danger btn-sm add-btn" onclick="deleteTag({{ $allTherapyAppointmentDateAndTimeList->id}})" >
-                                                                                    <i class="ri-delete-bin-fill"></i>
-                                                                                </button>
-                                                                                <form id="delete-form-{{ $allTherapyAppointmentDateAndTimeList->id }}" action="{{ route('therapyAppointments.destroy',$allTherapyAppointmentDateAndTimeList->id) }}" method="POST" style="display: none;">
-                                                                                    @method('DELETE')
-                                                                                                                  @csrf
-
-                                                                                                              </form>
-                                                                                @endif
-
-                                                                    </td>
-                                                                </tr>
-                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
                                                     </div>
                                                 </div><!-- end card body -->
                                             </div><!-- end card -->
@@ -470,6 +452,87 @@ Therapist Profile | {{ $ins_name }}
                                         </tr>
                                         </thead>
                                         <tbody class="list form-check-all">
+
+                                        <!--main table start-->
+
+                                        @foreach($therapyAppointmentPendingM as $key=>$allTherapyAppointmentDateAndTimeList)
+
+                                        <?php
+                                           $getNameFromWalkByPatient = DB::table('walk_by_patients')
+                                           ->where('patient_reg_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
+                                           $getNameFromPatient = DB::table('patients')
+                                           ->where('patient_id',$allTherapyAppointmentDateAndTimeList->patient_id)->value('name');
+
+
+                                         ?>
+
+                                           <tr>
+
+                                               <td class="email">{{ $key+1 }}</td>
+                                               <td class="customer_name">{{ $allTherapyAppointmentDateAndTimeList->serial }}</td>
+                                               <td class="email">{{ $allTherapyAppointmentDateAndTimeList->patient_id }}</td>
+                                               <td class="email">
+
+                                                   @if(empty($getNameFromWalkByPatient))
+
+                               {{ $getNameFromPatient }}
+                                                   @else
+                               {{ $getNameFromWalkByPatient }}
+                                                   @endif
+                                               </td>
+                                               <td class="email">
+
+                                                   <?php
+                               $getNameTherapist = DB::table('therapists')
+                                           ->where('id',$allTherapyAppointmentDateAndTimeList->therapist)->value('name');
+
+                                                   ?>
+
+                                                   {{ $getNameTherapist }}
+
+                                               </td>
+                                               <td class="phone">{{ $allTherapyAppointmentDateAndTimeList->date }}</td>
+
+                               <td class="phone">
+                                   <form method="post" action="{{ route('therapyStatusUpdate') }}">
+                                       @csrf
+                                                                                           <select class="form-control" name="status">
+
+                                                                                            <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
+                                                                                            <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                            <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                            <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                            <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                            <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
+                                                                                           </select>
+                                                                                           <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
+                                                                                           <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
+                                   </form>
+                               </td>
+                                               <td>
+
+                                                           @if (Auth::guard('admin')->user()->can('therapyAppointmentView'))
+                                                           {{-- <li><a href="{{ route('therapyAppointments.show',$allTherapyAppointmentDateAndTimeList->id) }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li> --}}
+                                                           @endif
+                                                           @if (Auth::guard('admin')->user()->can('therapyAppointmentUpdate'))
+                                                           {{-- <li><a class="dropdown-item edit-item-btn" href="{{ route('therapyAppointments.edit',$allTherapyAppointmentDateAndTimeList->id) }}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li> --}}
+                                                           @endif
+                                                           @if (Auth::guard('admin')->user()->can('therapyAppointmentDelete'))
+                                                           <button class="btn btn-danger btn-sm add-btn" onclick="deleteTag({{ $allTherapyAppointmentDateAndTimeList->id}})" >
+                                                               <i class="ri-delete-bin-fill"></i>
+                                                           </button>
+                                                           <form id="delete-form-{{ $allTherapyAppointmentDateAndTimeList->id }}" action="{{ route('therapyAppointments.destroy',$allTherapyAppointmentDateAndTimeList->id) }}" method="POST" style="display: none;">
+                                                               @method('DELETE')
+                                                                                             @csrf
+
+                                                                                         </form>
+                                                           @endif
+
+                                               </td>
+                                           </tr>
+                               @endforeach
+
+                                        <!--end main table end -->
                                         @foreach($therapyAppointmentPending as $key=>$allTherapyAppointmentDateAndTimeList)
 
                                      <?php
@@ -513,13 +576,11 @@ Therapist Profile | {{ $ins_name }}
                                     @csrf
                                                                                         <select class="form-control" name="status">
                                                                                             <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
+                                                                                            <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                            <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                            <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                            <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                            <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
                                                                                         </select>
                                                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -615,13 +676,11 @@ Therapist Profile | {{ $ins_name }}
                                 @csrf
                                                                                     <select class="form-control" name="status">
                                                                                         <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                                                        <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                        <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                                                        <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                                                        <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
+                                                                                        <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                        <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                        <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                        <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                        <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
                                                                                     </select>
                                                                                     <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->status }}" name="id" />
                                                                                     <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
@@ -717,13 +776,11 @@ Therapist Profile | {{ $ins_name }}
                                     @csrf
                                                                                         <select class="form-control" name="status">
                                                                                             <option value="Pending" {{ 'Pending' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Pending</option>
-                                                                                            <option value="Ingredient Request Ready" {{ 'Ingredient Request Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ingredient Request Ready</option>
-                                                                                            <option value="Ready" {{ 'Ready' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready</option>
-                                                                                            <option value="Ongoing Process" {{ 'Ongoing Process' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Process</option>
-                                                                                            <option value="End" {{ 'End' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End</option>
-
-
-                                                            <option value="Cancelled" {{ 'Cancelled' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Cancelled</option>
+                                                                                            <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Therapy Ingredient Request</option>
+                                                                                            <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Ingredient</option>
+                                                                                            <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ready Ingredient</option>
+                                                                                            <option value="Ongoing Therapy" {{ 'Ongoing Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>Ongoing Therapy</option>
+                                                                                            <option value="End Therapy" {{ 'End Therapy' == $allTherapyAppointmentDateAndTimeList->status ? 'selected':''}}>End Therapy</option>
                                                                                         </select>
                                                                                         <input type="hidden" value="{{ $allTherapyAppointmentDateAndTimeList->id }}" name="id" />
                                                                                         <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>

@@ -123,6 +123,22 @@
             <th scope="col">Quantity</th>
             <th scope="col" class="text-end">Amount</th>
         </tr>
+              @foreach($signaturePackagePriceLIst as $signaturePackagePriceLIsts)
+                                            
+                                            <tr>
+<td class="text-start">
+    <span class="fw-medium">{{ $signaturePackagePriceLIsts->name}}</span>
+
+</td>
+
+<td>{{ $signaturePackagePriceLIsts->price}}</td>
+<td>{{ $signaturePackagePriceLIsts->quantity}}</td>
+<td>{{ $signaturePackagePriceLIsts->price*$signaturePackagePriceLIsts->quantity}}</td>
+</tr>
+                                            
+                                            
+                                            @endforeach
+                                            
         <?php
         $countSingleFacePackageList = count($singleFacePackageList);
                        $totalFacialAmount = 0 ;

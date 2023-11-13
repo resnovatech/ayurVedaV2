@@ -19,7 +19,7 @@ $medicineEquipmentList = DB::table('medicine_equipment')->latest()->get();
             <th scope="col">Tablet/Medicine Name</th>
             <th scope="col">Ingredient Name</th>
             <th scope="col">Quantity</th>
-           {{--  <th scope="col">Unit</th> --}}
+           <th scope="col">Unit</th>
           </tr>
         </thead>
         <tbody>
@@ -47,7 +47,10 @@ $medicineEquipmentList = DB::table('medicine_equipment')->latest()->get();
         <label>Tablet Quantity</label>
         <input type="text" required class="form-control" id="hquantity0" required name="hquantity[]">
     </td>
-    {{-- <td></td> --}}
+     <td>
+        <label>Note</label>
+        <input type="text" required value="no not available" class="form-control" id="hnote0" required name="hnote[]">
+    </td>
     </tr>
 
 @endfor
@@ -86,6 +89,11 @@ $medicineEquipmentList = DB::table('medicine_equipment')->latest()->get();
             <td>
 
                 <input type="text" required class="form-control" id="munit{{$k+1+5000}}" name="munit{{$k}}[]" required>
+            </td>
+            
+            <td>
+
+                <input type="text" required class="form-control" value="no not available" id="mnote{{$k+1+5000}}" name="mnote{{$k}}[]" required>
             </td>
 
             <td>
@@ -131,6 +139,10 @@ $medicineEquipmentList = DB::table('medicine_equipment')->latest()->get();
                 '<input type="text" required class="form-control" id="mquantity'+i+'" name="mquantity'+id_for_pass+'[]" required></td>' +
                 '<td>'+
                 '<input type="text" required class="form-control" id="munit'+i+'" name="munit'+id_for_pass+'[]" required>'+
+
+                '</td>'+
+                   '<td>'+
+                '<input type="text" required class="form-control" id="mnote'+i+'" name="mnote'+id_for_pass+'[]" value="no not available" required>'+
 
                 '</td>'+
                 '<td><button type="button" id="finalD'+i+id_for_pass+'" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'

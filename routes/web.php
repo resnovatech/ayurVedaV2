@@ -46,6 +46,7 @@ use App\Http\Controllers\InventoryNameController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\VatController;
 use App\Http\Controllers\Admin\InventoryDamageController;
+use App\Http\Controllers\Admin\OtherEquipmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,7 +85,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //therapy_package
 
-
+    Route::resource('otherEquipment', OtherEquipmentController::class);
 
 
     Route::resource('inventoryDamage', InventoryDamageController::class);
@@ -97,10 +98,29 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('facePackInfoList', FacePackController::class);
 
     Route::resource('inventoryNameInfo',InventoryNameController::class);
+    
+    
+      Route::controller(InventoryNameController::class)->group(function () {
+          
+        Route::get('/inventoryMixerAdd', 'inventoryMixerAdd')->name('inventoryMixerAdd');
+        Route::get('/inventoryMixerList', 'inventoryMixerList')->name('inventoryMixerList');
+        Route::get('/inventoryMixerEdit/{id}', 'inventoryMixerEdit')->name('inventoryMixerEdit');
+        
+        Route::DELETE('/inventoryMixerDelete/{id}', 'inventoryMixerDelete')->name('inventoryMixerDelete');
+        
+        
+        Route::post('/inventoryMixerStore', 'inventoryMixerStore')->name('inventoryMixerStore');
+Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMixerUpdate');
+
+    });
 
     Route::resource('therapyMakerList', TherapyMakerController::class);
     Route::resource('inventoryCategoryList', InventoryCategoryController::class);
     Route::resource('inventoryList', InventoryController::class);
+    
+    Route::controller(InventoryController::class)->group(function () {
+          Route::get('/getDataForQuantity', 'getDataForQuantity')->name('getDataForQuantity');
+    });
 
     Route::resource('agreementFormThree', AgrementFormThreeController::class);
     Route::resource('agreementFormTwo', AgrementFormTwoController::class);
@@ -146,6 +166,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('walkByPatientTherapy', WalkByPatientTherapyController::class);
 
     Route::controller(WalkByPatientTherapyController::class)->group(function () {
+        
+        Route::get('/signatureTherapyAdd', 'signatureTherapyAdd')->name('signatureTherapyAdd');
+        Route::get('/signatureTherapyList', 'signatureTherapyList')->name('signatureTherapyList');
+          Route::get('/signatureTherapyEdit', 'signatureTherapyEdit')->name('signatureTherapyEdit');
+        
         Route::get('/therapyPackageListForSingleTherapy', 'therapyPackageListForSingleTherapy')->name('therapyPackageListForSingleTherapy');
         Route::get('/therapyListForSingleTherapy', 'therapyListForSingleTherapy')->name('therapyListForSingleTherapy');
         Route::get('/getTherapyType', 'getTherapyType')->name('getTherapyType');
@@ -274,6 +299,14 @@ Route::group(['prefix' => 'admin'], function () {
 
 
   Route::resource('medicineEquipment', MedicineEquipmentController::class);
+  
+  Route::controller(MedicineEquipmentController::class)->group(function () {
+      
+      Route::get('/showCategoryMedicine', 'showCategoryMedicine')->name('showCategoryMedicine');
+      
+  });
+
+      
   Route::resource('powderList', PowderController::class);
   Route::resource('packageList', PackageController::class);
 
@@ -295,6 +328,8 @@ Route::resource('therapist',TherapistController::class);
 
 Route::controller(TherapistController::class)->group(function () {
     Route::post('/therapyStatusUpdate', 'therapyStatusUpdate')->name('therapyStatusUpdate');
+
+    Route::get('/therapyListForReceptionist', 'therapyListForReceptionist')->name('therapyListForReceptionist');
 });
 
 //end therapist route

@@ -16,6 +16,7 @@ use App\Models\HealthSupplement;
 use App\Models\PatientTherapy;
 use App\Models\TherapyPackage;
 use App\Models\PatientHerb;
+use App\Models\SignPackage;
 use App\Models\PatientMedicalSupplement;
 use DB;
 use Session;
@@ -140,16 +141,35 @@ return response()->json($data);
         if (is_null($this->user) || !$this->user->can('walkByPatientTherapyView')) {
                    abort(403, 'Sorry !! You are Unauthorized to Add !');
                }
-               $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('date',date('Y-m-d'))->latest()->get();
-               $therapyAppointmentDateAndTimeListAll = TherapyAppointmentDateAndTime::latest()->get();
+               $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('signavailable','no')->where('date',date('Y-m-d'))->latest()->get();
+               $therapyAppointmentDateAndTimeListAll = TherapyAppointmentDateAndTime::where('signavailable','no')->latest()->get();
        //dd(1);
                return view('admin.walkByPatientTherapy.index',compact('therapyAppointmentDateAndTimeList','therapyAppointmentDateAndTimeListAll'));
+           }
+           
+           public function signatureTherapyList(){
+               
+               
+                 $therapyAppointmentDateAndTimeList = TherapyAppointmentDateAndTime::where('signavailable','yes')->where('date',date('Y-m-d'))->latest()->get();
+               $therapyAppointmentDateAndTimeListAll = TherapyAppointmentDateAndTime::where('signavailable','yes')->latest()->get();
+       //dd(1);
+               return view('admin.walkByPatientTherapy.index',compact('therapyAppointmentDateAndTimeList','therapyAppointmentDateAndTimeListAll'));
+               
            }
 
 
 
     public function create(){
         if (is_null($this->user) || !$this->user->can('walkByPatientTherapyAdd')) {
+                   abort(403, 'Sorry !! You are Unauthorized to Add !');
+               }
+               $patientHistory = WalkByPatient::latest()->get();
+       //dd(1);
+               return view('admin.walkByPatientTherapy.create',compact('patientHistory'));
+           }
+           
+            public function signatureTherapyAdd(){
+        if (is_null($this->user) || !$this->user->can('signatureTherapyAdd')) {
                    abort(403, 'Sorry !! You are Unauthorized to Add !');
                }
                $patientHistory = WalkByPatient::latest()->get();
@@ -279,6 +299,8 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
                 $therapyAppointment->patient_id =$patientId;
                 $therapyAppointment->history_id = $patientHistoryUpdateId;
+                
+                $therapyAppointment->signavailable = $request->signavailable;
                 $therapyAppointment->status = 0;
                 $therapyAppointment->save();
 
@@ -296,6 +318,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                     $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
                     $therapyAppointmentDetail->name='Single';
                     $therapyAppointmentDetail->amount=1;
+                    $therapyAppointmentDetail->signavailable = $request->signavailable;
                     $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
                     $therapyAppointmentDetail->save();
 
@@ -314,6 +337,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                        $therapyNamen->ingredient_name=$inputAllData['ingrident_id'][$j];
                        $therapyNamen->quantity=$inputAllData['quantity'][$j];
                        $therapyNamen->unit=$inputAllData['unit'][$j];
+                       $therapyNamen->snote=$inputAllData['snote'][$j];
                        $therapyNamen->therapy_appointment_detail_id   = $appId;
                        $therapyNamen->save();
 
@@ -329,6 +353,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $doctorAppointment->admin_id = Auth::guard('admin')->user()->id;
                 $doctorAppointment->patient_id = $request->patient_id;
                 $doctorAppointment->patient_type ='WalkByPatient';
+                $doctorAppointment->signavailable = $request->signavailable;
                 $doctorAppointment->status = 0;
                 $doctorAppointment->save();
 
@@ -352,6 +377,8 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                     $therapyDetail->face_pack_id =$inputAllData['face_package_id'][$key];
                     $therapyDetail->appoinment_id   = $facePackId;
                     $therapyDetail->history_id   = $patientHistoryUpdateId;
+                    $therapyDetail->signavailable = $request->signavailable;
+                       $therapyDetail->fnote=$inputAllData['fnote'][$key];
                     $therapyDetail->quantity   = 1;
                     $therapyDetail->save();
 
@@ -374,6 +401,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapyAppointment->admin_id =Auth::guard('admin')->user()->id;
                 $therapyAppointment->patient_id =$patientId;
                  $therapyAppointment->history_id = $patientHistoryUpdateId;
+                  $therapyAppointment->signavailable = $request->signavailable;
                 $therapyAppointment->status = 0;
                 $therapyAppointment->save();
 
@@ -391,6 +419,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapyAppointmentDetail->therapy_name=$inputAllData['therapy_id'][$key];
                 $therapyAppointmentDetail->name=$request->therapy_package_id;
                 $therapyAppointmentDetail->amount=1;
+                $therapyAppointmentDetail->signavailable = $request->signavailable;
                 $therapyAppointmentDetail->therapy_appointment_id   = $therapyAppointmentId;
                 $therapyAppointmentDetail->save();
 
@@ -415,6 +444,7 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
     $therapyNamen33->ingredient_name=$inputAllData['ingrident_id'.$key][$k];
     $therapyNamen33->quantity=$inputAllData['quantity'.$key][$k];
     $therapyNamen33->unit=$inputAllData['unit'.$key][$k];
+    $therapyNamen33->snote=$inputAllData['snote'.$key][$k];
     $therapyNamen33->therapy_appointment_detail_id   = $appIdNew;
     $therapyNamen33->save();
 
@@ -423,9 +453,12 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                }
             }
 
+if($request->signavailable ='yes'){
+    return redirect()->route('signatureTherapyAdd')->with('success','Added successfully!');
+}else{
 
                return redirect()->route('walkByPatientTherapy.create')->with('success','Added successfully!');
-
+}
 
 
         }
@@ -441,6 +474,17 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
         $therapyHistoryId =PatientHistory::where('patient_id',Session::get('patientId'))
                   ->where('status',2)
                    ->value('id');
+                   
+                   if(!empty($request->ssquantity)){
+                      $enterData = new SignPackage();
+                      $enterData->quantity = $request->ssquantity;
+                      $enterData->price = $request->ssprice;
+                      $enterData->historyId = $therapyHistoryId;
+                      $enterData->Name = 'Signature Package';
+                      $enterData->save();
+                   }else{
+                       
+                   }
                    
                   // dd(Session::get('patientHistoryUpdateId'));
 
@@ -553,7 +597,11 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapistList1->end_time= $convertInStringEnd;
                 $therapistList1->face_pack_status=1;
                 $therapistList1->therapy_appointment_id   = $faceAppointmentId;
-            
+            if(!empty($request->ssquantity)){
+                $therapistList1->signavailable='yes';
+            }else{
+                $therapistList1->signavailable='no';
+            }
                 $therapistList1->serial=$finalSerialValue;
                 $therapistList1->patient_id   = Session::get('patientId');
                 $therapistList1->admin_id   = Auth::guard('admin')->user()->id;
@@ -667,7 +715,11 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
                 $therapistList->end_time= $convertInStringEnd;
                   $therapistList->face_pack_status=0;
                     $therapistList->therapy_appointment_id   = $therapyAppointmentId;
-              
+               if(!empty($request->ssquantity)){
+                $therapistList->signavailable='yes';
+            }else{
+                $therapistList->signavailable='no';
+            }
                 $therapistList->serial=$finalSerialValue;
                 $therapistList->patient_id   = Session::get('patientId');
                 $therapistList->admin_id   = Auth::guard('admin')->user()->id;
@@ -722,8 +774,13 @@ Session::put('patientHistoryUpdateId', $patientHistoryUpdateId);
    ]);
 
            session()->forget(['name','age','email','therapyPackageId','patientHistoryUpdateId']);
+           
+            if(!empty($request->ssquantity)){
+                     return redirect()->route('signatureTherapyList')->with('success','Added successfully!');
+            }else{
 
             return redirect()->route('walkByPatientTherapy.index')->with('success','Added successfully!');
+            }
         }
 
 

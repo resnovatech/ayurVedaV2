@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Patient;
+use App\Models\PatientAdmit;
+use App\Models\WalkByPatient;
 use App\Models\PatientFile;
 use App\Models\Bill;
 use App\Models\PatientHistory;
@@ -36,10 +38,10 @@ class PatientController extends Controller
                }
 
           $patientList = Patient::latest()->get();
+$walkByPatientList = WalkByPatient::latest()->get();
+$patientAdmitList = PatientAdmit::latest()->get();
 
-
-
-               return view('admin.patient.index',compact('patientList'));
+               return view('admin.patient.index',compact('patientList','walkByPatientList','patientAdmitList'));
            }
 
 

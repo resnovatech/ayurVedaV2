@@ -9,7 +9,7 @@ class TherapyDetail extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'therapy_list_id','therapy_ingredient_id','quantity','unit'
+        'therapy_list_id','therapy_ingredient_id','quantity','unit','mainnote'
     ];
 
 

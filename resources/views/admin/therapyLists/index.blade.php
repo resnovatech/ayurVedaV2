@@ -55,6 +55,7 @@ Therapy List | {{ $ins_name }}
                                         <th class="sort" data-sort="customer_name"> Name</th>
                                         <th class="sort" data-sort="customer_name"> Amount</th>
                                         <th class="sort" data-sort="customer_name"> Ingredient</th>
+                                        <th class="sort" data-sort="customer_name"> Note</th>
                                         <th class="sort" data-sort="action">Action</th>
                                     </tr>
                                     </thead>
@@ -89,7 +90,7 @@ Therapy List | {{ $ins_name }}
                                           @endforeach
 
                                         </td>
-
+  <td class="customer_name">{{ $allTherapyLists->mainnote }}</td>
 
                                         <td>
 
@@ -168,6 +169,8 @@ Therapy List | {{ $ins_name }}
                                     <th>Therapy Ingredient</th>
                                     <th>Quantity</th>
                                     <th>Unit</th>
+                                      <th>Note</th>
+                                      <th></th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -183,10 +186,15 @@ Therapy List | {{ $ins_name }}
                                     </td>
                                     <td>
                                         <select class="form-select mb-3" name="unit[]" aria-label="Default select example">
-                                            <option value="gram">gram</option>
-                                            <option value="milligram">milligram</option>
-                                            <option value="liter">liter</option>
+                                         <option value="Gram">Gram</option>
+<option value="Piece">Piece</option>
+<option value="Ml">Ml</option>
+<option value="Drops">Drops</option>
                                         </select>
+                                    </td>
+                                        <td>
+                                        <input type="text" name="mainnote[]" value=""
+                                               class="form-control"/>
                                     </td>
                                     <td>
                                         <button type="button" name="add" id="dynamic-ar"
@@ -223,8 +231,11 @@ Therapy List | {{ $ins_name }}
             '<input type="text" name="quantity[]"  class="form-control" /></td>' +
             '<td>' +
             ' <select class="form-select mb-3" name="unit[]" aria-label="Default select example">' +
-            ' <option value="gram">gram</option><option value="milligram">milligram</option><option value="liter">liter</option></select>' +
+            ' <option value="Gram">Gram</option><option value="Piece">Piece</option><option value="Ml">Ml</option><option value="Drops">Drops</option></select>' +
             '</td>' +
+              '<td>' +
+            '<input type="text" name="mainnote[]"  class="form-control" /></td>' +
+            '<td>' +
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });

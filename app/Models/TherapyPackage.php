@@ -10,6 +10,6 @@ class TherapyPackage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'package_name','therapy_list','price'
+        'package_name','therapy_list','price','time_list'
     ];
 }

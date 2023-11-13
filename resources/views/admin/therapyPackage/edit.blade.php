@@ -51,7 +51,7 @@ Therapy Package | {{ $ins_name }}
                                 <?php
                                 $convert_new_ass_cat  = explode(",",$allpackagesLists->therapy_list);
 
-
+                                   $newTimeList = explode(",",$allpackagesLists->time_list);
 
                                                    ?>
 
@@ -59,9 +59,10 @@ Therapy Package | {{ $ins_name }}
                                     <table class="table table-bordered dynamicAddRemove" id="">
                                         <tr>
                                             <th>Therapy List</th>
-
+<th>Time</th>
                                         </tr>
                                         @foreach($convert_new_ass_cat as $j=>$allTherapyIngredient)
+                                        @foreach($newTimeList as $newTimeLists)
 
                                         @if($j == 0 )
                                         <tr id="mDelete{{ $j+50000 }}">
@@ -73,7 +74,7 @@ Therapy Package | {{ $ins_name }}
                                                     @endforeach
                                                 </select>
                                             </td>
-
+<td>  <input type="text" name ="time_list[]" class="form-control" value="{{$newTimeLists}}" id="" placeholder="Time" required></td>
                                             <td>
 
                                                 <button type="button" name="add"  id=""
@@ -95,7 +96,7 @@ Therapy Package | {{ $ins_name }}
                                                     @endforeach
                                                 </select>
                                             </td>
-
+<td>  <input type="text" name ="time_list[]" class="form-control" value="{{$newTimeLists}}" id="" placeholder="Time" required></td>
                                             <td>
 
 
@@ -106,7 +107,7 @@ Therapy Package | {{ $ins_name }}
                                             </td>
                                         </tr>
                                         @endif
-
+@endforeach
                                         @endforeach
                                     </table>
                                 </div>
@@ -158,7 +159,9 @@ Therapy Package | {{ $ins_name }}
             ' <select class="form-select mb-3" id="powderId'+i+'" name="therapy_list[]" aria-label="Default select example">' +
             '<option value="">--Please Select -- </option>@foreach($therapLists as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
-
+   '<td>'+
+            '<input type="text" name ="time_list[]" class="form-control" id="" placeholder="Time" required>'+
+'</td>'+
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });

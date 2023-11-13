@@ -42,6 +42,7 @@ Add Medical Suppliment In Prescription | {{ $ins_name }}
                     <tr>
                         <th>Supplement Name</th>
                         <th>Quantity</th>
+                           <th>Note</th>
                     </tr>
                     <tr>
                         <td>
@@ -55,6 +56,11 @@ Add Medical Suppliment In Prescription | {{ $ins_name }}
                         </td>
                         <td>
                             <input type="text" name="quantity[]" required value=""
+                                   class="form-control"/>
+                        </td>
+                        
+                         <td>
+                            <input type="text" value="no note available" name="ppnote[]" required value=""
                                    class="form-control"/>
                         </td>
                         <td>
@@ -120,6 +126,8 @@ Add Medical Suppliment In Prescription | {{ $ins_name }}
                 '</td>' +
                 '<td>' +
                 '<input type="text" name="quantity[]" value="" class="form-control" required/></td>' +
+                   '<td>' +
+                '<input type="text" name="ppnote[]" value="no note available" value="" class="form-control" required/></td>' +
                 '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
         });

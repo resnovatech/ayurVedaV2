@@ -31,7 +31,7 @@ class PatientPrecriptionController extends Controller
 {
     public function index(){
 
-        $getHistoryData = PatientHistory::latest()->get();
+        $getHistoryData = PatientHistory::where('status',0)->latest()->get();
         return view('admin.prescriptionList.index',compact('getHistoryData'));
     }
 

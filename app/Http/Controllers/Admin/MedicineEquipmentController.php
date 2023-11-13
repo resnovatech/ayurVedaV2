@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MedicineEquipment;
 use Illuminate\Support\Facades\Auth;
+use DB;
 class MedicineEquipmentController extends Controller
 {
     public $user;
@@ -77,6 +78,32 @@ class MedicineEquipmentController extends Controller
             $input = $request->all();
 
             $medicine->fill($input)->save();
+            
+               if($request->getData == 0){
+                
+                
+            }else{
+                
+                
+                   $inputAllData = $request->all();
+
+                $ing_name = $inputAllData['mainId'];
+                
+                
+                foreach($ing_name as $k=>$ing_names){
+                 
+                 
+                    DB::table('therapy_ing_detail')->where('id',$inputAllData['mainId'][$k])->update([
+                         
+                   'quantity' => $inputAllData['updateQuantity'][$k],
+                   'unit' => $inputAllData['updateUnit'][$k],
+              
+                   'updated_at' => Carbon::now()
+                  ]);
+                }
+                
+                
+            }
 
     return redirect()->route('medicineEquipment.index')->with('success','Updated successfully!');
 
@@ -95,5 +122,11 @@ class MedicineEquipmentController extends Controller
 
         MedicineEquipment::destroy($id);
         return redirect()->route('medicineEquipment.index')->with('error','Deleted successfully!');
+    }
+    
+    public function showCategoryMedicine(Request $request){
+        $mainData = $request->getTheValue;
+         $data = view('admin.medicineEquipment.showCategoryMedicine',compact('mainData'))->render();
+            return response()->json($data);
     }
 }

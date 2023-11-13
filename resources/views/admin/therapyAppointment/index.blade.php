@@ -34,7 +34,7 @@ Therapy Appointment | {{ $ins_name }}
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Doctor Appointment Info</h4>
+                        <h4 class="card-title mb-0">THERAPY Appointment Info</h4>
                         @include('flash_message')
                     </div><!-- end card header -->
 

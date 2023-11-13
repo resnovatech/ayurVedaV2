@@ -52,7 +52,7 @@ class DoctorWaitingListController extends Controller
             abort(403, 'Sorry !! You are Unauthorized to View !');
                }
 
-          $doctorWaitingList = DoctorAppointment::where('appointment_date',date('Y-m-d'))->where('status','=',null)->latest()->get();
+          $doctorWaitingList = DoctorAppointment::where('status','=',null)->latest()->get();
 
 
 
@@ -388,6 +388,7 @@ class DoctorWaitingListController extends Controller
             $mm = new PatientHerb();
             $mm->name=$inputAllData['medicinename'][$key];
             $mm->how_many_dose=$inputAllData['mmquantity'][$key];
+            $mm->mnote=$inputAllData['mnote'][$key];
             $mm->package_name=$request->package__type;
             $mm->doctor_id= $doctorWaitingList->doctor_id;
             $mm->doctor_appointment_id= Session::get('doctor_appoinment');
@@ -406,6 +407,7 @@ class DoctorWaitingListController extends Controller
             $mainDetail->ingredient_name =$inputAllData['mingrident_id'.$key][$j];
             $mainDetail->quantity =$inputAllData['mquantity'.$key][$j];
             $mainDetail->unit =$inputAllData['munit'.$key][$j];
+               $mainDetail->mnote =$inputAllData['mnote'.$key][$j];
             $mainDetail->save();
 
             }
@@ -421,6 +423,7 @@ class DoctorWaitingListController extends Controller
                 $tabletNameStore = new PatientHerb();
                 $tabletNameStore->name=$inputAllData['tablet_name'][$key];
                 $tabletNameStore->how_many_dose=$inputAllData['hquantity'][$key];
+                $tabletNameStore->hnote=$inputAllData['hnote'][$key];
                 $tabletNameStore->package_name=$request->package__type;
                 $tabletNameStore->doctor_id    = $doctorWaitingList->doctor_id;
                 $tabletNameStore->doctor_appointment_id    = Session::get('doctor_appoinment');
@@ -460,6 +463,7 @@ class DoctorWaitingListController extends Controller
                 $supplementName = new FacePackAppoinmentDetail();
                 $supplementName->face_pack_id=$inputAllData['supplement_name'][$key];
                 $supplementName->quantity=$inputAllData['quantity'][$key];
+                $supplementName->fnote=$inputAllData['fnote'][$key];
                 $supplementName->doctor_id    = $doctorWaitingList->doctor_id;
                 $supplementName->appoinment_id    = Session::get('doctor_appoinment');
                 $supplementName->history_id   = $finalGetData->id;
@@ -489,6 +493,7 @@ class DoctorWaitingListController extends Controller
                 $supplementName = new PatientMedicalSupplement();
                 $supplementName->name=$inputAllData['supplement_name'][$key];
                 $supplementName->quantity=$inputAllData['quantity'][$key];
+                    $supplementName->ppnote=$inputAllData['ppnote'][$key];
                 $supplementName->doctor_id    = $doctorWaitingList->doctor_id;
                 $supplementName->doctor_appointment_id    = Session::get('doctor_appoinment');
                 $supplementName->patient_history_id   = $finalGetData->id;

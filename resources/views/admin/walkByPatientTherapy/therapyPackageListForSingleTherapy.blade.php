@@ -23,6 +23,7 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
         <th>Ingredient Name</th>
         <th>Quantity</th>
         <th>Unit</th>
+        <th>Note</th>
     </tr>
     @foreach($allDetail as $key=>$allGetIngredientData)
     <tr>
@@ -43,7 +44,7 @@ $allDetail = DB::table('therapy_details')->where('therapy_list_id',$allTherapyPa
                 <option value="liter" {{ 'liter' ==  $allGetIngredientData->unit ? 'selected':'' }}>liter</option>
             </select>
         </td>
-
+     <td><input type="text" class="form-control" name="snote{{ $j }}[]" value="No Not Available" ></td>
         <td>
             <button type="button" name="add" id="dynamic-ar{{ $j}}"
                     class="btn btn-outline-primary dynamic-ar">Add New Ingredient
@@ -102,6 +103,9 @@ $therapistList = DB::table('therapists')->latest()->get();
             ' <select class="form-select mb-3" name="unit'+id_for_pass+'[]" aria-label="Default select example">' +
             ' <option value="gram">gram</option><option value="milligram">milligram</option><option value="liter">liter</option></select>' +
             '</td>' +
+              '<td>' +
+            '<input type="text" name="snote'+id_for_pass+'[]"  class="form-control" value="no note available" /></td>' +
+            '<td>' +
             '<td><button type="button" id="remove-input-fieldd'+i+'" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });

@@ -54,7 +54,7 @@ Therapy Maker List | {{ $ins_name }}
                                         <a class="nav-link" data-bs-toggle="tab" href="#arrow-finished"
                                            role="tab" aria-selected="false" tabindex="-1">
                                             <span class="d-block d-sm-none"><i class="mdi mdi-email"></i></span>
-                                            <span class="d-none d-sm-block">Finished</span>
+                                            <span class="d-none d-sm-block">Ready</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
@@ -77,8 +77,46 @@ Therapy Maker List | {{ $ins_name }}
                                             $therapyId = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('id');
 
-                                            $therapyDetailList = DB::table('single_ingredients')
+
+///////////////////
+
+
+                                                    $therapistIdMain = DB::table('therapy_appointment_date_and_times')
+                                                    ->where('therapy_appointment_id',$allTherapyAppointmentDetails->therapy_appointment_id)
+                                                    ->first();
+
+
+
+                                                    $therapyDetailList1 = DB::table('single_ingredients')
                                                     ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+                                                   // dd(count($therapyDetailList));
+
+
+                                                    if(count($therapyDetailList1) == 0){
+
+
+
+$patientId = DB::table('patient_therapies')->where('patient_id',$therapistIdMain->patient_id)
+->latest()->value('id');
+
+
+$therapyDetailList = DB::table('patient_therapy_details')
+                                                    ->where('patient_therapy_id', $patientId)->get();
+
+
+//dd($patientId);
+
+                                                    }else{
+
+                                                        $therapyDetailList = DB::table('single_ingredients')
+                                                    ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+
+                                                    }
+
+/////////////////////////////////////////////
+
                                                     $therapyName = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('name');
 
@@ -125,13 +163,13 @@ if(!$therapistIdMain){
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Request" {{ 'Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
-                                                                                                                    <option value="Ongoing" {{ 'Ongoing' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
-                                                                                                                    <option value="Finished" {{ 'Finished' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Finished</option>
+                                                                                                                    <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
+                                                                                                                    <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
+                                                                                                                    <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ready</option>
 
 
 
-                                                                                    <option value="All" {{ 'All' == $allTherapyAppointmentDetails->status ? 'selected':''}}>All</option>
+
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDetails->id }}" name="id" />
 
@@ -182,8 +220,49 @@ if(!$therapistIdMain){
                                             $therapyId = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('id');
 
-                                            $therapyDetailList = DB::table('single_ingredients')
+                                            //////////////////
+
+
+                                            $therapistIdMain = DB::table('therapy_appointment_date_and_times')
+                                                    ->where('therapy_appointment_id',$allTherapyAppointmentDetails->therapy_appointment_id)
+                                                    ->first();
+
+
+
+                                                    $therapyDetailList1 = DB::table('single_ingredients')
                                                     ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+                                                   // dd(count($therapyDetailList));
+
+
+                                                    if(count($therapyDetailList1) == 0){
+
+
+
+$patientId = DB::table('patient_therapies')->where('patient_id',$therapistIdMain->patient_id)
+->latest()->value('id');
+
+
+$therapyDetailList = DB::table('patient_therapy_details')
+                                                    ->where('patient_therapy_id', $patientId)->get();
+
+
+//dd($patientId);
+
+                                                    }else{
+
+                                                        $therapyDetailList = DB::table('single_ingredients')
+                                                    ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+
+                                                    }
+
+/////////////////////////////////////////////
+
+
+
+
+
                                                     $therapyName = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('name');
 
@@ -229,13 +308,13 @@ if(!$therapistIdMain){
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Request" {{ 'Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
-                                                                                                                    <option value="Ongoing" {{ 'Ongoing' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
-                                                                                                                    <option value="Finished" {{ 'Finished' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Finished</option>
+                                                                                                                    <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
+                                                                                                                    <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
+                                                                                                                    <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ready</option>
 
 
 
-                                                                                    <option value="All" {{ 'All' == $allTherapyAppointmentDetails->status ? 'selected':''}}>All</option>
+
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDetails->id }}" name="id" />
 
@@ -286,8 +365,48 @@ if(!$therapistIdMain){
                                             $therapyId = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('id');
 
-                                            $therapyDetailList = DB::table('single_ingredients')
+                                          //////////////////
+
+
+                                          $therapistIdMain = DB::table('therapy_appointment_date_and_times')
+                                                    ->where('therapy_appointment_id',$allTherapyAppointmentDetails->therapy_appointment_id)
+                                                    ->first();
+
+
+
+                                                    $therapyDetailList1 = DB::table('single_ingredients')
                                                     ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+                                                   // dd(count($therapyDetailList));
+
+
+                                                    if(count($therapyDetailList1) == 0){
+
+
+
+$patientId = DB::table('patient_therapies')->where('patient_id',$therapistIdMain->patient_id)
+->latest()->value('id');
+
+
+$therapyDetailList = DB::table('patient_therapy_details')
+                                                    ->where('patient_therapy_id', $patientId)->get();
+
+
+//dd($patientId);
+
+                                                    }else{
+
+                                                        $therapyDetailList = DB::table('single_ingredients')
+                                                    ->where('therapy_appointment_detail_id', $allTherapyAppointmentDetails->id)->get();
+
+
+                                                    }
+
+/////////////////////////////////////////////
+
+
+
+
                                                     $therapyName = DB::table('therapy_lists')
                                                     ->where('id', $allTherapyAppointmentDetails->therapy_name)->value('name');
 
@@ -333,9 +452,9 @@ if(!$therapistIdMain){
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Request" {{ 'Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
-                                                                                                                    <option value="Ongoing" {{ 'Ongoing' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
-                                                                                                                    <option value="Finished" {{ 'Finished' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Finished</option>
+                                                                                                                    <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
+                                                                                                                    <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
+                                                                                                                    <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ready</option>
 
 
 
@@ -437,13 +556,13 @@ if(!$therapistIdMain){
                                                         <form method="post" action="{{ route('therapyStatusUpdate') }}">
                                                             @csrf
                                                                                                                 <select class="form-control" name="status">
-                                                                                                                    <option value="Request" {{ 'Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
-                                                                                                                    <option value="Ongoing" {{ 'Ongoing' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
-                                                                                                                    <option value="Finished" {{ 'Finished' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Finished</option>
+                                                                                                                    <option value="Therapy Ingredient Request" {{ 'Therapy Ingredient Request' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Request</option>
+                                                                                                                    <option value="Ongoing Ingredient" {{ 'Ongoing Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ongoing</option>
+                                                                                                                    <option value="Ready Ingredient" {{ 'Ready Ingredient' == $allTherapyAppointmentDetails->status ? 'selected':''}}>Ready</option>
 
 
 
-                                                                                    <option value="All" {{ 'All' == $allTherapyAppointmentDetails->status ? 'selected':''}}>All</option>
+
                                                                                                                 </select>
                                                                                                                 <input type="hidden" value="{{ $allTherapyAppointmentDetails->id }}" name="id" />
 

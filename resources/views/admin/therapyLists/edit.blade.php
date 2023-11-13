@@ -58,6 +58,8 @@ Therapy List | {{ $ins_name }}
                                             <th>Therapy Ingredient</th>
                                             <th>Quantity</th>
                                             <th>Unit</th>
+                                             <th>Note</th>
+                                      <th></th>
                                         </tr>
                                         @foreach($allTherapyLists->therapyDetails as $key=>$allTherapyIngredient)
                                         @if($key+1 == 1)
@@ -75,10 +77,15 @@ Therapy List | {{ $ins_name }}
                                             </td>
                                             <td>
                                                 <select class="form-select mb-3" name="unit[]" aria-label="Default select example">
-                                                    <option value="gram" {{ 'gram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>gram</option>
-                                                    <option value="milligram" {{ 'milligram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>milligram</option>
-                                                    <option value="liter" {{ 'liter' ==  $allTherapyIngredient->unit ? 'selected':'' }}>liter</option>
+                                                    <option value="Gram" {{ 'Gram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Gram</option>
+                                                    <option value="Piece" {{ 'Piece' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Piece</option>
+                                                    <option value="Ml" {{ 'Ml' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Ml</option>
+                                                         <option value="Drops" {{ 'Drops' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Drops</option>
                                                 </select>
+                                            </td>
+                                              <td>
+                                                <input type="text" name="mainnote[]"  value="{{ $allTherapyIngredient->mainnote  }}"
+                                                       class="form-control"/>
                                             </td>
                                             <td>
                                                 <button type="button" name="add" id="dynamic-ar"
@@ -101,10 +108,15 @@ Therapy List | {{ $ins_name }}
                                             </td>
                                             <td>
                                                 <select class="form-select mb-3" name="unit[]" aria-label="Default select example">
-                                                    <option value="gram" {{ 'gram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>gram</option>
-                                                    <option value="milligram" {{ 'milligram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>milligram</option>
-                                                    <option value="liter" {{ 'liter' ==  $allTherapyIngredient->unit ? 'selected':'' }}>liter</option>
+                                                <option value="Gram" {{ 'Gram' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Gram</option>
+                                                    <option value="Piece" {{ 'Piece' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Piece</option>
+                                                    <option value="Ml" {{ 'Ml' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Ml</option>
+                                                         <option value="Drops" {{ 'Drops' ==  $allTherapyIngredient->unit ? 'selected':'' }}>Drops</option>
                                                 </select>
+                                            </td>
+                                             <td>
+                                                <input type="text" name="mainnote[]"  value="{{ $allTherapyIngredient->mainnote  }}"
+                                                       class="form-control"/>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>
@@ -161,10 +173,13 @@ Therapy List | {{ $ins_name }}
             '</td>' +
             '<td>' +
             '<input type="text" name="quantity[]"  class="form-control" /></td>' +
-            '<td>' +
+          '<td>' +
             ' <select class="form-select mb-3" name="unit[]" aria-label="Default select example">' +
-            ' <option value="gram">gram</option><option value="milligram">milligram</option><option value="liter">liter</option></select>' +
+            ' <option value="Gram">Gram</option><option value="Piece">Piece</option><option value="Ml">Ml</option><option value="Drops">Drops</option></select>' +
             '</td>' +
+              '<td>' +
+            '<input type="text" name="mainnote[]"  class="form-control" /></td>' +
+            '<td>' +
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });

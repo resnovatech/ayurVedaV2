@@ -346,6 +346,10 @@
         $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
 </script>

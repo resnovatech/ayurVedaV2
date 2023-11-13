@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-Inventory List | {{ $ins_name }}
+Inventory List  | {{ $ins_name }}
 @endsection
 
 
@@ -82,7 +82,7 @@ Inventory List | {{ $ins_name }}
                 <th class="sort" data-sort="customer_name"> Name</th>
                 <th class="sort" data-sort="customer_name"> Quantity</th>
                 <th class="sort" data-sort="customer_name"> Available Quantity</th>
-
+ <th class="sort" data-sort="action">Action</th>
             </tr>
             </thead>
             <tbody class="list form-check-all">
@@ -91,7 +91,28 @@ Inventory List | {{ $ins_name }}
             <tr>
 
                 <td class="id">{{ $key+1 }}</td>
-                <td class="customer_name">{{ $allTherapyIngredients->name }}</td>
+                <td class="customer_name">
+                    
+                    {{ $allTherapyIngredients->name }}
+                    
+                    <br>
+                    
+                    <?php 
+                      
+                      $getDataNew = DB::table('therapy_ing_detail')
+                      ->where('main_name',$allTherapyIngredients->name)->latest()->get();
+                    
+                    
+                    ?>
+                    
+                    @foreach($getDataNew as $getDataNews)
+                    
+                    {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
+                    
+                    @endforeach
+                    
+                    
+                    </td>
                 <td class="customer_name">{{ $allTherapyIngredients->quantity }}</td>
                 <td class="customer_name">
 
@@ -114,7 +135,116 @@ Inventory List | {{ $ins_name }}
 
 
                 </td>
+<td>
+    
+    
+                @if (Auth::guard('admin')->user()->can('therapyIngredientsUpdate'))
+                    <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lgmn{{ $allTherapyIngredients->id }}"
+                    class="btn btn-primary waves-light waves-effect  btn-sm" >
+                    <i class="ri-pencil-fill"></i></button>
 
+                      <!--  Large modal example -->
+                      <div class="modal fade bs-example-modal-lgmn{{ $allTherapyIngredients->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="myLargeModalLabel">Update Therapy Ingredient</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="{{ route('therapyIngredients.update',$allTherapyIngredients->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="row">
+                                            
+                                                               <!--new code List-->
+                                            
+                                            @if(count($getDataNew) == 0)
+
+  <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
+@else
+<hr>
+<input type="hidden"  name="getData" class="form-control" value="1" placeholder="Appointment Date" required>
+
+
+<div class="row">
+    
+             
+@foreach($getDataNew as $getDataNews)
+<input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
+<input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
+<div class="col-md-4 mt-2">
+    <label>Name</label>
+    <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
+    
+</div>
+
+<div class="col-md-4 mt-2">
+    
+    <label>Quantity</label>
+        <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
+    
+</div>
+
+
+<div class="col-md-4 mt-2">
+        <label>Unit</label>
+                <select name ="updateUnit[]" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Gram" {{'Gram' == $getDataNews->unit ? 'selected':''}}>Gram</option>
+<option value="Piece" {{'Piece' == $getDataNews->unit ? 'selected':''}}>Piece</option>
+<option value="Ml" {{'Ml' == $getDataNews->unit ? 'selected':''}}>Ml</option>
+<option value="Drops" {{'Drops' == $getDataNews->unit ? 'selected':''}}>Drops</option>
+</select>
+</div>
+@endforeach
+</div>
+<hr>
+@endif
+                                            
+                                            <!-- end new code list -->
+                                           
+
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Quantity</label>
+                                                <input type="text" name="quantity" value="{{ $allTherapyIngredients->quantity }}"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Unit</label>
+                                            
+
+                                                <select name ="unit" class="form-control">
+                                                    <option>--Select One --</option>
+
+                    <option value="Gram" {{ $allTherapyIngredients->unit == 'Gram' ? 'selected':''}}>Gram</option>
+                    <option value="Piece" {{ $allTherapyIngredients->unit == 'Piece' ? 'selected':''}}>Piece</option>
+                     <option value="Ml" {{ $allTherapyIngredients->unit == 'Ml' ? 'selected':''}}>Ml</option>
+                    <option value="Drops" {{ $allTherapyIngredients->unit == 'Drops' ? 'selected':''}}>Drops</option>
+                    
+                    
+                    
+
+                    </select>
+
+
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                    </form>
+                                  </div>
+                              </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                      </div><!-- /.modal -->
+
+
+@endif
+    
+    
+</td>
 
             </tr>
             @endforeach
@@ -132,7 +262,9 @@ Inventory List | {{ $ins_name }}
                 <th class="sort" data-sort="customer_name"> Name</th>
                 <th class="sort" data-sort="customer_name"> Quantity</th>
                 <th class="sort" data-sort="customer_name"> Available Quantity</th>
-
+                 <th class="sort" data-sort="customer_name"> Other Category</th>
+                 <th class="sort" data-sort="customer_name">Type</th>
+ <th class="sort" data-sort="action">Action</th>
 
             </tr>
             </thead>
@@ -142,7 +274,25 @@ Inventory List | {{ $ins_name }}
             <tr>
 
                 <td class="id">{{ $key+1 }}</td>
-                <td class="customer_name">{{ $allmedicineEquipment->name }}</td>
+                <td class="customer_name">
+                    
+                    {{ $allmedicineEquipment->name }} <br>
+                    
+                    <?php 
+                      
+                      $getDataNew = DB::table('therapy_ing_detail')
+                      ->where('main_name',$allmedicineEquipment->name)->latest()->get();
+                    
+                    
+                    ?>
+                    
+                    @foreach($getDataNew as $getDataNews)
+                    
+                    {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
+                    
+                    @endforeach
+                    
+                    </td>
                 <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
                 <td class="customer_name">
 
@@ -162,7 +312,145 @@ Inventory List | {{ $ins_name }}
 
 
                 </td>
+                  <td class="customer_name">{{ $allmedicineEquipment->other_category }}</td>
+                              <td class="customer_name">{{ $allmedicineEquipment->other_type }}</td>
+<td>@if (Auth::guard('admin')->user()->can('medicineEquipmentUpdate'))
+                    <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lgmnb{{ $allmedicineEquipment->id }}"
+                    class="btn btn-primary waves-light waves-effect  btn-sm" >
+                    <i class="ri-pencil-fill"></i></button>
 
+                      <!--  Large modal example -->
+                      <div class="modal fade bs-example-modal-lgmnb{{ $allmedicineEquipment->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="myLargeModalLabel">Update Medicine Ingredient</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="{{ route('medicineEquipment.update',$allmedicineEquipment->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="row">
+                                            
+                                             <div class="col-12 mb-2">
+                            <label for="" class="form-label">Other Category</label>
+                         
+
+                            <select name ="other_category" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Doctor" {{'Doctor' == $allmedicineEquipment->other_category ? 'selected':''}}>Doctor</option>
+<option value="Other" {{'Other' == $allmedicineEquipment->other_category ? 'selected':''}}>Other</option>
+
+</select>
+
+
+
+                        </div>
+                        
+                        
+                         <div class="col-12 mb-2">
+                            <label for="" class="form-label"> Type</label>
+                         
+
+                            <select name ="other_type" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Indian" {{'Indian' == $allmedicineEquipment->other_type ? 'selected':''}}>Indian</option>
+<option value="Bangladeshi" {{'Bangladeshi' == $allmedicineEquipment->other_type ? 'selected':''}}>Bangladeshi</option>
+
+</select>
+
+
+
+                        </div>
+                                            
+                                                               <!--new code List-->
+                                            
+                                            @if(count($getDataNew) == 0)
+
+  <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
+@else
+<hr>
+<input type="hidden"  name="getData" class="form-control" value="1" placeholder="Appointment Date" required>
+
+
+<div class="row">
+    
+             
+@foreach($getDataNew as $getDataNews)
+<input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
+<input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
+<div class="col-md-4 mt-2">
+    <label>Name</label>
+    <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
+    
+</div>
+
+<div class="col-md-4 mt-2">
+    
+    <label>Quantity</label>
+        <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
+    
+</div>
+
+
+<div class="col-md-4 mt-2">
+        <label>Unit</label>
+                <select name ="updateUnit[]" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Gram" {{'Gram' == $getDataNews->unit ? 'selected':''}}>Gram</option>
+<option value="Piece" {{'Piece' == $getDataNews->unit ? 'selected':''}}>Piece</option>
+<option value="Ml" {{'Ml' == $getDataNews->unit ? 'selected':''}}>Ml</option>
+<option value="Drops" {{'Drops' == $getDataNews->unit ? 'selected':''}}>Drops</option>
+</select>
+</div>
+@endforeach
+</div>
+<hr>
+@endif
+                                            
+                                            <!-- end new code list -->
+                                           
+
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Quantity</label>
+                                                <input type="text" name="quantity" value="{{ $allmedicineEquipment->quantity }}"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="col-12 mb-2">
+                                                <label for="" class="form-label">Unit</label>
+                                            
+
+                                                <select name ="unit" class="form-control">
+                                                    <option>--Select One --</option>
+
+                    <option value="Gram" {{ $allmedicineEquipment->unit == 'Gram' ? 'selected':''}}>Gram</option>
+                    <option value="Piece" {{ $allmedicineEquipment->unit == 'Piece' ? 'selected':''}}>Piece</option>
+                     <option value="Ml" {{ $allmedicineEquipment->unit == 'Ml' ? 'selected':''}}>Ml</option>
+                    <option value="Drops" {{ $allmedicineEquipment->unit == 'Drops' ? 'selected':''}}>Drops</option>
+                    
+                    
+                    
+
+                    </select>
+
+
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                    </form>
+                                  </div>
+                              </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                      </div><!-- /.modal -->
+
+
+@endif</td>
             </tr>
             @endforeach
             </tbody>
@@ -176,6 +464,7 @@ Inventory List | {{ $ins_name }}
             <thead class="table-light">
             <tr>
                 <th class="sort" data-sort="customer_name">Sl</th>
+                <th class="sort" data-sort="customer_name"> Category Name</th>
                 <th class="sort" data-sort="customer_name"> Name</th>
                 <th class="sort" data-sort="customer_name"> Quantity</th>
                 <th class="sort" data-sort="customer_name"> Available Quantity</th>
@@ -190,7 +479,28 @@ Inventory List | {{ $ins_name }}
             <tr>
 
                 <td class="id">{{ $key+1 }}</td>
-                <td class="customer_name">{{ $allmedicineEquipment->name }}</td>
+                <td class="customer_name">{{ $allmedicineEquipment->category }}</td>
+                <td class="customer_name">
+                    
+                    {{ $allmedicineEquipment->name }}<br>
+                    
+                    <?php 
+                      
+                      $getDataNew = DB::table('therapy_ing_detail')
+                      ->where('main_name',$allmedicineEquipment->name)->latest()->get();
+                    
+                    
+                    ?>
+                    
+                    @foreach($getDataNew as $getDataNews)
+                    
+                    {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
+                    
+                    @endforeach
+                    
+                    
+                    
+                    </td>
                 <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
 
 
@@ -230,17 +540,56 @@ Inventory List | {{ $ins_name }}
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <label for="" class="form-label">Name</label>
-                                                {{-- <input type="text" value="{{ $allmedicineEquipment->name }}" name ="name" class="form-control" id="" placeholder="Name" required> --}}
+                                         
+                                            
+                                            
+                                            <!--new code List-->
+                                            
+                                            @if(count($getDataNew) == 0)
 
-                                                <select name ="name" class="form-control">
-                                                    <option>--Select One --</option>
-                                                    @foreach($inventoryNames as $AllInventory)
-                    <option value="{{ $AllInventory->name }}"  {{ $allmedicineEquipment->name == $AllInventory->name ? 'selected':''}}>{{ $AllInventory->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+  <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
+@else
+<hr>
+<input type="hidden"  name="getData" class="form-control" value="1" placeholder="Appointment Date" required>
+
+
+<div class="row">
+    
+             
+@foreach($getDataNew as $getDataNews)
+<input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
+<input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
+<div class="col-md-4 mt-2">
+    <label>Name</label>
+    <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
+    
+</div>
+
+<div class="col-md-4 mt-2">
+    
+    <label>Quantity</label>
+        <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
+    
+</div>
+
+
+<div class="col-md-4 mt-2">
+        <label>Unit</label>
+                <select name ="updateUnit[]" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Gram" {{'Gram' == $getDataNews->unit ? 'selected':''}}>Gram</option>
+<option value="Piece" {{'Piece' == $getDataNews->unit ? 'selected':''}}>Piece</option>
+<option value="Ml" {{'Ml' == $getDataNews->unit ? 'selected':''}}>Ml</option>
+<option value="Drops" {{'Drops' == $getDataNews->unit ? 'selected':''}}>Drops</option>
+</select>
+</div>
+@endforeach
+</div>
+<hr>
+@endif
+                                            
+                                            <!-- end new code list -->
 
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Quantity</label>
@@ -249,8 +598,23 @@ Inventory List | {{ $ins_name }}
                                             </div>
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Unit</label>
-                                                <input type="text" name="unit" value="{{ $allmedicineEquipment->unit }}"
-                                                class="form-control"/>
+                                                {{-- <input type="text" name="unit" value="{{ $allmedicineEquipment->unit }}"
+                                                class="form-control"/> --}}
+
+                                                <select name ="unit" class="form-control">
+                                                    <option>--Select One --</option>
+
+                    <option value="Gram" {{ $allmedicineEquipment->unit == 'Gram' ? 'selected':''}}>Gram</option>
+                    <option value="Piece" {{ $allmedicineEquipment->unit == 'Piece' ? 'selected':''}}>Piece</option>
+                     <option value="Ml" {{ $allmedicineEquipment->unit == 'Ml' ? 'selected':''}}>Ml</option>
+                    <option value="Drops" {{ $allmedicineEquipment->unit == 'Drops' ? 'selected':''}}>Drops</option>
+                    
+                    
+                    
+
+                    </select>
+
+
                                             </div>
 
                                         </div>
@@ -319,24 +683,37 @@ Inventory List | {{ $ins_name }}
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Inventory Category</label>
-                            <select name ="category" class="form-control" id=""  required>
+                            <select name ="category" class="form-control newcate" id=""  required>
                                 <option value="">--Please select --</option>
                                 @foreach($inventoryCategorys as $allInventoryCategorys)
 <option value="{{ $allInventoryCategorys->name }}">{{ $allInventoryCategorys->name }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        
+                        
+                        
+                          <div id="resultc">
+                            
+                            
+                        </div>
+
 
 
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Name</label>
                             {{-- <input type="text" name ="name" class="form-control" id="" placeholder="Name" required> --}}
-                            <select name ="name" class="form-control">
+                            <select name ="name" class="form-control storeForInventory" id="storeForInventory">
                                 <option>--Select One --</option>
                                 @foreach($inventoryNames as $AllInventory)
 <option value="{{ $AllInventory->name }}">{{ $AllInventory->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        
+                        <div class="testResultStore">
+                            
+                            
                         </div>
 
                         <div class="col-12 mb-2">
@@ -346,8 +723,21 @@ Inventory List | {{ $ins_name }}
                         </div>
                         <div class="col-12 mb-2">
                             <label for="" class="form-label">Unit</label>
-                            <input type="text" name="unit" value=""
-                            class="form-control"/>
+                            {{-- <input type="text" name="unit" value=""
+                            class="form-control"/> --}}
+
+
+                            <select name ="unit" class="form-control">
+                                <option>--Select One --</option>
+
+<option value="Gram">Gram</option>
+<option value="Piece">Piece</option>
+<option value="Ml">Ml</option>
+<option value="Drops">Drops</option>
+</select>
+
+
+
                         </div>
 
                     </div>
@@ -363,6 +753,63 @@ Inventory List | {{ $ins_name }}
 
 
 @section('script')
+<script>
 
+///new
+
+ $(document).on('change', '.newcate', function() {
+     
+     var getTheValue = $(this).val();
+     
+       $.ajax({
+url: "{{ route('showCategoryMedicine') }}",
+method: 'GET',
+data: {getTheValue:getTheValue},
+success: function(data) {
+
+    
+
+  
+       $('#resultc').html(data);
+     
+       
+
+
+    
+
+}
+});
+});
+///end new 
+    // $('#appointment_time').change(function(){
+
+        $(document).on('change', '.storeForInventory', function() {
+
+        var getTheValue = $(this).val();
+    
+        //alert(getTheValue);
+
+        $.ajax({
+url: "{{ route('getDataForQuantity') }}",
+method: 'GET',
+data: {getTheValue:getTheValue},
+success: function(data) {
+
+    
+
+  
+       $('.testResultStore').html(data);
+     
+       
+
+
+    
+
+}
+});
+
+    });
+
+</script>
 
 @endsection

@@ -57,6 +57,10 @@ Add Face Pack In Prescription | {{ $ins_name }}
                             <input type="text" name="quantity[]" required value=""
                                    class="form-control"/>
                         </td>
+                          <td>
+                            <input type="text" name="fnote[]" required value="no note available"
+                                   class="form-control"/>
+                        </td>
                         <td>
                             <button type="button" name="add" id="dynamic-arsu"
                                     class="btn btn-outline-primary">Add New FACE PACK
@@ -120,6 +124,8 @@ Add Face Pack In Prescription | {{ $ins_name }}
                 '</td>' +
                 '<td>' +
                 '<input type="text" name="quantity[]" value="" class="form-control" required/></td>' +
+                '<td>' +
+                '<input type="text" name="fnote[]" value="" class="form-control" value="no note available" required/></td>' +
                 '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
         });

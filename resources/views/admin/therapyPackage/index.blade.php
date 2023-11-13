@@ -160,7 +160,7 @@ Therapy Package List | {{ $ins_name }}
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
                                     <th>Therapy Name</th>
-
+  <th>Time</th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -171,7 +171,7 @@ Therapy Package List | {{ $ins_name }}
                                             @endforeach
                                         </select>
                                     </td>
-
+<td>  <input type="text" name ="time_list[]" class="form-control" id="" placeholder="Time" required></td>
                                     <td>
                                         <button type="button" name="add" id="dynamic-ar"
                                                 class="btn btn-outline-primary">Add New Therapy
@@ -208,7 +208,9 @@ Therapy Package List | {{ $ins_name }}
             ' <select class="form-select mb-3" id="powderId'+i+'" name="therapy_list[]" aria-label="Default select example">' +
             '<option value="">--Please Select -- </option>@foreach($therapLists as $allTherapyIngredients)<option data-amount="{{ $allTherapyIngredients->amount }}" value="{{ $allTherapyIngredients->name }}">{{ $allTherapyIngredients->name }}</option>@endforeach</select>' +
             '</td>' +
-
+            '<td>'+
+            '<input type="text" name ="time_list[]" class="form-control" id="" placeholder="Time" required>'+
+'</td>'+
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
         );
     });

@@ -187,6 +187,31 @@ Paid
                                         </tr>
                                         </thead>
                                         <tbody id="products-list">
+                                            
+                                                  @foreach($signaturePackagePriceLIst as $signaturePackagePriceLIsts)
+                                            
+                                            <tr>
+<td class="text-start">
+    <span class="fw-medium">{{ $signaturePackagePriceLIsts->name}}</span>
+
+</td>
+
+<td>{{ $signaturePackagePriceLIsts->price}}</td>
+<td>
+    
+   
+    <input type="hidden" name="new_sign_pack_id[]" value="{{ $signaturePackagePriceLIsts->id }}"/>
+                                            <input type="text" class="form-control form-control-sm" name="new_sign_pack_quantity[]" value="{{ $signaturePackagePriceLIsts->quantity }}"/>
+    
+    
+    </td>
+<td>{{ $signaturePackagePriceLIsts->price*$signaturePackagePriceLIsts->quantity}}</td>
+</tr>
+                                            
+                                            
+                                            @endforeach
+                                            
+                                            
                                             <?php
                                             $countSingleFacePackageList = count($singleFacePackageList);
                                                            $totalFacialAmount = 0 ;

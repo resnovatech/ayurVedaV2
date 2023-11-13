@@ -1,6 +1,10 @@
 @extends('admin.master.masterCreate')
 @section('title')
+@if(Route::is('signatureTherapyAdd'))
+Signature Package  | {{ $ins_name }}
+@else
 Therapy Appointment  | {{ $ins_name }}
+@endif
 @endsection
 
 
@@ -15,17 +19,35 @@ Therapy Appointment  | {{ $ins_name }}
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
+                @if(Route::is('signatureTherapyAdd'))
+                
+                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Signature Package Appointment</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                            
+                            <li class="breadcrumb-item active">Signature Package Appointment</li>
+                        </ol>
+                    </div>
+
+                </div>
+                
+                @else
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">Therapy Appointment</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                            
                             <li class="breadcrumb-item active">Therapy Appointment</li>
                         </ol>
                     </div>
 
                 </div>
+                @endif
             </div>
         </div>
 
@@ -149,6 +171,37 @@ $facePackAppoinmentList = DB::table('face_pack_appoinments')
             <div class="card mt-5">
                 <div class="card-body">
                     <div class="row mt-3">
+                        
+                         @if(Route::is('signatureTherapyAdd'))
+                    
+                   <div class="col-lg-6">
+    
+    <!--label-->
+    
+  <label class="mt-2">Quantity</label>
+
+    <!--label-->
+    <input type="text" required  name="ssquantity" value=""
+               class="form-control mt-2" />
+    </div>
+    
+        <div class="col-lg-6">
+    
+    <!--label-->
+    
+  <label class="mt-2">Price</label>
+
+    <!--label-->
+    <input type="text" required  name="ssprice" value=""
+               class="form-control mt-2" />
+    </div>
+                    
+                    @else
+                 
+                    
+                    @endif
+                    
+                    
 
             <h4 class="card-title mb-0 flex-grow-1">Therapy/FacePack Appointment Date & Time</h4>
             @foreach($facePackAppoinmentList as $j=>$allfacePackAppoinmentList)
@@ -325,6 +378,15 @@ class="form-control mt-2" id="checkData"/>
             <div class="modal-body">
                 <form action="{{ route('walkByPatientTherapy.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                     @csrf
+                    
+                    @if(Route::is('signatureTherapyAdd'))
+                    
+                    <input type="hidden" name ="signavailable" value="yes" class="form-control"  placeholder="Name" required>
+                    
+                    @else
+                    <input type="hidden" name ="signavailable" value="no" class="form-control"  placeholder="Name" required>
+                    
+                    @endif
                     <div class="row">
                         <div class="col-6 mb-2">
                             <label for="" class="form-label">Name</label>
