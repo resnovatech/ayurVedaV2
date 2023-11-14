@@ -428,86 +428,208 @@ $usr = Auth::guard('admin')->user();
                 </li>
                 @endif
 
+                <li class="menu-title"><span data-key="t-menu">Other</span></li>
 
+                <!--new code for inventory-->
                 @if ( $usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate')|| $usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
-                <li class="menu-title"><span data-key="t-menu">Inventory  </span></li>
-                @if ($usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('inventoryCategoryList.index') ? 'active' : '' }}" href="{{ route('inventoryCategoryList.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Category List</span>
+                    <a class="nav-link menu-link collapsed" href="#sidebarMaps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMaps">
+                        <i class="bx bxs-cart-add"></i> <span data-key="t-maps">Inventory</span>
                     </a>
+                    <div class="menu-dropdown collapse" id="sidebarMaps" style="">
+                        <ul class="nav nav-sm flex-column">
+
+                            @if ($usr->can('inventoryCategoryAdd') || $usr->can('inventoryCategoryView') || $usr->can('inventoryCategoryDelete') || $usr->can('inventoryCategoryUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('inventoryCategoryList.index') ? 'active' : '' }}" href="{{ route('inventoryCategoryList.index') }}">
+Inventory Category List
+                                </a>
+                            </li>
+                            @endif
+
+
+                            @if ($usr->can('inventoryNameAdd') || $usr->can('inventoryNameView') || $usr->can('inventoryNameDelete') || $usr->can('inventoryNameUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('inventoryNameInfo.index') ? 'active' : '' }}" href="{{ route('inventoryNameInfo.index') }}">
+                                    Inventory Name List
+                                </a>
+                            </li>
+                            @endif
+
+
+                            @if ($usr->can('inventoryMixerAdd') || $usr->can('inventoryMixerView') || $usr->can('inventoryMixerDelete') || $usr->can('inventoryMixerUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('inventoryMixerList') || Route::is('inventoryMixerAdd') || Route::is('inventoryMixerEdit') ? 'active' : '' }}" href="{{ route('inventoryMixerList') }}">
+                                   Inventory Mixer List
+                                </a>
+                            </li>
+                            @endif
+
+                            @if ($usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">
+                                   Inventory List
+                                </a>
+                            </li>
+                            @endif
+
+                            @if ($usr->can('inventoryDamageAdd') || $usr->can('inventoryDamageView') || $usr->can('inventoryDamageDelete') || $usr->can('inventoryDamageUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-vector" class="nav-link {{ Route::is('inventoryDamage.index') ? 'active' : '' }}" href="{{ route('inventoryDamage.index') }}">
+                                  Inventory Damage
+                                </a>
+                            </li>
+                            @endif
+
+                            @if ($usr->can('otherEquipmentAdd') || $usr->can('otherEquipmentView') || $usr->can('otherEquipmentDelete') || $usr->can('otherEquipmentUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-leaflet" class="nav-link {{ Route::is('otherEquipment.index') ? 'active' : '' }}" href="{{ route('otherEquipment.index') }}">
+                                    Other Equipment
+                                </a>
+                            </li>
+                            @endif
+
+
+
+                        </ul>
+                    </div>
                 </li>
-                @endif
-                @if ($usr->can('inventoryNameAdd') || $usr->can('inventoryNameView') || $usr->can('inventoryNameDelete') || $usr->can('inventoryNameUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('inventoryNameInfo.index') ? 'active' : '' }}" href="{{ route('inventoryNameInfo.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Name List</span>
-                    </a>
-                </li>
-                @endif
-
-                 @if ($usr->can('inventoryMixerAdd') || $usr->can('inventoryMixerView') || $usr->can('inventoryMixerDelete') || $usr->can('inventoryMixerUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('inventoryMixerList') || Route::is('inventoryMixerAdd') || Route::is('inventoryMixerEdit') ? 'active' : '' }}" href="{{ route('inventoryMixerList') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Mixer List</span>
-                    </a>
-                </li>
-                @endif
-
-                @if ($usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory List</span>
-                    </a>
-                </li>
-                @endif
-
-
-
-                @if ($usr->can('inventoryDamageAdd') || $usr->can('inventoryDamageView') || $usr->can('inventoryDamageDelete') || $usr->can('inventoryDamageUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('inventoryDamage.index') ? 'active' : '' }}" href="{{ route('inventoryDamage.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Inventory Damage</span>
-                    </a>
-                </li>
-                @endif
-
-
-                 @if ($usr->can('otherEquipmentAdd') || $usr->can('otherEquipmentView') || $usr->can('otherEquipmentDelete') || $usr->can('otherEquipmentUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('otherEquipment.index') ? 'active' : '' }}" href="{{ route('otherEquipment.index') }}">
-                        <i class="bx bxs-file-plus"></i> <span data-key="t-widgets">Other Equipment</span>
-                    </a>
-                </li>
-                @endif
-
-
-
-                @endif
-                @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate') || $usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate') || $usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
-                <li class="menu-title"><span data-key="t-menu">HR Section</span></li>
-                @if ($usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('staff.index') ? 'active' : '' }}" href="{{ route('staff.index') }}">
-                        <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-widgets">Staff</span>
-                    </a>
-                </li>
-                @endif
-                @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('reward.index') ? 'active' : '' }}" href="{{ route('reward.index') }}">
-                        <i class="bx bx-money"></i> <span data-key="t-widgets">Reward</span>
-                    </a>
-                </li>
-                @endif
-                @if ($usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate'))
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('therapist.show') || Route::is('therapist.index') ? 'active' : '' }}" href="{{ route('therapist.index') }}">
-                        <i class="mdi mdi-doctor"></i> <span data-key="t-widgets">Therapist</span>
-                    </a>
-                </li>
-                @endif
 @endif
+
+                <!-- end new code for inventory -->
+
+                <!--new code for hrm start-->
+
+                @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate') || $usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate') || $usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link collapsed" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
+                        <i class="ri-team-fill"></i> <span data-key="t-multi-level">Human Resource</span>
+                    </a>
+                    <div class="menu-dropdown collapse" id="sidebarMultilevel" style="">
+                        <ul class="nav nav-sm flex-column">
+
+
+                            @if ($usr->can('staffAdd') || $usr->can('staffView') || $usr->can('staffDelete') || $usr->can('staffUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-level-1.1" class="nav-link {{ Route::is('staff.index') ? 'active' : '' }}" href="{{ route('staff.index') }}">
+                                   Staff
+                                </a>
+                            </li>
+                            @endif
+                            @if ($usr->can('rewardAdd') || $usr->can('rewardView') || $usr->can('rewardDelete') || $usr->can('rewardUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-level-1.1" class="nav-link {{ Route::is('reward.index') ? 'active' : '' }}" href="{{ route('reward.index') }}">
+                                   Reward
+                                </a>
+                            </li>
+                            @endif
+                            @if ($usr->can('therapistAdd') || $usr->can('therapistView') || $usr->can('therapistDelete') || $usr->can('therapistUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-level-1.1" class="nav-link {{ Route::is('therapist.show') || Route::is('therapist.index') ? 'active' : '' }}" href="{{ route('therapist.index') }}">
+                                 Therapist
+                                </a>
+                            </li>
+                            @endif
+
+
+
+
+
+
+                            <li class="nav-item">
+                                <a href="#sidebarAccount" class="nav-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2">HRM</a>
+                                <div class="menu-dropdown collapse" id="sidebarAccount" style="">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="#sidebarCrm11" class="nav-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrm" data-key="t-level-2.2">Attandance</a>
+                                            <div class="collapse menu-dropdown" id="sidebarCrm11">
+                                                <ul class="nav nav-sm flex-column">
+                                                    @if ($usr->can('attandaceAdd'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('attandace.create') }}" class="nav-link" data-key="t-level-3.1">Add Detail</a>
+                                                    </li>
+                                                    @endif
+                                                    @if ( $usr->can('attandaceView') || $usr->can('attandaceDelete') || $usr->can('attandaceUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('attandace.index') }}" class="nav-link" data-key="t-level-3.2">View Report</a>
+                                                    </li>
+                                                    @endif
+
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#sidebarCrm" class="nav-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrm" data-key="t-level-2.2">PayRoll</a>
+                                            <div class="collapse menu-dropdown" id="sidebarCrm">
+                                                <ul class="nav nav-sm flex-column">
+                                                    @if ($usr->can('salaryTypeAdd') || $usr->can('salaryTypeView') || $usr->can('salaryTypeDelete') || $usr->can('salaryTypeUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('salaryType.index') }}" class="nav-link" data-key="t-level-3.1">Salary Type SetUp</a>
+                                                    </li>
+                                                    @endif
+                                                    @if ($usr->can('salarySetupAdd') || $usr->can('salarySetupView') || $usr->can('salarySetupDelete') || $usr->can('salarySetupUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('salarySetup.index') }}" class="nav-link" data-key="t-level-3.2">Salary SetUp</a>
+                                                    </li>
+@endif
+@if ($usr->can('salaryGenerateAdd') || $usr->can('salaryGenerateView') || $usr->can('salaryGenerateDelete') || $usr->can('salaryGenerateUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('salaryGenerate.index') }}" class="nav-link" data-key="t-level-3.2">Salary Generate</a>
+                                                    </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+
+                                        <li class="nav-item">
+                                            <a href="#sidebarCrm112" class="nav-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrm" data-key="t-level-2.2">Leave</a>
+                                            <div class="collapse menu-dropdown" id="sidebarCrm112">
+                                                <ul class="nav nav-sm flex-column">
+                                                    @if ($usr->can('leaveTypeAdd') || $usr->can('leaveTypeView') || $usr->can('leaveTypeDelete') || $usr->can('leaveTypeUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('leaveType.index') }}" class="nav-link" data-key="t-level-3.1">Leave Type</a>
+                                                    </li>
+                                                    @endif
+                                                    @if ($usr->can('leaveApplicationAdd') || $usr->can('leaveApplicationView') || $usr->can('leaveApplicationDelete') || $usr->can('leaveApplicationUpdate'))
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('leaveApplication.index') }}" class="nav-link" data-key="t-level-3.2">Leave Application</a>
+                                                    </li>
+                                                    @endif
+
+
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+                </li>
+
+                @endif
+
+                <!-- end new code for hrm end-->
+
+
+
+
+
+
+
+
+
+
                 @if ($usr->can('permissionAdd') || $usr->can('permissionView') || $usr->can('permissionDelete') || $usr->can('permissionUpdate') || $usr->can('roleAdd') || $usr->can('roleView') || $usr->can('roleDelete') || $usr->can('roleUpdate') || $usr->can('userAdd') || $usr->can('userView') || $usr->can('userDelete') || $usr->can('userUpdate') || $usr->can('systemInformationAdd') || $usr->can('systemInformationView') || $usr->can('systemInformationDelete') || $usr->can('systemInformationUpdate'))
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Setting</span></li>
 

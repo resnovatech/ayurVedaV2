@@ -47,6 +47,12 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\VatController;
 use App\Http\Controllers\Admin\InventoryDamageController;
 use App\Http\Controllers\Admin\OtherEquipmentController;
+use App\Http\Controllers\Admin\SalaryTypeController;
+use App\Http\Controllers\Admin\SalaryGenerateController;
+use App\Http\Controllers\Admin\SalarySetupController;
+use App\Http\Controllers\Admin\LeaveTypeController;
+use App\Http\Controllers\Admin\LeaveApplicationController;
+use App\Http\Controllers\Admin\AttandaceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,6 +91,18 @@ Route::group(['prefix' => 'admin'], function () {
 
     //therapy_package
 
+
+    Route::resource('salaryType', SalaryTypeController::class);
+    Route::resource('salaryGenerate', SalaryGenerateController::class);
+    Route::resource('salarySetup', SalarySetupController::class);
+    Route::resource('leaveType', LeaveTypeController::class);
+    Route::resource('leaveApplication', LeaveApplicationController::class);
+    Route::resource('attandace', AttandaceController::class);
+
+
+
+
+
     Route::resource('otherEquipment', OtherEquipmentController::class);
 
 
@@ -98,17 +116,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('facePackInfoList', FacePackController::class);
 
     Route::resource('inventoryNameInfo',InventoryNameController::class);
-    
-    
+
+
       Route::controller(InventoryNameController::class)->group(function () {
-          
+
         Route::get('/inventoryMixerAdd', 'inventoryMixerAdd')->name('inventoryMixerAdd');
         Route::get('/inventoryMixerList', 'inventoryMixerList')->name('inventoryMixerList');
         Route::get('/inventoryMixerEdit/{id}', 'inventoryMixerEdit')->name('inventoryMixerEdit');
-        
+
         Route::DELETE('/inventoryMixerDelete/{id}', 'inventoryMixerDelete')->name('inventoryMixerDelete');
-        
-        
+
+
         Route::post('/inventoryMixerStore', 'inventoryMixerStore')->name('inventoryMixerStore');
 Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMixerUpdate');
 
@@ -117,7 +135,7 @@ Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMix
     Route::resource('therapyMakerList', TherapyMakerController::class);
     Route::resource('inventoryCategoryList', InventoryCategoryController::class);
     Route::resource('inventoryList', InventoryController::class);
-    
+
     Route::controller(InventoryController::class)->group(function () {
           Route::get('/getDataForQuantity', 'getDataForQuantity')->name('getDataForQuantity');
     });
@@ -166,11 +184,11 @@ Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMix
     Route::resource('walkByPatientTherapy', WalkByPatientTherapyController::class);
 
     Route::controller(WalkByPatientTherapyController::class)->group(function () {
-        
+
         Route::get('/signatureTherapyAdd', 'signatureTherapyAdd')->name('signatureTherapyAdd');
         Route::get('/signatureTherapyList', 'signatureTherapyList')->name('signatureTherapyList');
           Route::get('/signatureTherapyEdit', 'signatureTherapyEdit')->name('signatureTherapyEdit');
-        
+
         Route::get('/therapyPackageListForSingleTherapy', 'therapyPackageListForSingleTherapy')->name('therapyPackageListForSingleTherapy');
         Route::get('/therapyListForSingleTherapy', 'therapyListForSingleTherapy')->name('therapyListForSingleTherapy');
         Route::get('/getTherapyType', 'getTherapyType')->name('getTherapyType');
@@ -299,14 +317,14 @@ Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMix
 
 
   Route::resource('medicineEquipment', MedicineEquipmentController::class);
-  
+
   Route::controller(MedicineEquipmentController::class)->group(function () {
-      
+
       Route::get('/showCategoryMedicine', 'showCategoryMedicine')->name('showCategoryMedicine');
-      
+
   });
 
-      
+
   Route::resource('powderList', PowderController::class);
   Route::resource('packageList', PackageController::class);
 
