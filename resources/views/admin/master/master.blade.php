@@ -41,6 +41,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <style>
 
         .swal2-confirm{
@@ -273,7 +274,7 @@
 
 
 
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 
 <script type="text/javascript">
@@ -349,6 +350,10 @@
 
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+});
+
+$(document).ready(function(){
+    $('input.timepicker').timepicker({});
 });
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
