@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 13, 2023 at 12:27 PM
--- Server version: 10.3.39-MariaDB
--- PHP Version: 8.1.16
+-- Host: 127.0.0.1
+-- Generation Time: Nov 15, 2023 at 11:12 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hhayurveda_main`
+-- Database: `ayervedhanovemberupdate`
 --
 
 -- --------------------------------------------------------
@@ -55,7 +55,8 @@ INSERT INTO `admins` (`id`, `name`, `phone`, `staff_id`, `position`, `image`, `e
 (6, 'x', '01788881451', '3', NULL, NULL, 'x@gmail.com', NULL, '$2y$10$EdF78h9i9Zlr3jt4EcRY9uQFrD5AJjSQoHEuzr.ZAV6FGDlXShPt2', NULL, '2023-08-26 09:33:22', '2023-08-26 09:33:22'),
 (7, 'loreta', '11111111111', NULL, 'staff', NULL, 'loreta.amm.dias@gmail.com', NULL, '$2y$10$2w0aJ2WqWlUzGQlQVB7aT.zfeIwkRG0az4mW6GMhhvRg1X6LwAS1S', NULL, '2023-11-02 08:39:11', '2023-11-02 08:39:11'),
 (8, 'Rozina', '11111111111', NULL, 'staff', NULL, 'rozinasultana123@gmail.com', NULL, '$2y$10$I5877Fkx68Aw8PVqbx7lyeREf35zggHsfPo9IAI5lZXqCGX267nfu', NULL, '2023-11-02 08:41:01', '2023-11-02 08:41:01'),
-(9, 'dr.mahmuda2017', '11111111', NULL, 'doctor', NULL, 'dr.mahmuda2017@gmail.com', NULL, '$2y$10$jaZpGKWRTcpZAwSEBfIPOOX2etdPREqeF1r9Cs0AVLmpuRppdpOSq', NULL, '2023-11-02 08:42:46', '2023-11-02 08:42:46');
+(9, 'dr.mahmuda2017', '11111111', NULL, 'doctor', NULL, 'dr.mahmuda2017@gmail.com', NULL, '$2y$10$jaZpGKWRTcpZAwSEBfIPOOX2etdPREqeF1r9Cs0AVLmpuRppdpOSq', NULL, '2023-11-02 08:42:46', '2023-11-02 08:42:46'),
+(11, '2dGgoXRLRC', '33333333333', '4', NULL, NULL, 'KPcSH52UNN', NULL, '$2y$10$/Npm7eBKHqsbgj64J0WnmuCa71n5N.lA8T6AX7MwZESXm4HdDE2xq', NULL, '2023-11-14 02:23:37', '2023-11-14 02:24:44');
 
 -- --------------------------------------------------------
 
@@ -186,6 +187,30 @@ CREATE TABLE `agrement_form_twos` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `attandances`
+--
+
+CREATE TABLE `attandances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `employee_id` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT '0',
+  `date` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `checkintime` varchar(255) DEFAULT NULL,
+  `checkouttime` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attandances`
+--
+
+INSERT INTO `attandances` (`id`, `employee_id`, `status`, `date`, `created_at`, `updated_at`, `checkintime`, `checkouttime`) VALUES
+(1, '2dGgoXRLRC(33333333333)', '1', '2023-11-14', '2023-11-14 02:55:34', '2023-11-14 03:01:38', '10:00 AM', '02:30 PM');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bills`
 --
 
@@ -258,6 +283,13 @@ CREATE TABLE `doctors` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `doctors`
+--
+
+INSERT INTO `doctors` (`id`, `admin_id`, `name`, `address`, `gender`, `email_address`, `phone_or_mobile_number`, `nid_number`, `nationality`, `years_of_experience`, `doctor_certificate`, `created_at`, `updated_at`) VALUES
+(3, 1, '5U9dAaC9fN', 'dCkt8FS8vo', 'Male', 'cnnn5@hn4h.com', '11111111111', 'gbrY7KocZv', '9ObaTnLr7Y', '6TkFvo7pRc', 'public/uploads/forwardingLettrer.pdf', '2023-11-14 02:22:55', '2023-11-14 02:22:55');
+
 -- --------------------------------------------------------
 
 --
@@ -293,6 +325,13 @@ CREATE TABLE `doctor_consult_dates` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `doctor_consult_dates`
+--
+
+INSERT INTO `doctor_consult_dates` (`id`, `doctor_id`, `day`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+(3, 3, 'Saturday', '16:22', '15:22', '2023-11-14 02:22:55', '2023-11-14 02:22:55');
 
 -- --------------------------------------------------------
 
@@ -649,6 +688,51 @@ INSERT INTO `inventory_names` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `leave_applications`
+--
+
+CREATE TABLE `leave_applications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type_id` varchar(255) NOT NULL,
+  `detail_type_id` varchar(255) NOT NULL,
+  `app_start_date` varchar(255) NOT NULL,
+  `app_end_date` varchar(255) NOT NULL,
+  `day` varchar(255) NOT NULL,
+  `hard_copy` varchar(255) NOT NULL,
+  `approved_start_date` varchar(255) NOT NULL,
+  `approved_end_date` varchar(255) NOT NULL,
+  `approved_day` varchar(255) NOT NULL,
+  `approved_by` varchar(255) NOT NULL,
+  `approved_reason` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_types`
+--
+
+CREATE TABLE `leave_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `total_day` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `leave_types`
+--
+
+INSERT INTO `leave_types` (`id`, `name`, `total_day`, `created_at`, `updated_at`) VALUES
+(1, 'sick', '20', '2023-11-14 04:05:11', '2023-11-14 04:05:11'),
+(2, 'general', '10', '2023-11-14 04:05:24', '2023-11-14 04:05:24');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `medicines`
 --
 
@@ -929,6 +1013,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (3, 'App\\Models\\Admin', 2),
 (3, 'App\\Models\\Admin', 3),
 (3, 'App\\Models\\Admin', 6),
+(3, 'App\\Models\\Admin', 11),
 (4, 'App\\Models\\Admin', 4),
 (5, 'App\\Models\\Admin', 5);
 
@@ -1540,7 +1625,35 @@ INSERT INTO `permissions` (`id`, `group_name`, `name`, `guard_name`, `created_at
 (180, 'inventoryMixer', 'inventoryMixerAdd', 'admin', NULL, NULL),
 (181, 'inventoryMixer', 'inventoryMixerView', 'admin', NULL, NULL),
 (182, 'inventoryMixer', 'inventoryMixerDelete', 'admin', NULL, NULL),
-(183, 'inventoryMixer', 'inventoryMixerUpdate', 'admin', NULL, NULL);
+(183, 'inventoryMixer', 'inventoryMixerUpdate', 'admin', NULL, NULL),
+(184, 'attandance', 'attandanceAdd', 'admin', NULL, NULL),
+(185, 'attandance', 'attandanceView', 'admin', NULL, NULL),
+(186, 'attandance', 'attandanceDelete', 'admin', NULL, NULL),
+(187, 'attandance', 'attandanceUpdate', 'admin', NULL, NULL),
+(188, 'salaryType', 'salaryTypeAdd', 'admin', NULL, NULL),
+(189, 'salaryType', 'salaryTypeView', 'admin', NULL, NULL),
+(190, 'salaryType', 'salaryTypeDelete', 'admin', NULL, NULL),
+(191, 'salaryType', 'salaryTypeUpdate', 'admin', NULL, NULL),
+(192, 'salaryGenerate', 'salaryGenerateAdd', 'admin', NULL, NULL),
+(193, 'salaryGenerate', 'salaryGenerateView', 'admin', NULL, NULL),
+(194, 'salaryGenerate', 'salaryGenerateDelete', 'admin', NULL, NULL),
+(195, 'salaryGenerate', 'salaryGenerateUpdate', 'admin', NULL, NULL),
+(196, 'salarySetup', 'salarySetupAdd', 'admin', NULL, NULL),
+(197, 'salarySetup', 'salarySetupView', 'admin', NULL, NULL),
+(198, 'salarySetup', 'salarySetupDelete', 'admin', NULL, NULL),
+(199, 'salarySetup', 'salarySetupUpdate', 'admin', NULL, NULL),
+(200, 'leaveType', 'leaveTypeAdd', 'admin', NULL, NULL),
+(201, 'leaveType', 'leaveTypeView', 'admin', NULL, NULL),
+(202, 'leaveType', 'leaveTypeDelete', 'admin', NULL, NULL),
+(203, 'leaveType', 'leaveTypeUpdate', 'admin', NULL, NULL),
+(204, 'leaveApplication', 'leaveApplicationAdd', 'admin', NULL, NULL),
+(205, 'leaveApplication', 'leaveApplicationView', 'admin', NULL, NULL),
+(206, 'leaveApplication', 'leaveApplicationDelete', 'admin', NULL, NULL),
+(207, 'leaveApplication', 'leaveApplicationUpdate', 'admin', NULL, NULL),
+(208, 'attandace', 'attandaceAdd', 'admin', NULL, NULL),
+(209, 'attandace', 'attandaceView', 'admin', NULL, NULL),
+(210, 'attandace', 'attandaceDelete', 'admin', NULL, NULL),
+(211, 'attandace', 'attandaceUpdate', 'admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1822,7 +1935,104 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (180, 1),
 (181, 1),
 (182, 1),
-(183, 1);
+(183, 1),
+(184, 1),
+(185, 1),
+(186, 1),
+(187, 1),
+(188, 1),
+(189, 1),
+(190, 1),
+(191, 1),
+(192, 1),
+(193, 1),
+(194, 1),
+(195, 1),
+(196, 1),
+(197, 1),
+(198, 1),
+(199, 1),
+(200, 1),
+(201, 1),
+(202, 1),
+(203, 1),
+(204, 1),
+(205, 1),
+(206, 1),
+(207, 1),
+(208, 1),
+(209, 1),
+(210, 1),
+(211, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_generates`
+--
+
+CREATE TABLE `salary_generates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `detail_id` varchar(255) NOT NULL,
+  `start_date` varchar(255) NOT NULL,
+  `end_date` varchar(255) NOT NULL,
+  `add_by` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_set_ups`
+--
+
+CREATE TABLE `salary_set_ups` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `employee_name` varchar(255) NOT NULL,
+  `employee_id` varchar(255) NOT NULL,
+  `total` varchar(255) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_set_up_details`
+--
+
+CREATE TABLE `salary_set_up_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type_name` varchar(255) NOT NULL,
+  `detail_type_id` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_types`
+--
+
+CREATE TABLE `salary_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `salary_types`
+--
+
+INSERT INTO `salary_types` (`id`, `name`, `action`, `created_at`, `updated_at`) VALUES
+(1, 'house', 'add', '2023-11-14 04:07:27', '2023-11-14 04:07:27'),
+(2, 'transport', 'add', '2023-11-14 04:07:45', '2023-11-14 04:07:45'),
+(3, 'loan', 'deduct', '2023-11-14 04:08:00', '2023-11-14 04:08:00');
 
 -- --------------------------------------------------------
 
@@ -1923,6 +2133,13 @@ CREATE TABLE `therapists` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `therapists`
+--
+
+INSERT INTO `therapists` (`id`, `admin_id`, `name`, `email`, `phone_or_mobile_number`, `address`, `nid_number`, `nationality`, `dob`, `years_of_experience`, `created_at`, `updated_at`) VALUES
+(4, 1, '2dGgoXRLRC', 'KPcSH52UNN', '33333333333', 'FN3dOYElS8', 'VX4TMABeTt', 'UMQ7Sjn7Ye', '2023-11-27', '11', '2023-11-14 02:23:37', '2023-11-14 02:24:44');
 
 -- --------------------------------------------------------
 
@@ -2464,6 +2681,23 @@ CREATE TABLE `vats` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `vendors`
+--
+
+CREATE TABLE `vendors` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `walk_by_patients`
 --
 
@@ -2511,6 +2745,24 @@ CREATE TABLE `walk_by_patient_services` (
 INSERT INTO `walk_by_patient_services` (`id`, `walk_by_patient_id`, `name`, `detail`, `created_at`, `updated_at`) VALUES
 (20, 14, 'Open this select menu', '0ow2wPJM1I', '2023-11-01 09:40:46', '2023-11-01 09:40:46');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `warhouses`
+--
+
+CREATE TABLE `warhouses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `vendor` varchar(255) NOT NULL,
+  `expired_date` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -2556,6 +2808,12 @@ ALTER TABLE `agrement_form_three_sneha_lists`
 ALTER TABLE `agrement_form_twos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `agrement_form_twos_admin_id_foreign` (`admin_id`);
+
+--
+-- Indexes for table `attandances`
+--
+ALTER TABLE `attandances`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `bills`
@@ -2663,6 +2921,18 @@ ALTER TABLE `inventory_damages`
 -- Indexes for table `inventory_names`
 --
 ALTER TABLE `inventory_names`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `leave_applications`
+--
+ALTER TABLE `leave_applications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `leave_types`
+--
+ALTER TABLE `leave_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2878,6 +3148,30 @@ ALTER TABLE `role_has_permissions`
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `salary_generates`
+--
+ALTER TABLE `salary_generates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `salary_set_ups`
+--
+ALTER TABLE `salary_set_ups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `salary_set_up_details`
+--
+ALTER TABLE `salary_set_up_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `salary_types`
+--
+ALTER TABLE `salary_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sign_packages`
 --
 ALTER TABLE `sign_packages`
@@ -2989,6 +3283,12 @@ ALTER TABLE `vats`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `walk_by_patients`
 --
 ALTER TABLE `walk_by_patients`
@@ -3003,6 +3303,12 @@ ALTER TABLE `walk_by_patient_services`
   ADD KEY `walk_by_patient_services_walk_by_patient_id_foreign` (`walk_by_patient_id`);
 
 --
+-- Indexes for table `warhouses`
+--
+ALTER TABLE `warhouses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -3010,7 +3316,7 @@ ALTER TABLE `walk_by_patient_services`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `agrement_form_ones`
@@ -3043,6 +3349,12 @@ ALTER TABLE `agrement_form_twos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `attandances`
+--
+ALTER TABLE `attandances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
@@ -3064,7 +3376,7 @@ ALTER TABLE `discounts`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `doctor_appointments`
@@ -3076,7 +3388,7 @@ ALTER TABLE `doctor_appointments`
 -- AUTO_INCREMENT for table `doctor_consult_dates`
 --
 ALTER TABLE `doctor_consult_dates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `face_packs`
@@ -3143,6 +3455,18 @@ ALTER TABLE `inventory_damages`
 --
 ALTER TABLE `inventory_names`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+
+--
+-- AUTO_INCREMENT for table `leave_applications`
+--
+ALTER TABLE `leave_applications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `leave_types`
+--
+ALTER TABLE `leave_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `medicines`
@@ -3268,7 +3592,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -3293,6 +3617,30 @@ ALTER TABLE `rewards`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `salary_generates`
+--
+ALTER TABLE `salary_generates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `salary_set_ups`
+--
+ALTER TABLE `salary_set_ups`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `salary_set_up_details`
+--
+ALTER TABLE `salary_set_up_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `salary_types`
+--
+ALTER TABLE `salary_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sign_packages`
@@ -3322,7 +3670,7 @@ ALTER TABLE `system_information`
 -- AUTO_INCREMENT for table `therapists`
 --
 ALTER TABLE `therapists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `therapy_appointments`
@@ -3397,6 +3745,12 @@ ALTER TABLE `vats`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `vendors`
+--
+ALTER TABLE `vendors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `walk_by_patients`
 --
 ALTER TABLE `walk_by_patients`
@@ -3407,6 +3761,12 @@ ALTER TABLE `walk_by_patients`
 --
 ALTER TABLE `walk_by_patient_services`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `warhouses`
+--
+ALTER TABLE `warhouses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
