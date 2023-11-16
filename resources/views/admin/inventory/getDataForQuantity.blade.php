@@ -6,22 +6,38 @@
 <input type="hidden"  name="getData" class="form-control" value="1" placeholder="Appointment Date" required>
 
 <div class="row">
-    
-              
+
+
 @foreach($mainData as $convert_new_ass_cat)
 <input type="hidden"  name="mainId[]" class="form-control" value="{{$convert_new_ass_cat->id}}" placeholder="Appointment Date" required>
 <input type="hidden"  name="mainName[]" class="form-control" value="{{$convert_new_ass_cat->main_name}}" placeholder="Appointment Date" required>
 <div class="col-md-4 mt-2">
     <label>Name</label>
     <input type="text"  name="updateName[]" class="form-control" value="{{$convert_new_ass_cat->name}}"  required>
-    
+    <?php
+    $mainData = DB::table('warhouses')->where('name',$convert_new_ass_cat->name)->value('quantity');
+
+
+if(empty($mainData)){
+
+    $resultData =  0 ;
+
+}else{
+
+    $resultData =   $mainData;
+
+}
+
+
+    ?>
+    <small  class="text-success" >available quantity: {{ $resultData }}</small>
 </div>
 
 <div class="col-md-4 mt-2">
-    
+
     <label>Quantity</label>
         <input type="text"  name="updateQuantity[]" class="form-control"   required>
-    
+
 </div>
 
 

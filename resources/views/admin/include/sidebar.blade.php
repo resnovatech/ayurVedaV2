@@ -465,6 +465,26 @@ Inventory Category List
                             </li>
                             @endif
 
+
+                            @if ($usr->can('vendorAdd') || $usr->can('vendorView') || $usr->can('vendorDelete') || $usr->can('vendorUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('vendor.index') ? 'active' : '' }}" href="{{ route('vendor.index') }}">
+                                   Vendor List
+                                </a>
+                            </li>
+                            @endif
+
+
+                            @if ($usr->can('warehouseAdd') || $usr->can('warehouseView') || $usr->can('warehouseDelete') || $usr->can('warehouserUpdate'))
+                            <li class="nav-item">
+                                <a data-key="t-google" class="nav-link {{ Route::is('warehouse.index') || Route::is('warehouse.create') || Route::is('warehouse.edit') ? 'active' : '' }}" href="{{ route('warehouse.index') }}">
+                                   WareHouse
+                                </a>
+                            </li>
+                            @endif
+
+
+
                             @if ($usr->can('inventoryAdd') || $usr->can('inventoryView') || $usr->can('inventoryDelete') || $usr->can('inventoryUpdate'))
                             <li class="nav-item">
                                 <a data-key="t-google" class="nav-link {{ Route::is('inventoryList.index') ? 'active' : '' }}" href="{{ route('inventoryList.index') }}">

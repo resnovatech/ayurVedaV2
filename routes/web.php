@@ -53,6 +53,8 @@ use App\Http\Controllers\Admin\SalarySetupController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\LeaveApplicationController;
 use App\Http\Controllers\Admin\AttandaceController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\WarehouseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,6 +92,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [DashBoardController::class, 'index'])->name('admin.dashboard');
 
     //therapy_package
+
+    Route::resource('vendor', VendorController::class);
+    Route::resource('warehouse', WarehouseController::class);
 
 
     Route::resource('salaryType', SalaryTypeController::class);
@@ -138,6 +143,11 @@ Route::post('/inventoryMixerUpdate', 'inventoryMixerUpdate')->name('inventoryMix
 
     Route::controller(InventoryController::class)->group(function () {
           Route::get('/getDataForQuantity', 'getDataForQuantity')->name('getDataForQuantity');
+
+
+          Route::get('/checkwareHousequantity', 'checkwareHousequantity')->name('checkwareHousequantity');
+
+
     });
 
     Route::resource('agreementFormThree', AgrementFormThreeController::class);

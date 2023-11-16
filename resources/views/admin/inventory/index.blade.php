@@ -92,26 +92,26 @@ Inventory List  | {{ $ins_name }}
 
                 <td class="id">{{ $key+1 }}</td>
                 <td class="customer_name">
-                    
+
                     {{ $allTherapyIngredients->name }}
-                    
+
                     <br>
-                    
-                    <?php 
-                      
+
+                    <?php
+
                       $getDataNew = DB::table('therapy_ing_detail')
                       ->where('main_name',$allTherapyIngredients->name)->latest()->get();
-                    
-                    
+
+
                     ?>
-                    
+
                     @foreach($getDataNew as $getDataNews)
-                    
+
                     {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
-                    
+
                     @endforeach
-                    
-                    
+
+
                     </td>
                 <td class="customer_name">{{ $allTherapyIngredients->quantity }}</td>
                 <td class="customer_name">
@@ -136,8 +136,8 @@ Inventory List  | {{ $ins_name }}
 
                 </td>
 <td>
-    
-    
+
+
                 @if (Auth::guard('admin')->user()->can('therapyIngredientsUpdate'))
                     <button type="button" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lgmn{{ $allTherapyIngredients->id }}"
                     class="btn btn-primary waves-light waves-effect  btn-sm" >
@@ -157,9 +157,9 @@ Inventory List  | {{ $ins_name }}
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            
+
                                                                <!--new code List-->
-                                            
+
                                             @if(count($getDataNew) == 0)
 
   <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
@@ -169,22 +169,41 @@ Inventory List  | {{ $ins_name }}
 
 
 <div class="row">
-    
-             
+
+
 @foreach($getDataNew as $getDataNews)
 <input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
 <input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
 <div class="col-md-4 mt-2">
     <label>Name</label>
     <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
-    
+
 </div>
 
 <div class="col-md-4 mt-2">
-    
+
     <label>Quantity</label>
         <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
-    
+
+
+        <?php
+    $mainData = DB::table('warhouses')->where('name',$getDataNews->name)->value('quantity');
+
+
+if(empty($mainData)){
+
+    $resultData =  0 ;
+
+}else{
+
+    $resultData =   $mainData;
+
+}
+
+
+    ?>
+    <small  class="text-success" >available quantity: {{ $resultData }}</small>
+
 </div>
 
 
@@ -203,18 +222,38 @@ Inventory List  | {{ $ins_name }}
 </div>
 <hr>
 @endif
-                                            
+
                                             <!-- end new code list -->
-                                           
+
 
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Quantity</label>
                                                 <input type="text" name="quantity" value="{{ $allTherapyIngredients->quantity }}"
                                                        class="form-control"/>
+
+
+                                                       <?php
+    $mainData = DB::table('warhouses')->where('name',$allTherapyIngredients->name)->value('quantity');
+
+
+if(empty($mainData)){
+
+    $resultData =  0 ;
+
+}else{
+
+    $resultData =   $mainData;
+
+}
+
+
+    ?>
+    <small  class="text-success" >available quantity: {{ $resultData }}</small>
+
                                             </div>
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Unit</label>
-                                            
+
 
                                                 <select name ="unit" class="form-control">
                                                     <option>--Select One --</option>
@@ -223,9 +262,9 @@ Inventory List  | {{ $ins_name }}
                     <option value="Piece" {{ $allTherapyIngredients->unit == 'Piece' ? 'selected':''}}>Piece</option>
                      <option value="Ml" {{ $allTherapyIngredients->unit == 'Ml' ? 'selected':''}}>Ml</option>
                     <option value="Drops" {{ $allTherapyIngredients->unit == 'Drops' ? 'selected':''}}>Drops</option>
-                    
-                    
-                    
+
+
+
 
                     </select>
 
@@ -242,8 +281,8 @@ Inventory List  | {{ $ins_name }}
 
 
 @endif
-    
-    
+
+
 </td>
 
             </tr>
@@ -275,23 +314,23 @@ Inventory List  | {{ $ins_name }}
 
                 <td class="id">{{ $key+1 }}</td>
                 <td class="customer_name">
-                    
+
                     {{ $allmedicineEquipment->name }} <br>
-                    
-                    <?php 
-                      
+
+                    <?php
+
                       $getDataNew = DB::table('therapy_ing_detail')
                       ->where('main_name',$allmedicineEquipment->name)->latest()->get();
-                    
-                    
+
+
                     ?>
-                    
+
                     @foreach($getDataNew as $getDataNews)
-                    
+
                     {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
-                    
+
                     @endforeach
-                    
+
                     </td>
                 <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
                 <td class="customer_name">
@@ -333,10 +372,10 @@ Inventory List  | {{ $ins_name }}
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            
+
                                              <div class="col-12 mb-2">
                             <label for="" class="form-label">Other Category</label>
-                         
+
 
                             <select name ="other_category" class="form-control">
                                 <option>--Select One --</option>
@@ -349,11 +388,11 @@ Inventory List  | {{ $ins_name }}
 
 
                         </div>
-                        
-                        
+
+
                          <div class="col-12 mb-2">
                             <label for="" class="form-label"> Type</label>
-                         
+
 
                             <select name ="other_type" class="form-control">
                                 <option>--Select One --</option>
@@ -366,9 +405,9 @@ Inventory List  | {{ $ins_name }}
 
 
                         </div>
-                                            
+
                                                                <!--new code List-->
-                                            
+
                                             @if(count($getDataNew) == 0)
 
   <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
@@ -378,22 +417,42 @@ Inventory List  | {{ $ins_name }}
 
 
 <div class="row">
-    
-             
+
+
 @foreach($getDataNew as $getDataNews)
 <input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
 <input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
 <div class="col-md-4 mt-2">
     <label>Name</label>
     <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
-    
+
 </div>
 
 <div class="col-md-4 mt-2">
-    
+
     <label>Quantity</label>
         <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
-    
+
+
+
+        <?php
+        $mainData = DB::table('warhouses')->where('name',$getDataNews->name)->value('quantity');
+
+
+    if(empty($mainData)){
+
+        $resultData =  0 ;
+
+    }else{
+
+        $resultData =   $mainData;
+
+    }
+
+
+        ?>
+        <small  class="text-success" >available quantity: {{ $resultData }}</small>
+
 </div>
 
 
@@ -412,18 +471,37 @@ Inventory List  | {{ $ins_name }}
 </div>
 <hr>
 @endif
-                                            
+
                                             <!-- end new code list -->
-                                           
+
 
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Quantity</label>
                                                 <input type="text" name="quantity" value="{{ $allmedicineEquipment->quantity }}"
                                                        class="form-control"/>
+
+
+                                                       <?php
+                                                       $mainData = DB::table('warhouses')->where('name',$allmedicineEquipment->name)->value('quantity');
+
+
+                                                   if(empty($mainData)){
+
+                                                       $resultData =  0 ;
+
+                                                   }else{
+
+                                                       $resultData =   $mainData;
+
+                                                   }
+
+
+                                                       ?>
+                                                       <small  class="text-success" >available quantity: {{ $resultData }}</small>
                                             </div>
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Unit</label>
-                                            
+
 
                                                 <select name ="unit" class="form-control">
                                                     <option>--Select One --</option>
@@ -432,9 +510,9 @@ Inventory List  | {{ $ins_name }}
                     <option value="Piece" {{ $allmedicineEquipment->unit == 'Piece' ? 'selected':''}}>Piece</option>
                      <option value="Ml" {{ $allmedicineEquipment->unit == 'Ml' ? 'selected':''}}>Ml</option>
                     <option value="Drops" {{ $allmedicineEquipment->unit == 'Drops' ? 'selected':''}}>Drops</option>
-                    
-                    
-                    
+
+
+
 
                     </select>
 
@@ -481,25 +559,25 @@ Inventory List  | {{ $ins_name }}
                 <td class="id">{{ $key+1 }}</td>
                 <td class="customer_name">{{ $allmedicineEquipment->category }}</td>
                 <td class="customer_name">
-                    
+
                     {{ $allmedicineEquipment->name }}<br>
-                    
-                    <?php 
-                      
+
+                    <?php
+
                       $getDataNew = DB::table('therapy_ing_detail')
                       ->where('main_name',$allmedicineEquipment->name)->latest()->get();
-                    
-                    
+
+
                     ?>
-                    
+
                     @foreach($getDataNew as $getDataNews)
-                    
+
                     {{$getDataNews->name}}({{$getDataNews->quantity}} {{$getDataNews->unit}}) <br>
-                    
+
                     @endforeach
-                    
-                    
-                    
+
+
+
                     </td>
                 <td class="customer_name">{{ $allmedicineEquipment->quantity }}</td>
 
@@ -540,11 +618,11 @@ Inventory List  | {{ $ins_name }}
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                         
-                                            
-                                            
+
+
+
                                             <!--new code List-->
-                                            
+
                                             @if(count($getDataNew) == 0)
 
   <input type="hidden"  name="getData" class="form-control" value="0" placeholder="Appointment Date" required>
@@ -554,22 +632,38 @@ Inventory List  | {{ $ins_name }}
 
 
 <div class="row">
-    
-             
+
+
 @foreach($getDataNew as $getDataNews)
 <input type="hidden"  name="mainId[]" class="form-control" value="{{$getDataNews->id}}" placeholder="Appointment Date" required>
 <input type="hidden"  name="mainName[]" class="form-control" value="{{$getDataNews->main_name}}" placeholder="Appointment Date" required>
 <div class="col-md-4 mt-2">
     <label>Name</label>
     <input type="text"  name="updateName[]" class="form-control" value="{{$getDataNews->name}}"  required>
-    
+
 </div>
 
 <div class="col-md-4 mt-2">
-    
+
     <label>Quantity</label>
         <input type="text"  name="updateQuantity[]" class="form-control" value="{{$getDataNews->quantity}}"   required>
-    
+        <?php
+        $mainData = DB::table('warhouses')->where('name',$getDataNews->name)->value('quantity');
+
+
+    if(empty($mainData)){
+
+        $resultData =  0 ;
+
+    }else{
+
+        $resultData =   $mainData;
+
+    }
+
+
+        ?>
+        <small  class="text-success" >available quantity: {{ $resultData }}</small>
 </div>
 
 
@@ -588,13 +682,31 @@ Inventory List  | {{ $ins_name }}
 </div>
 <hr>
 @endif
-                                            
+
                                             <!-- end new code list -->
 
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Quantity</label>
                                                 <input type="text" name="quantity" value="{{ $allmedicineEquipment->quantity }}"
                                                        class="form-control"/>
+
+                                                       <?php
+                                                       $mainData = DB::table('warhouses')->where('name',$allmedicineEquipment->name)->value('quantity');
+
+
+                                                   if(empty($mainData)){
+
+                                                       $resultData =  0 ;
+
+                                                   }else{
+
+                                                       $resultData =   $mainData;
+
+                                                   }
+
+
+                                                       ?>
+                                                       <small  class="text-success" >available quantity: {{ $resultData }}</small>
                                             </div>
                                             <div class="col-12 mb-2">
                                                 <label for="" class="form-label">Unit</label>
@@ -608,9 +720,9 @@ Inventory List  | {{ $ins_name }}
                     <option value="Piece" {{ $allmedicineEquipment->unit == 'Piece' ? 'selected':''}}>Piece</option>
                      <option value="Ml" {{ $allmedicineEquipment->unit == 'Ml' ? 'selected':''}}>Ml</option>
                     <option value="Drops" {{ $allmedicineEquipment->unit == 'Drops' ? 'selected':''}}>Drops</option>
-                    
-                    
-                    
+
+
+
 
                     </select>
 
@@ -673,7 +785,7 @@ Inventory List  | {{ $ins_name }}
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Inventory Category Name</h5>
+                <h5 class="modal-title" id="myModalLabel">Inventory </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
@@ -690,12 +802,12 @@ Inventory List  | {{ $ins_name }}
                                 @endforeach
                             </select>
                         </div>
-                        
-                        
-                        
+
+
+
                           <div id="resultc">
-                            
-                            
+
+
                         </div>
 
 
@@ -709,11 +821,12 @@ Inventory List  | {{ $ins_name }}
 <option value="{{ $AllInventory->name }}">{{ $AllInventory->name }}</option>
                                 @endforeach
                             </select>
+                            <small  class="quantityShow text-success" ></small>
                         </div>
-                        
+
                         <div class="testResultStore">
-                            
-                            
+
+
                         </div>
 
                         <div class="col-12 mb-2">
@@ -753,40 +866,44 @@ Inventory List  | {{ $ins_name }}
 
 
 @section('script')
+
+<script>
+
+</script>
 <script>
 
 ///new
 
  $(document).on('change', '.newcate', function() {
-     
+
      var getTheValue = $(this).val();
-     
+
        $.ajax({
 url: "{{ route('showCategoryMedicine') }}",
 method: 'GET',
 data: {getTheValue:getTheValue},
 success: function(data) {
 
-    
 
-  
+
+
        $('#resultc').html(data);
-     
-       
 
 
-    
+
+
+
 
 }
 });
 });
-///end new 
+///end new
     // $('#appointment_time').change(function(){
 
         $(document).on('change', '.storeForInventory', function() {
 
         var getTheValue = $(this).val();
-    
+
         //alert(getTheValue);
 
         $.ajax({
@@ -795,18 +912,26 @@ method: 'GET',
 data: {getTheValue:getTheValue},
 success: function(data) {
 
-    
-
-  
        $('.testResultStore').html(data);
-     
-       
-
-
-    
 
 }
 });
+
+
+
+$.ajax({
+url: "{{ route('checkwareHousequantity') }}",
+method: 'GET',
+data: {getTheValue:getTheValue},
+success: function(data) {
+
+       $('.quantityShow').html('available quantity'+' '+data);
+
+}
+});
+
+
+
 
     });
 

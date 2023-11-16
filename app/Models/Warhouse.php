@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Warhouse extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        'name','quantity','unit','price','vendor','expired_date'
+    ];
+
+   
+
 }
